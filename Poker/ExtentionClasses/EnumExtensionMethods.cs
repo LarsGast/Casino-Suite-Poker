@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace Poker {
-	public static class ExtensionMethods {
+	public static class EnumExtensionMethods {
 
 		/// <summary>
 		/// Extension method.
