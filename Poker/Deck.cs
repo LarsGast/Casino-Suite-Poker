@@ -39,9 +39,13 @@ namespace Casino_Suite_Poker {
 		/// <summary>
 		/// Shuffles the cards in the deck.
 		/// </summary>
-		public void shuffle() {
-			var rand = new Random();
-			this.cards = this.cards.OrderBy(card => rand.Next()).ToList();
+		public void shuffle(Random random = null) {
+
+			if (random == null) {
+				random = new Random();
+			}
+
+			this.cards = this.cards.OrderBy(card => random.Next()).ToList();
 		}
 	}
 }
