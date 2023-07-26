@@ -1,5 +1,5 @@
 ﻿using Casino_Suite_Poker;
-using System;
+using MoreLinq;
 using System.Collections.Generic;
 using System.Linq;
 using static Casino_Suite_Poker.Card;
@@ -34,7 +34,7 @@ namespace Poker.WinningHands {
 
 		/// <summary>
 		/// The card that matters first for each hand.
-		/// Card with value of the highest participating card for Straight, Flush, and StraightFlush.
+		/// Card with value of the highest participating card for Straight and StraightFlush.
 		/// Card with value of the highest pair for Pair and TwoPair.
 		/// Card with value of the three of a kind for ThreeOfAKind and FullHouse.
 		/// Card with value of the four of a kind for FourOfAKind.
@@ -207,6 +207,214 @@ namespace Poker.WinningHands {
 
 			return null;
 		}
+
+		#endregion
+
+		#region Get best hand
+
+		/// <summary>
+		/// Gets the best hand possible with the given cards.
+		/// </summary>
+		/// <param name="cards"></param>
+		/// <returns></returns>
+		public static PokerHand getBestHand(List<Card> cards) {
+
+			var bestStraightFlush = PokerHand.getBestStraightFlush(cards);
+			if (bestStraightFlush != null) {
+				return bestStraightFlush;
+			}
+
+			var bestFourOfAKind = PokerHand.getBestFourOfAKind(cards);
+			if (bestFourOfAKind != null) {
+				return bestFourOfAKind;
+			}
+
+			var bestFullHouse = PokerHand.getBestFullHouse(cards);
+			if (bestFullHouse != null) {
+				return bestFullHouse;
+			}
+
+			var bestFlush = PokerHand.getBestFlush(cards);
+			if (bestFlush != null) {
+				return bestFlush;
+			}
+
+			return PokerHand.getBestHighCard(cards);
+		}
+
+		/// <summary>
+		/// Gets the best straight flush possible with the given cards.
+		/// </summary>
+		/// <param name="cards"></param>
+		/// <returns>null if there is no straight flush.</returns>
+		private static PokerHand getBestStraightFlush(List<Card> cards) {
+
+			var highestStraightFlushCards = PokerHand.getHighestStraightCards(cards, true).OrderByDescending(card => card.cardValue).ToList();
+
+			if (highestStraightFlushCards.Count == 0) {
+				return null;
+			}
+
+			var highestCard = highestStraightFlushCards.First();
+			var kickers = highestStraightFlushCards.Where(card => card != highestCard).ToList();
+			return new PokerHand(HandType.StraightFlush, highestCard.cardValue, null, highestCard.suit, kickers);
+		}
+
+		/// <summary>
+		/// Gets the best four of a kind possible with the given cards.
+		/// </summary>
+		/// <param name="cards"></param>
+		/// <returns>null if there is no four of a kind.</returns>
+		private static PokerHand getBestFourOfAKind(List<Card> cards) {
+
+			// Only 1 four of a kind is possible, so we do not have to check if the one we find is the highest one.
+			var highestFourOrAKindValue = PokerHand.getHighestOfAKindValue(cards, 4);
+
+			if (highestFourOrAKindValue == null) {
+				return null;
+			}
+
+			var kickers = cards.OrderByDescending(card => card.cardValue).Where(card => card.cardValue != highestFourOrAKindValue).Take(1).ToList();
+			return new PokerHand(HandType.FourOrAKind, highestFourOrAKindValue, null, null, kickers);
+		}
+
+		/// <summary>
+		/// Gets the best full house possible with the given cards.
+		/// </summary>
+		/// <param name="cards"></param>
+		/// <returns>null if there is no full house.</returns>
+		private static PokerHand getBestFullHouse(List<Card> cards) {
+
+			var highestThreeOfAKindValue = PokerHand.getHighestOfAKindValue(cards, 3);
+
+			if (highestThreeOfAKindValue == null) {
+				return null;
+			}
+
+			var secondHighestThreeOfAKindValue = PokerHand.getHighestOfAKindValue(cards.Where(card => card.cardValue != highestThreeOfAKindValue).ToList(), 3);
+			var highestPairValue = PokerHand.getHighestOfAKindValue(cards, 2);
+
+			if (secondHighestThreeOfAKindValue == null && highestPairValue == null) {
+				return null;
+			}
+
+			var kickers = new List<Card>();
+			return new PokerHand(HandType.FullHouse, highestThreeOfAKindValue, highestPairValue, null, kickers);
+		}
+
+		/// <summary>
+		/// Gets the best flush possible with the given cards.
+		/// </summary>
+		/// <param name="cards"></param>
+		/// <returns>null if there is no flush.</returns>
+		private static PokerHand getBestFlush(List<Card> cards) {
+			var flushCards = cards
+				.GroupBy(card => card.suit)
+				.Where(group => group.Count() >= 5)
+				.SelectMany(group => group)
+				.ToList();
+
+			if (flushCards.Count == 0) {
+				return null;
+			}
+
+			var flushSuit = flushCards.First().suit;
+			var kickers = flushCards.OrderByDescending(card => card.cardValue).ToList();
+			return new PokerHand(HandType.Flush, null, null, flushSuit, kickers);
+		}
+
+		/// <summary>
+		/// Gets the best hight card possible with the given cards.
+		/// </summary>
+		/// <param name="cards"></param>
+		/// <returns></returns>
+		private static PokerHand getBestHighCard(List<Card> cards) {
+
+			var orderedCards = cards.OrderByDescending(card => card.cardValue).ToList();
+			var kickers = orderedCards.Take(5).ToList();
+			return new PokerHand(HandType.HighCard, null, null, null, kickers);
+		}
+
+		#region Help Functions
+
+		/// <summary>
+		/// Gets the highest "X of a kind" value of the given cards.
+		/// </summary>
+		/// <param name="cards"></param>
+		/// <param name="numberOfAKind"></param>
+		/// <returns>null if there is no "X of a kind" value.</returns>
+		private static CardValue? getHighestOfAKindValue(List<Card> cards, int numberOfAKind) {
+
+			var highestOfAKindCards = cards
+				.GroupBy(card => card.cardValue)
+				.Where(group => group.Count() == numberOfAKind);
+
+			if (highestOfAKindCards.Count() == 0) {
+				return null;
+			}
+
+			var highestOfAKindValue = highestOfAKindCards.OrderByDescending(group => group.Key).First().Key;
+
+			return highestOfAKindValue;
+		}
+
+		/// <summary>
+		/// Gets the cards that make up the highset possible straight (flush) with the given cards.
+		/// </summary>
+		/// <param name="cards"></param>
+		/// <param name="mustBeFlush">If the hand has to be a straight flush or just a straight</param>
+		/// <returns></returns>
+		private static List<Card> getHighestStraightCards(List<Card> cards, bool mustBeFlush = false) {
+
+			// The ace can be used at both ends, as the card below a 2, and the card above a King.
+			// Because of this, we will sort descending and add duplicate cards of each ace at the end of the list.
+			var orderedCards = cards.OrderByDescending(card => card.cardValue).ToList();
+			if (orderedCards.Select(card => card.cardValue).Contains(CardValue.Ace)) {
+				orderedCards.AddRange(orderedCards.Where(card => card.cardValue == CardValue.Ace));
+			}
+
+			// Look for a straight (flush) for each card, starting with the highest.
+			var highestStraightCards = new List<Card>();
+			foreach (var currentCard in orderedCards) {
+
+				// Four (and below) cannot be the highest card in a straight.
+				if (currentCard.cardValue == CardValue.Four) {
+					break;
+				}
+
+				// Get all cards that would make up a straight with currentCard as the highest card.
+				// If the current card is a Five, then the Ace can also be part of the straight.
+				var cardsForStraight = cards.Where(card => 
+					(card.cardValue == currentCard.cardValue - 1 ||
+					card.cardValue == currentCard.cardValue - 2 ||					
+					card.cardValue == currentCard.cardValue - 3 ||					
+					card.cardValue == currentCard.cardValue - 4) &&
+					(currentCard.cardValue == CardValue.Five && card.cardValue == CardValue.Ace) &&
+					(mustBeFlush && card.suit == currentCard.suit)
+				).ToList();
+
+				// There may be multiple cards with the same value.
+				// Remove duplicates in that case.
+				if (cardsForStraight.Count > 5) {
+					if (mustBeFlush) {
+						cardsForStraight = cardsForStraight.Where(card => card.suit != currentCard.suit).ToList();
+					}
+					else {
+						cardsForStraight = cardsForStraight.DistinctBy(card => card.cardValue).ToList();
+					}
+				}
+
+				// Is there are exactly 5 cards in cardsForStraight, then we have a straight.
+				if (cardsForStraight.Count == 5) {
+					highestStraightCards = cardsForStraight.ToList();
+					break;
+				}
+			}
+
+			return highestStraightCards;
+		}
+
+		#endregion
 
 		#endregion
 
