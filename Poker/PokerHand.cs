@@ -2,8 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using static Casino_Suite_Poker.Card;
 
 namespace Poker.WinningHands {
@@ -42,7 +40,7 @@ namespace Poker.WinningHands {
 		/// Card with value of the four of a kind for FourOfAKind.
 		/// Null for HighCard.
 		/// </summary>
-		public Card.CardValue? firstCardValue { get; private set; }
+		public CardValue? firstCardValue { get; private set; }
 
 		/// <summary>
 		/// The card that matters after the first card for each hand.
@@ -50,14 +48,14 @@ namespace Poker.WinningHands {
 		/// Card with value of the highest pair for FullHouse.
 		/// Otherwise null.
 		/// </summary>
-		public Card.CardValue? secondCardValue { get; private set; }
+		public CardValue? secondCardValue { get; private set; }
 
 		/// <summary>
 		/// The suit of the hand, if it matters.
 		/// It matters for Flush and StraightFlush.
 		/// Otherwise null.
 		/// </summary>
-		public Card.Suit? suit { get; private set; }
+		public Suit? suit { get; private set; }
 
 		/// <summary>
 		/// The (sorted, from high to low values) kickers of the hand.
@@ -86,7 +84,7 @@ namespace Poker.WinningHands {
 		/// <param name="secondCard"></param>
 		/// <param name="suit"></param>
 		/// <param name="kickers"></param>
-		private PokerHand(HandType handType, Card.CardValue? firstCard, Card.CardValue? secondCard, Card.Suit? suit, List<Card> kickers) {
+		private PokerHand(HandType handType, CardValue? firstCard, CardValue? secondCard, Suit? suit, List<Card> kickers) {
 			this.handType = handType;
 			this.firstCardValue = firstCard;
 			this.secondCardValue = secondCard;
