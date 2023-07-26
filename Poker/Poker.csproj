@@ -45,6 +45,7 @@
     <Compile Include="ExtentionClasses\EnumExtensionMethods.cs" />
     <Compile Include="Deck.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="PokerHand.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
