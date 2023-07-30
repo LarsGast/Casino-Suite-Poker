@@ -64,7 +64,7 @@ namespace Unit_Tests {
 
 			var bestHand = PokerHand.getBestHand(cards);
 
-			var handType = HandType.FourOrAKind;
+			var handType = HandType.FourOfAKind;
 			CardValue? firstValue = CardValue.Ace;
 			CardValue? secondValue = null;
 			Suit? suit = null;

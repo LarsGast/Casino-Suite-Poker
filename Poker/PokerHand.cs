@@ -22,7 +22,7 @@ namespace Poker.WinningHands {
 			Straight,
 			Flush,
 			FullHouse,
-			FourOrAKind,
+			FourOfAKind,
 			StraightFlush
 		}
 
@@ -294,7 +294,7 @@ namespace Poker.WinningHands {
 			}
 
 			var kickers = cards.OrderByDescending(card => card.cardValue).Where(card => card.cardValue != highestFourOrAKindValue).Take(1);
-			return new PokerHand(HandType.FourOrAKind, highestFourOrAKindValue, null, null, kickers);
+			return new PokerHand(HandType.FourOfAKind, highestFourOrAKindValue, null, null, kickers);
 		}
 
 		/// <summary>
