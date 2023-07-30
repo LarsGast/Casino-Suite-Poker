@@ -62,7 +62,18 @@ namespace Poker.WinningHands {
 		/// </summary>
 		public List<Card> kickers {
 			get {
-				return _kickers.OrderByDescending(card => card.cardValue).ToList();
+
+				var orderedKickers = this._kickers.OrderByDescending(card => card.cardValue).ToList();
+
+				// If the hand is a straight or straight flush from Ace to Five, then Ace is NOT the first kicker, Five is.
+				// If this is the case, move the Ace from the top of the list to the bottom.
+				if (this.handType == HandType.Straight || this.handType == HandType.StraightFlush) {
+					if (orderedKickers.Last().cardValue == CardValue.Two) {
+						orderedKickers = orderedKickers.Move(0, 1, 4).ToList();
+					}
+				}
+
+				return orderedKickers;
 			}
 		}
 
@@ -483,14 +494,14 @@ namespace Poker.WinningHands {
 				// Get all cards that would make up a straight with currentCard as the highest card.
 				// If the current card is a Five, then the Ace can also be part of the straight.
 				var cardsForStraight = cards.Where(card => 
-					(card == currentCard ||
+					(card.equals(currentCard) ||
 					card.cardValue == currentCard.cardValue - 1 ||
 					card.cardValue == currentCard.cardValue - 2 ||					
 					card.cardValue == currentCard.cardValue - 3 ||					
 					card.cardValue == currentCard.cardValue - 4 ||
 					(currentCard.cardValue == CardValue.Five && card.cardValue == CardValue.Ace)) &&
 					(!mustBeFlush || card.suit == currentCard.suit)
-				);
+				).DistinctBy(card => card.cardValue);
 
 				// There may be multiple cards with the same value.
 				// Remove duplicates in that case.
