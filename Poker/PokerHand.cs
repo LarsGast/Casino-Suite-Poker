@@ -484,7 +484,7 @@ namespace Poker.WinningHands {
 				// Get all cards that would make up a straight with currentCard as the highest card.
 				// If the current card is a Five, then the Ace can also be part of the straight.
 				var cardsForStraight = cards.Where(card => 
-					(card.cardValue == currentCard.cardValue ||
+					(card == currentCard ||
 					card.cardValue == currentCard.cardValue - 1 ||
 					card.cardValue == currentCard.cardValue - 2 ||					
 					card.cardValue == currentCard.cardValue - 3 ||					
