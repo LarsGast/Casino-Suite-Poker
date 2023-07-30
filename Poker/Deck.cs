@@ -15,8 +15,8 @@ namespace Casino_Suite_Poker {
 		/// Constructor.
 		/// </summary>
 		/// <param name="cards"></param>
-		private Deck(List<Card> cards) {
-			this.cards = cards;
+		private Deck(IEnumerable<Card> cards) {
+			this.cards = cards.ToList();
 		}
 
 		/// <summary>

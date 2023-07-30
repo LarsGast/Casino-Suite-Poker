@@ -70,7 +70,7 @@ namespace Poker.WinningHands {
 		/// <summary>
 		/// Unsorted list of kickers.
 		/// </summary>
-		private List<Card> _kickers { get; set; }
+		private IEnumerable<Card> _kickers { get; set; }
 
 		#endregion
 
@@ -84,7 +84,7 @@ namespace Poker.WinningHands {
 		/// <param name="secondCard"></param>
 		/// <param name="suit"></param>
 		/// <param name="kickers"></param>
-		private PokerHand(HandType handType, CardValue? firstCard, CardValue? secondCard, Suit? suit, List<Card> kickers) {
+		private PokerHand(HandType handType, CardValue? firstCard, CardValue? secondCard, Suit? suit, IEnumerable<Card> kickers) {
 			this.handType = handType;
 			this.firstCardValue = firstCard;
 			this.secondCardValue = secondCard;
@@ -217,7 +217,7 @@ namespace Poker.WinningHands {
 		/// </summary>
 		/// <param name="cards"></param>
 		/// <returns></returns>
-		public static PokerHand getBestHand(List<Card> cards) {
+		public static PokerHand getBestHand(IEnumerable<Card> cards) {
 
 			var bestStraightFlush = PokerHand.getBestStraightFlush(cards);
 			if (bestStraightFlush != null) {
@@ -267,16 +267,16 @@ namespace Poker.WinningHands {
 		/// </summary>
 		/// <param name="cards"></param>
 		/// <returns>null if there is no straight flush.</returns>
-		private static PokerHand getBestStraightFlush(List<Card> cards) {
+		private static PokerHand getBestStraightFlush(IEnumerable<Card> cards) {
 
-			var highestStraightFlushCards = PokerHand.getHighestStraightCards(cards, mustBeFlush: true).OrderByDescending(card => card.cardValue).ToList();
+			var highestStraightFlushCards = PokerHand.getHighestStraightCards(cards, mustBeFlush: true).OrderByDescending(card => card.cardValue);
 
-			if (highestStraightFlushCards.Count == 0) {
+			if (highestStraightFlushCards.Count() == 0) {
 				return null;
 			}
 
 			var highestCard = highestStraightFlushCards.First();
-			var kickers = highestStraightFlushCards.Where(card => card != highestCard).ToList();
+			var kickers = highestStraightFlushCards.Where(card => card != highestCard);
 			return new PokerHand(HandType.StraightFlush, highestCard.cardValue, null, highestCard.suit, kickers);
 		}
 
@@ -285,7 +285,7 @@ namespace Poker.WinningHands {
 		/// </summary>
 		/// <param name="cards"></param>
 		/// <returns>null if there is no four of a kind.</returns>
-		private static PokerHand getBestFourOfAKind(List<Card> cards) {
+		private static PokerHand getBestFourOfAKind(IEnumerable<Card> cards) {
 
 			// Only 1 four of a kind is possible, so we do not have to check if the one we find is the highest one.
 			var highestFourOrAKindValue = PokerHand.getHighestOfAKindValue(cards, 4);
@@ -294,7 +294,7 @@ namespace Poker.WinningHands {
 				return null;
 			}
 
-			var kickers = cards.OrderByDescending(card => card.cardValue).Where(card => card.cardValue != highestFourOrAKindValue).Take(1).ToList();
+			var kickers = cards.OrderByDescending(card => card.cardValue).Where(card => card.cardValue != highestFourOrAKindValue).Take(1);
 			return new PokerHand(HandType.FourOrAKind, highestFourOrAKindValue, null, null, kickers);
 		}
 
@@ -303,7 +303,7 @@ namespace Poker.WinningHands {
 		/// </summary>
 		/// <param name="cards"></param>
 		/// <returns>null if there is no full house.</returns>
-		private static PokerHand getBestFullHouse(List<Card> cards) {
+		private static PokerHand getBestFullHouse(IEnumerable<Card> cards) {
 
 			var highestThreeOfAKindValue = PokerHand.getHighestOfAKindValue(cards, 3);
 
@@ -311,7 +311,7 @@ namespace Poker.WinningHands {
 				return null;
 			}
 
-			var secondHighestThreeOfAKindValue = PokerHand.getHighestOfAKindValue(cards.Where(card => card.cardValue != highestThreeOfAKindValue).ToList(), 3);
+			var secondHighestThreeOfAKindValue = PokerHand.getHighestOfAKindValue(cards.Where(card => card.cardValue != highestThreeOfAKindValue), 3);
 			var highestPairValue = PokerHand.getHighestOfAKindValue(cards, 2);
 
 			if (secondHighestThreeOfAKindValue == null && highestPairValue == null) {
@@ -327,19 +327,18 @@ namespace Poker.WinningHands {
 		/// </summary>
 		/// <param name="cards"></param>
 		/// <returns>null if there is no flush.</returns>
-		private static PokerHand getBestFlush(List<Card> cards) {
+		private static PokerHand getBestFlush(IEnumerable<Card> cards) {
 			var flushCards = cards
 				.GroupBy(card => card.suit)
 				.Where(group => group.Count() >= 5)
-				.SelectMany(group => group)
-				.ToList();
+				.SelectMany(group => group);
 
-			if (flushCards.Count == 0) {
+			if (flushCards.Count() == 0) {
 				return null;
 			}
 
 			var flushSuit = flushCards.First().suit;
-			var kickers = flushCards.OrderByDescending(card => card.cardValue).ToList();
+			var kickers = flushCards.OrderByDescending(card => card.cardValue);
 			return new PokerHand(HandType.Flush, null, null, flushSuit, kickers);
 		}
 
@@ -348,16 +347,16 @@ namespace Poker.WinningHands {
 		/// </summary>
 		/// <param name="cards"></param>
 		/// <returns>null if there is no straight.</returns>
-		private static PokerHand getBestStraight(List<Card> cards) {
+		private static PokerHand getBestStraight(IEnumerable<Card> cards) {
 
-			var highestStraightCards = PokerHand.getHighestStraightCards(cards, mustBeFlush: false).OrderByDescending(card => card.cardValue).ToList();
+			var highestStraightCards = PokerHand.getHighestStraightCards(cards, mustBeFlush: false).OrderByDescending(card => card.cardValue);
 
-			if (highestStraightCards.Count == 0) {
+			if (highestStraightCards.Count() == 0) {
 				return null;
 			}
 
 			var highestCard = highestStraightCards.First();
-			var kickers = highestStraightCards.Where(card => card != highestCard).ToList();
+			var kickers = highestStraightCards.Where(card => card != highestCard);
 			return new PokerHand(HandType.Straight, highestCard.cardValue, null, null, kickers);
 		}
 
@@ -366,7 +365,7 @@ namespace Poker.WinningHands {
 		/// </summary>
 		/// <param name="cards"></param>
 		/// <returns>null if there is no three of a kind.</returns>
-		private static PokerHand getBestThreeOfAKind(List<Card> cards) {
+		private static PokerHand getBestThreeOfAKind(IEnumerable<Card> cards) {
 
 			var highestThreeOfAKindValue = PokerHand.getHighestOfAKindValue(cards, 3);
 
@@ -374,7 +373,7 @@ namespace Poker.WinningHands {
 				return null;
 			}
 
-			var kickers = cards.Where(card => card.cardValue != highestThreeOfAKindValue).OrderByDescending(card => card.cardValue).Take(2).ToList();
+			var kickers = cards.Where(card => card.cardValue != highestThreeOfAKindValue).OrderByDescending(card => card.cardValue).Take(2);
 			return new PokerHand(HandType.ThreeOfAKind, highestThreeOfAKindValue, null, null, kickers);
 		}
 
@@ -383,7 +382,7 @@ namespace Poker.WinningHands {
 		/// </summary>
 		/// <param name="cards"></param>
 		/// <returns>null if there is no two pair.</returns>
-		private static PokerHand getBestTwoPair(List<Card> cards) {
+		private static PokerHand getBestTwoPair(IEnumerable<Card> cards) {
 
 			var highestPairValue = PokerHand.getHighestOfAKindValue(cards, 2);
 
@@ -391,7 +390,7 @@ namespace Poker.WinningHands {
 				return null;
 			}
 
-			var secondHighestPairValue = PokerHand.getHighestOfAKindValue(cards.Where(card => card.cardValue != highestPairValue).ToList(), 2);
+			var secondHighestPairValue = PokerHand.getHighestOfAKindValue(cards.Where(card => card.cardValue != highestPairValue), 2);
 
 			if (secondHighestPairValue == null) {
 				return null;
@@ -400,8 +399,7 @@ namespace Poker.WinningHands {
 			var kickers = cards
 				.Where(card => card.cardValue != highestPairValue && card.cardValue != secondHighestPairValue)
 				.OrderByDescending(card => card.cardValue)
-				.Take(1)
-				.ToList();
+				.Take(1);
 
 			return new PokerHand(HandType.TwoPair, highestPairValue, secondHighestPairValue, null, kickers);
 		}
@@ -411,7 +409,7 @@ namespace Poker.WinningHands {
 		/// </summary>
 		/// <param name="cards"></param>
 		/// <returns>null if there is no pair.</returns>
-		private static PokerHand getBestPair(List<Card> cards) {
+		private static PokerHand getBestPair(IEnumerable<Card> cards) {
 
 			var highestPairValue = PokerHand.getHighestOfAKindValue(cards, 2);
 
@@ -422,8 +420,7 @@ namespace Poker.WinningHands {
 			var kickers = cards
 				.Where(card => card.cardValue != highestPairValue)
 				.OrderByDescending(card => card.cardValue)
-				.Take(3)
-				.ToList();
+				.Take(3);
 
 			return new PokerHand(HandType.TwoPair, highestPairValue, null, null, kickers);
 		}
@@ -433,9 +430,9 @@ namespace Poker.WinningHands {
 		/// </summary>
 		/// <param name="cards"></param>
 		/// <returns></returns>
-		private static PokerHand getBestHighCard(List<Card> cards) {
-			var orderedCards = cards.OrderByDescending(card => card.cardValue).ToList();
-			var kickers = orderedCards.Take(5).ToList();
+		private static PokerHand getBestHighCard(IEnumerable<Card> cards) {
+			var orderedCards = cards.OrderByDescending(card => card.cardValue);
+			var kickers = orderedCards.Take(5);
 			return new PokerHand(HandType.HighCard, null, null, null, kickers);
 		}
 
@@ -447,7 +444,7 @@ namespace Poker.WinningHands {
 		/// <param name="cards"></param>
 		/// <param name="numberOfAKind"></param>
 		/// <returns>null if there is no "X of a kind" value.</returns>
-		private static CardValue? getHighestOfAKindValue(List<Card> cards, int numberOfAKind) {
+		private static CardValue? getHighestOfAKindValue(IEnumerable<Card> cards, int numberOfAKind) {
 
 			var highestOfAKindCards = cards
 				.GroupBy(card => card.cardValue)
@@ -468,7 +465,7 @@ namespace Poker.WinningHands {
 		/// <param name="cards"></param>
 		/// <param name="mustBeFlush">If the hand has to be a straight flush or just a straight</param>
 		/// <returns></returns>
-		private static List<Card> getHighestStraightCards(List<Card> cards, bool mustBeFlush = false) {
+		private static List<Card> getHighestStraightCards(IEnumerable<Card> cards, bool mustBeFlush = false) {
 
 			// The ace can be used at both ends, as the card below a 2, and the card above a King.
 			// Because of this, we will sort descending and add duplicate cards of each ace at the end of the list.
@@ -495,21 +492,21 @@ namespace Poker.WinningHands {
 					card.cardValue == currentCard.cardValue - 4) &&
 					(currentCard.cardValue == CardValue.Five && card.cardValue == CardValue.Ace) &&
 					(mustBeFlush && card.suit == currentCard.suit)
-				).ToList();
+				);
 
 				// There may be multiple cards with the same value.
 				// Remove duplicates in that case.
-				if (cardsForStraight.Count > 5) {
+				if (cardsForStraight.Count() > 5) {
 					if (mustBeFlush) {
-						cardsForStraight = cardsForStraight.Where(card => card.suit != currentCard.suit).ToList();
+						cardsForStraight = cardsForStraight.Where(card => card.suit != currentCard.suit);
 					}
 					else {
-						cardsForStraight = cardsForStraight.DistinctBy(card => card.cardValue).ToList();
+						cardsForStraight = cardsForStraight.DistinctBy(card => card.cardValue);
 					}
 				}
 
 				// Is there are exactly 5 cards in cardsForStraight, then we have a straight.
-				if (cardsForStraight.Count == 5) {
+				if (cardsForStraight.Count() == 5) {
 					highestStraightCards = cardsForStraight.ToList();
 					break;
 				}
