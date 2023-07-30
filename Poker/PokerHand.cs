@@ -59,7 +59,7 @@ namespace Poker.WinningHands {
 
 		/// <summary>
 		/// The (sorted, from high to low values) kickers of the hand.
-		/// These are all the cards/ values not present in the first and second value.
+		/// These are all the cards/ values not present in the first and second value, but still used to make the hand.
 		/// </summary>
 		public List<Card> kickers {
 			get {
@@ -275,9 +275,9 @@ namespace Poker.WinningHands {
 				return null;
 			}
 
-			var highestCard = highestStraightFlushCards.First();
-			var kickers = highestStraightFlushCards.Where(card => card != highestCard);
-			return new PokerHand(HandType.StraightFlush, highestCard.cardValue, null, highestCard.suit, kickers);
+			var suit = highestStraightFlushCards.First().suit;
+
+			return new PokerHand(HandType.StraightFlush, null, null, suit, highestStraightFlushCards);
 		}
 
 		/// <summary>
@@ -355,9 +355,7 @@ namespace Poker.WinningHands {
 				return null;
 			}
 
-			var highestCard = highestStraightCards.First();
-			var kickers = highestStraightCards.Where(card => card != highestCard);
-			return new PokerHand(HandType.Straight, highestCard.cardValue, null, null, kickers);
+			return new PokerHand(HandType.Straight, null, null, null, highestStraightCards);
 		}
 
 		/// <summary>
