@@ -48,7 +48,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Card.cs" />
-    <Compile Include="ExtentionClasses\EnumExtensionMethods.cs" />
+    <Compile Include="ExtensionClasses\EnumExtensionMethods.cs" />
     <Compile Include="Deck.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="PokerHand.cs" />
