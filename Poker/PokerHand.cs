@@ -239,6 +239,26 @@ namespace Poker.WinningHands {
 				return bestFlush;
 			}
 
+			var bestStraight = PokerHand.getBestStraight(cards);
+			if (bestStraight != null) {
+				return bestStraight;
+			}
+
+			var bestThreeOfAKind = PokerHand.getBestThreeOfAKind(cards);
+			if (bestThreeOfAKind != null) {
+				return bestThreeOfAKind;
+			}
+
+			var bestTwoPair = PokerHand.getBestTwoPair(cards);
+			if (bestTwoPair != null) {
+				return bestTwoPair;
+			}
+
+			var bestPair = PokerHand.getBestPair(cards);
+			if (bestPair != null) {
+				return bestPair;
+			}
+
 			return PokerHand.getBestHighCard(cards);
 		}
 
@@ -249,7 +269,7 @@ namespace Poker.WinningHands {
 		/// <returns>null if there is no straight flush.</returns>
 		private static PokerHand getBestStraightFlush(List<Card> cards) {
 
-			var highestStraightFlushCards = PokerHand.getHighestStraightCards(cards, true).OrderByDescending(card => card.cardValue).ToList();
+			var highestStraightFlushCards = PokerHand.getHighestStraightCards(cards, mustBeFlush: true).OrderByDescending(card => card.cardValue).ToList();
 
 			if (highestStraightFlushCards.Count == 0) {
 				return null;
@@ -324,12 +344,96 @@ namespace Poker.WinningHands {
 		}
 
 		/// <summary>
+		/// Gets the best straight possible with the given cards.
+		/// </summary>
+		/// <param name="cards"></param>
+		/// <returns>null if there is no straight.</returns>
+		private static PokerHand getBestStraight(List<Card> cards) {
+
+			var highestStraightCards = PokerHand.getHighestStraightCards(cards, mustBeFlush: false).OrderByDescending(card => card.cardValue).ToList();
+
+			if (highestStraightCards.Count == 0) {
+				return null;
+			}
+
+			var highestCard = highestStraightCards.First();
+			var kickers = highestStraightCards.Where(card => card != highestCard).ToList();
+			return new PokerHand(HandType.Straight, highestCard.cardValue, null, null, kickers);
+		}
+
+		/// <summary>
+		/// Gets the best three of a kind possible with the given cards.
+		/// </summary>
+		/// <param name="cards"></param>
+		/// <returns>null if there is no three of a kind.</returns>
+		private static PokerHand getBestThreeOfAKind(List<Card> cards) {
+
+			var highestThreeOfAKindValue = PokerHand.getHighestOfAKindValue(cards, 3);
+
+			if (highestThreeOfAKindValue == null) {
+				return null;
+			}
+
+			var kickers = cards.Where(card => card.cardValue != highestThreeOfAKindValue).OrderByDescending(card => card.cardValue).Take(2).ToList();
+			return new PokerHand(HandType.ThreeOfAKind, highestThreeOfAKindValue, null, null, kickers);
+		}
+
+		/// <summary>
+		/// Gets the best two pair possible with the given cards.
+		/// </summary>
+		/// <param name="cards"></param>
+		/// <returns>null if there is no two pair.</returns>
+		private static PokerHand getBestTwoPair(List<Card> cards) {
+
+			var highestPairValue = PokerHand.getHighestOfAKindValue(cards, 2);
+
+			if (highestPairValue == null) {
+				return null;
+			}
+
+			var secondHighestPairValue = PokerHand.getHighestOfAKindValue(cards.Where(card => card.cardValue != highestPairValue).ToList(), 2);
+
+			if (secondHighestPairValue == null) {
+				return null;
+			}
+
+			var kickers = cards
+				.Where(card => card.cardValue != highestPairValue && card.cardValue != secondHighestPairValue)
+				.OrderByDescending(card => card.cardValue)
+				.Take(1)
+				.ToList();
+
+			return new PokerHand(HandType.TwoPair, highestPairValue, secondHighestPairValue, null, kickers);
+		}
+
+		/// <summary>
+		/// Gets the best pair possible with the given cards.
+		/// </summary>
+		/// <param name="cards"></param>
+		/// <returns>null if there is no pair.</returns>
+		private static PokerHand getBestPair(List<Card> cards) {
+
+			var highestPairValue = PokerHand.getHighestOfAKindValue(cards, 2);
+
+			if (highestPairValue == null) {
+				return null;
+			}
+
+			var kickers = cards
+				.Where(card => card.cardValue != highestPairValue)
+				.OrderByDescending(card => card.cardValue)
+				.Take(3)
+				.ToList();
+
+			return new PokerHand(HandType.TwoPair, highestPairValue, null, null, kickers);
+		}
+
+		/// <summary>
 		/// Gets the best hight card possible with the given cards.
 		/// </summary>
 		/// <param name="cards"></param>
 		/// <returns></returns>
 		private static PokerHand getBestHighCard(List<Card> cards) {
-
 			var orderedCards = cards.OrderByDescending(card => card.cardValue).ToList();
 			var kickers = orderedCards.Take(5).ToList();
 			return new PokerHand(HandType.HighCard, null, null, null, kickers);
