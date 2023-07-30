@@ -9,14 +9,14 @@ namespace Casino_Suite_Poker {
 		/// The 52 cards of this deck.
 		/// Possibly sorted.
 		/// </summary>
-		public List<Card> cards {get; private set;}
+		private List<Card> _cards {get; set;}
 
 		/// <summary>
 		/// Constructor.
 		/// </summary>
 		/// <param name="cards"></param>
 		private Deck(IEnumerable<Card> cards) {
-			this.cards = cards.ToList();
+			this._cards = cards.ToList();
 		}
 
 		/// <summary>
@@ -45,7 +45,24 @@ namespace Casino_Suite_Poker {
 				random = new Random();
 			}
 
-			this.cards = this.cards.OrderBy(card => random.Next()).ToList();
+			this._cards = this._cards.OrderBy(card => random.Next()).ToList();
+		}
+
+		/// <summary>
+		/// Draw a card from the deck.
+		/// This removes the card from the deck.
+		/// </summary>
+		/// <returns>The top card of the deck.</returns>
+		public Card draw() {
+			var card = this._cards.FirstOrDefault();
+
+			if (card == null) {
+				return card;
+			}
+
+			this._cards.Remove(card);
+
+			return card;
 		}
 	}
 }

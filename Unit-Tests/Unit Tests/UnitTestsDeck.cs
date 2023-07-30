@@ -25,7 +25,14 @@ namespace Unit_Tests {
 
 			// Dictionary to store the frequency of each card after shuffling.
 			var cardFrequency = new Dictionary<Card, int>();
-			foreach (var card in deck.cards) {
+
+			while (true) {
+				var card = deck.draw();
+
+				if (card == null) {
+					break;
+				}
+
 				cardFrequency[card] = 0;
 			}
 
@@ -37,18 +44,31 @@ namespace Unit_Tests {
 
 				// Store which index the each card is shuffled.
 				int cardIndex = 0;
-				foreach (var card in deck.cards) {
+
+				while (true) {
+					var card = deck.draw();
+
+					if (card == null) {
+						break;
+					}
+
 					cardFrequency[card] = cardFrequency[card] + cardIndex;
 					cardIndex++;
 				}
 			}
 
 			// Calculate the expected average card index after shuffling (assuming a uniform distribution).
-			double averageIndex = (deck.cards.Count - 1) / 2.0;
+			double averageIndex = (52 - 1) / 2.0;
 
 			// Calculate the chi-square statistic
 			double chiSquare = 0;
-			foreach (var card in deck.cards) {
+
+			while (true) {
+				var card = deck.draw();
+
+				if (card == null) {
+					break;
+				}
 
 				// The observer average index is the observed indexes summed up divided by the number of shuffles.
 				double observedAverageIndex = (double)cardFrequency[card] / NumberOfShuffles;
@@ -59,7 +79,7 @@ namespace Unit_Tests {
 			}
 
 			// Degrees of freedom for a deck of cards is (number of cards - 1).
-			int degreesOfFreedom = deck.cards.Count - 1;
+			int degreesOfFreedom = 52 - 1;
 
 			// Set the significance level (alpha) for the chi-square test.
 			// 0.05 here means we want to be 95% certain the distibution is uniform.

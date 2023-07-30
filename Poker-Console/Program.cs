@@ -15,10 +15,17 @@ namespace Poker_Console {
 			deck.shuffle();
 
 			var cardCount = 1;
-			foreach(var card in deck.cards) {
+			while (true) {
+
+				var card = deck.draw();
+
+				if (card == null) {
+					break;
+				}
+
 				Console.WriteLine($"{cardCount}: {card.suit.getDisplayString()}{card.cardValue.getDisplayString()}");
 				cardCount++;
-			}
+			}	
 
 			Console.ReadKey();
 		}
