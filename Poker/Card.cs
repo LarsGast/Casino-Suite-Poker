@@ -1,5 +1,4 @@
-﻿using System.Runtime.CompilerServices;
-
+﻿
 namespace Casino_Suite_Poker {
 	public class Card {
 
@@ -54,6 +53,16 @@ namespace Casino_Suite_Poker {
 		public Card(CardValue cardValue, Suit suit) {
 			this.cardValue = cardValue;
 			this.suit = suit;
+		}
+
+		/// <summary>
+		/// Checks whether the two cards are equal.
+		/// Two cards are equal is they have the same value and the same suit.
+		/// </summary>
+		/// <param name="other"></param>
+		/// <returns></returns>
+		public bool equals(Card other) {
+			return this.cardValue == other.cardValue && this.suit == other.suit;
 		}
 	}
 }
