@@ -5,29 +5,13 @@ using Poker.WinningHands;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Unit_Tests.Unit_Tests_Help_Methods;
 using static Casino_Suite_Poker.Card;
 using static Poker.WinningHands.PokerHand;
 
 namespace Unit_Tests {
 	[TestClass]
 	public class UnitTestsWinningHand {
-
-		/// <summary>
-		/// Help function to assert a PokerHand.
-		/// </summary>
-		/// <param name="hand">Observed hand</param>
-		/// <param name="handType">Expected handType</param>
-		/// <param name="firstCardValue">Expected firstCardValue</param>
-		/// <param name="secondCardValue">Expected secondCardValue</param>
-		/// <param name="suit">Expected suit</param>
-		/// <param name="kickers">Expected kickers</param>
-		public void assertHand(PokerHand hand, HandType handType, CardValue? firstCardValue, CardValue? secondCardValue, Suit? suit, IEnumerable<Card> kickers) {
-			Assert.IsTrue(hand.handType == handType, $"Hand is not a {handType}");
-			Assert.IsTrue(hand.firstCardValue == firstCardValue, $"Highest value is not {firstCardValue}");
-			Assert.IsTrue(hand.secondCardValue == secondCardValue, $"Second highest value is not {secondCardValue}");
-			Assert.IsTrue(hand.suit == suit, $"Suit is not {suit}");
-			Assert.IsTrue(hand.kickers.equals(kickers), $"Kickers are not the same. Oberved: {hand.kickers.getDisplayString()}. Expected: {kickers.getDisplayString()}");
-		}
 
 		/// <summary>
 		/// Tests whether the given straightflush.
@@ -59,7 +43,7 @@ namespace Unit_Tests {
 				new Card(CardValue.Ten, Suit.Hearts)
 			};
 
-			this.assertHand(bestHand, handType, firstValue, secondValue, suit, kickers);
+			UnitTestHelpClass.assertHand(bestHand, handType, firstValue, secondValue, suit, kickers);
 		}
 
 		/// <summary>
@@ -88,7 +72,7 @@ namespace Unit_Tests {
 				new Card(CardValue.King, Suit.Hearts)
 			};
 
-			this.assertHand(bestHand, handType, firstValue, secondValue, suit, kickers);
+			UnitTestHelpClass.assertHand(bestHand, handType, firstValue, secondValue, suit, kickers);
 		}
 
 		/// <summary>
@@ -115,7 +99,7 @@ namespace Unit_Tests {
 			Suit? suit = null;
 			var kickers = new List<Card>();
 
-			this.assertHand(bestHand, handType, firstValue, secondValue, suit, kickers);
+			UnitTestHelpClass.assertHand(bestHand, handType, firstValue, secondValue, suit, kickers);
 		}
 
 		/// <summary>
@@ -148,7 +132,7 @@ namespace Unit_Tests {
 				new Card(CardValue.Nine, Suit.Hearts)
 			};
 
-			this.assertHand(bestHand, handType, firstValue, secondValue, suit, kickers);
+			UnitTestHelpClass.assertHand(bestHand, handType, firstValue, secondValue, suit, kickers);
 		}
 
 		/// <summary>
@@ -181,7 +165,7 @@ namespace Unit_Tests {
 				new Card(CardValue.Ten, Suit.Hearts)
 			};
 
-			this.assertHand(bestHand, handType, firstValue, secondValue, suit, kickers);
+			UnitTestHelpClass.assertHand(bestHand, handType, firstValue, secondValue, suit, kickers);
 		}
 
 		/// <summary>
@@ -211,7 +195,7 @@ namespace Unit_Tests {
 				new Card(CardValue.Queen, Suit.Hearts)
 			};
 
-			this.assertHand(bestHand, handType, firstValue, secondValue, suit, kickers);
+			UnitTestHelpClass.assertHand(bestHand, handType, firstValue, secondValue, suit, kickers);
 		}
 
 		/// <summary>
@@ -240,7 +224,7 @@ namespace Unit_Tests {
 				new Card(CardValue.Queen, Suit.Hearts)
 			};
 
-			this.assertHand(bestHand, handType, firstValue, secondValue, suit, kickers);
+			UnitTestHelpClass.assertHand(bestHand, handType, firstValue, secondValue, suit, kickers);
 		}
 
 		/// <summary>
@@ -271,7 +255,7 @@ namespace Unit_Tests {
 				new Card(CardValue.Jack, Suit.Hearts)
 			};
 
-			this.assertHand(bestHand, handType, firstValue, secondValue, suit, kickers);
+			UnitTestHelpClass.assertHand(bestHand, handType, firstValue, secondValue, suit, kickers);
 		}
 
 		/// <summary>
@@ -304,7 +288,7 @@ namespace Unit_Tests {
 				new Card(CardValue.Nine, Suit.Hearts),
 			};
 
-			this.assertHand(bestHand, handType, firstValue, secondValue, suit, kickers);
+			UnitTestHelpClass.assertHand(bestHand, handType, firstValue, secondValue, suit, kickers);
 		}
 	}
 }

@@ -65,7 +65,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="UnitTestsWinningHand.cs" />
-    <Compile Include="UnitTestsDeck.cs" />
+    <Compile Include="Unit Tests\UnitTestsWinningHand.cs" />
+    <Compile Include="Unit Tests\UnitTestsDeck.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
