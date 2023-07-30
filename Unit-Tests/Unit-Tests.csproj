@@ -66,7 +66,7 @@
   <ItemGroup>
     <Compile Include="Unit Tests Help Methods\UnitTestHelpClass.cs" />
     <Compile Include="Unit Tests\UnitTestsHandsWin.cs" />
-    <Compile Include="Unit Tests\UnitTestsWinningHand.cs" />
+    <Compile Include="Unit Tests\UnitTestsHandIsCorrect.cs" />
     <Compile Include="Unit Tests\UnitTestsDeck.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

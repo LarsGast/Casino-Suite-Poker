@@ -11,7 +11,7 @@ using static Poker.WinningHands.PokerHand;
 
 namespace Unit_Tests {
 	[TestClass]
-	public class UnitTestsWinningHand {
+	public class UnitTestsHandIsCorrect {
 
 		/// <summary>
 		/// Tests whether the given straightflush.
