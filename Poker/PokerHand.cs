@@ -5,7 +5,7 @@ using System.Linq;
 using static Casino_Suite_Poker.Card;
 
 namespace Poker.WinningHands {
-	internal class PokerHand {
+	public class PokerHand {
 
 		#region Properties
 
@@ -34,7 +34,6 @@ namespace Poker.WinningHands {
 
 		/// <summary>
 		/// The card that matters first for each hand.
-		/// Card with value of the highest participating card for Straight and StraightFlush.
 		/// Card with value of the highest pair for Pair and TwoPair.
 		/// Card with value of the three of a kind for ThreeOfAKind and FullHouse.
 		/// Card with value of the four of a kind for FourOfAKind.
