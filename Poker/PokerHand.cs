@@ -471,7 +471,7 @@ namespace Poker.WinningHands {
 			// Because of this, we will sort descending and add duplicate cards of each ace at the end of the list.
 			var orderedCards = cards.OrderByDescending(card => card.cardValue).ToList();
 			if (orderedCards.Select(card => card.cardValue).Contains(CardValue.Ace)) {
-				orderedCards.AddRange(orderedCards.Where(card => card.cardValue == CardValue.Ace));
+				orderedCards.AddRange(orderedCards.Where(card => card.cardValue == CardValue.Ace).ToList());
 			}
 
 			// Look for a straight (flush) for each card, starting with the highest.
@@ -486,12 +486,13 @@ namespace Poker.WinningHands {
 				// Get all cards that would make up a straight with currentCard as the highest card.
 				// If the current card is a Five, then the Ace can also be part of the straight.
 				var cardsForStraight = cards.Where(card => 
-					(card.cardValue == currentCard.cardValue - 1 ||
+					(card.cardValue == currentCard.cardValue ||
+					card.cardValue == currentCard.cardValue - 1 ||
 					card.cardValue == currentCard.cardValue - 2 ||					
 					card.cardValue == currentCard.cardValue - 3 ||					
-					card.cardValue == currentCard.cardValue - 4) &&
-					(currentCard.cardValue == CardValue.Five && card.cardValue == CardValue.Ace) &&
-					(mustBeFlush && card.suit == currentCard.suit)
+					card.cardValue == currentCard.cardValue - 4 ||
+					(currentCard.cardValue == CardValue.Five && card.cardValue == CardValue.Ace)) &&
+					(!mustBeFlush || card.suit == currentCard.suit)
 				);
 
 				// There may be multiple cards with the same value.
