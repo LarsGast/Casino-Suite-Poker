@@ -420,7 +420,7 @@ namespace Poker.WinningHands {
 				.OrderByDescending(card => card.cardValue)
 				.Take(3);
 
-			return new PokerHand(HandType.TwoPair, highestPairValue, null, null, kickers);
+			return new PokerHand(HandType.Pair, highestPairValue, null, null, kickers);
 		}
 
 		/// <summary>
