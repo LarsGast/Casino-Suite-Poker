@@ -12,7 +12,7 @@ namespace Poker_Console {
 	internal class Program {
 		static void Main(string[] args) {
 			
-			// Get a deck, shuffle it, and display each card from top to bottom.
+			// Get a deck and shuffle it.
 			var deck = Deck.get();
 			deck.shuffle();
 
@@ -97,10 +97,10 @@ namespace Poker_Console {
 				var playerOneWinsAgainstPlayerThree = handPlayerOne.winsAgainst(handPlayerThree);
 
 				if (playerOneWinsAgainstPlayerThree == true) {
-					Console.WriteLine("Speler 1 wins!");
+					Console.WriteLine("Player 1 wins!");
 				}
 				else if (playerOneWinsAgainstPlayerThree == false) {
-					Console.WriteLine("Speler 3 wins!");
+					Console.WriteLine("Player 3 wins!");
 				}
 				else if (playerOneWinsAgainstPlayerThree == null) {
 					Console.WriteLine("It's a draw between players 1 en 3!");
@@ -110,10 +110,10 @@ namespace Poker_Console {
 				var playerTwoWinsAgainstPlayerThree = handPlayerTwo.winsAgainst(handPlayerThree);
 
 				if (playerTwoWinsAgainstPlayerThree == true) {
-					Console.WriteLine("Speler 2 wins!");
+					Console.WriteLine("Player 2 wins!");
 				}
 				else if (playerTwoWinsAgainstPlayerThree == false) {
-					Console.WriteLine("Speler 3 wins!");
+					Console.WriteLine("Player 3 wins!");
 				}
 				else if (playerTwoWinsAgainstPlayerThree == null) {
 					Console.WriteLine("It's a draw between players 2 en 3!");
@@ -123,7 +123,7 @@ namespace Poker_Console {
 				var playerThreeWinsAgainstPlayerOne = handPlayerThree.winsAgainst(handPlayerOne);
 
 				if (playerThreeWinsAgainstPlayerOne == true) {
-					Console.WriteLine("Speler 3 wins!");
+					Console.WriteLine("Player 3 wins!");
 				}
 				else if (playerThreeWinsAgainstPlayerOne == false) {
 					Console.WriteLine("It's a draw between players 1 en 2!");
