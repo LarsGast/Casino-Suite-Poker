@@ -9,7 +9,13 @@ namespace Casino_Suite_Poker {
 		/// The 52 cards of this deck.
 		/// Possibly sorted.
 		/// </summary>
-		private List<Card> _cards {get; set;}
+		private List<Card> _cards { get; set; }
+
+		/// <summary>
+		/// The index of the las drawn card.
+		/// -1 if no card has been drawn yet.
+		/// </summary>
+		private int _index { get ; set; }
 
 		/// <summary>
 		/// Constructor.
@@ -17,6 +23,7 @@ namespace Casino_Suite_Poker {
 		/// <param name="cards"></param>
 		private Deck(IEnumerable<Card> cards) {
 			this._cards = cards.ToList();
+			this._index = -1;
 		}
 
 		/// <summary>
@@ -39,28 +46,54 @@ namespace Casino_Suite_Poker {
 		/// <summary>
 		/// Shuffles the cards in the deck.
 		/// </summary>
-		public void shuffle(Random random = null) {
+		/// <param name="includeDrawnCards">Whether the deck will shuffle the already drawn cards back into the deck.</param>
+		/// <param name="random">Random variable for drawing many cards in one instant.</param>
+		public void shuffle(bool includeDrawnCards = true, Random random = null) {
 
+			// Initiate random if not done already.
 			if (random == null) {
 				random = new Random();
 			}
 
-			this._cards = this._cards.OrderBy(card => random.Next()).ToList();
+			var cardsToNotFhuffle = new List<Card>();
+			var cardsToShuffle = this._cards;
+
+			// If we don't want to include the already drawn cards, then exclude those when shuffling the deck.
+			if (!includeDrawnCards) {
+
+				cardsToNotFhuffle = this._cards
+					.Where(card => this._cards.IndexOf(card) <= this._index)
+					.ToList();
+
+				cardsToShuffle = this._cards
+					.Where(card => this._cards.IndexOf(card) > this._index)
+					.ToList();
+			}
+			else {
+				// Reset the index so cards get drawn from the top again.
+				this._index = -1;
+			}
+
+			// Actually shuffle the cards.
+			// Add the already drawn cards to the front of the deck (in order) if neccecary.
+			var shuffledCards = cardsToShuffle.OrderBy(card => random.Next()).ToList();
+			this._cards = cardsToNotFhuffle.Union(shuffledCards).ToList();
 		}
 
 		/// <summary>
-		/// Draw a card from the deck.
-		/// This removes the card from the deck.
+		/// Draw a card from the deck by the next index.
+		/// The card does not actually get removed from the deck.
 		/// </summary>
-		/// <returns>The top card of the deck.</returns>
+		/// <returns>The card corresponding to the next index.</returns>
 		public Card draw() {
-			var card = this._cards.FirstOrDefault();
 
-			if (card == null) {
-				return card;
+			this._index++;
+
+			if (this._index >= this._cards.Count) {
+				return null;
 			}
 
-			this._cards.Remove(card);
+			var card = this._cards[this._index];			
 
 			return card;
 		}
