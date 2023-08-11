@@ -40,7 +40,7 @@ namespace Unit_Tests {
 			for (int i = 0; i < NumberOfShuffles; i++) {
 
 				// Include the random variable so that the default doesn't take the same seed.
-				deck.shuffle(random);
+				deck.shuffle(random: random);
 
 				// Store which index the each card is shuffled.
 				int cardIndex = 0;
@@ -91,6 +91,21 @@ namespace Unit_Tests {
 
 			// Perform the chi-square test.
 			Assert.IsFalse(chiSquare >= criticalValue, "The deck shuffle is not random.");
+		}
+
+		[TestMethod]
+		public void drawnCardsDoNotShuffle() {
+			var deck = Deck.get();
+
+			// Draw 10 cards.
+			for (int i = 0; i < 10; i++) {
+				deck.draw();
+			}
+
+			// Do a random shuffle.
+			// The properteis to test these are private, so test these yourself, I guess.
+			deck.shuffle(includeDrawnCards: false);
+			deck.shuffle(includeDrawnCards: true);
 		}
 	}
 }
