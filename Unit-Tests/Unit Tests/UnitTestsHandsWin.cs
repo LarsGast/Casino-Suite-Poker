@@ -1,5 +1,7 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Poker.WinningHands;
 using System;
+using System.Collections.Generic;
 using Unit_Tests.Unit_Tests_Help_Methods;
 
 namespace Unit_Tests.Unit_Tests {
@@ -16,26 +18,19 @@ namespace Unit_Tests.Unit_Tests {
 			var bestStraightFlush = UnitTestHelpClass.getBestStraightFlush();
 
 			// All hands below should lose against the hand specified above.
-			var worstStraightFlush = UnitTestHelpClass.getWorstStraightFlush();
-			var bestFourOfAKind = UnitTestHelpClass.getBestFourOfAKind();
-			var bestFullHouse = UnitTestHelpClass.getBestFullHouse();
-			var bestFlush = UnitTestHelpClass.getBestFlush();
-			var bestStraight = UnitTestHelpClass.getBestStraight();
-			var bestThreeOfAKind = UnitTestHelpClass.getBestThreeOfAKind();
-			var bestTwoPair = UnitTestHelpClass.getBestTwoPair();
-			var bestPair = UnitTestHelpClass.getBestPair();
-			var bestHighCard = UnitTestHelpClass.getBestHighCard();
-
-			// Assert that the best hand wins.
-			UnitTestHelpClass.assertThatHandWins(bestStraightFlush, worstStraightFlush);
-			UnitTestHelpClass.assertThatHandWins(bestStraightFlush, bestFourOfAKind);
-			UnitTestHelpClass.assertThatHandWins(bestStraightFlush, bestFullHouse);
-			UnitTestHelpClass.assertThatHandWins(bestStraightFlush, bestFlush);
-			UnitTestHelpClass.assertThatHandWins(bestStraightFlush, bestStraight);
-			UnitTestHelpClass.assertThatHandWins(bestStraightFlush, bestThreeOfAKind);
-			UnitTestHelpClass.assertThatHandWins(bestStraightFlush, bestTwoPair);
-			UnitTestHelpClass.assertThatHandWins(bestStraightFlush, bestPair);
-			UnitTestHelpClass.assertThatHandWins(bestStraightFlush, bestHighCard);
+			var losingHands = new List<PokerHand>() {
+				UnitTestHelpClass.getWorstStraightFlush(),
+				UnitTestHelpClass.getBestFourOfAKind(),
+				UnitTestHelpClass.getBestFullHouse(),
+				UnitTestHelpClass.getBestFlush(),
+				UnitTestHelpClass.getBestStraight(),
+				UnitTestHelpClass.getBestThreeOfAKind(),
+				UnitTestHelpClass.getBestTwoPair(),
+				UnitTestHelpClass.getBestPair(),
+				UnitTestHelpClass.getBestHighCard()
+			};
+			
+			UnitTestHelpClass.assertThatHandWins(bestStraightFlush, losingHands);
 		}
 
 		/// <summary>
@@ -48,24 +43,18 @@ namespace Unit_Tests.Unit_Tests {
 			var bestFourOfAKind = UnitTestHelpClass.getBestFourOfAKind();
 
 			// All hands below should lose against the hand specified above.
-			var worstFourOfAKind = UnitTestHelpClass.getWorstFourOfAKind();
-			var bestFullHouse = UnitTestHelpClass.getBestFullHouse();
-			var bestFlush = UnitTestHelpClass.getBestFlush();
-			var bestStraight = UnitTestHelpClass.getBestStraight();
-			var bestThreeOfAKind = UnitTestHelpClass.getBestThreeOfAKind();
-			var bestTwoPair = UnitTestHelpClass.getBestTwoPair();
-			var bestPair = UnitTestHelpClass.getBestPair();
-			var bestHighCard = UnitTestHelpClass.getBestHighCard();
+			var losingHands = new List<PokerHand>() {
+				UnitTestHelpClass.getWorstFourOfAKind(),
+				UnitTestHelpClass.getBestFullHouse(),
+				UnitTestHelpClass.getBestFlush(),
+				UnitTestHelpClass.getBestStraight(),
+				UnitTestHelpClass.getBestThreeOfAKind(),
+				UnitTestHelpClass.getBestTwoPair(),
+				UnitTestHelpClass.getBestPair(),
+				UnitTestHelpClass.getBestHighCard()
+			};
 
-			// Assert that the best hand wins.
-			UnitTestHelpClass.assertThatHandWins(bestFourOfAKind, worstFourOfAKind);
-			UnitTestHelpClass.assertThatHandWins(bestFourOfAKind, bestFullHouse);
-			UnitTestHelpClass.assertThatHandWins(bestFourOfAKind, bestFlush);
-			UnitTestHelpClass.assertThatHandWins(bestFourOfAKind, bestStraight);
-			UnitTestHelpClass.assertThatHandWins(bestFourOfAKind, bestThreeOfAKind);
-			UnitTestHelpClass.assertThatHandWins(bestFourOfAKind, bestTwoPair);
-			UnitTestHelpClass.assertThatHandWins(bestFourOfAKind, bestPair);
-			UnitTestHelpClass.assertThatHandWins(bestFourOfAKind, bestHighCard);
+			UnitTestHelpClass.assertThatHandWins(bestFourOfAKind, losingHands);
 		}
 
 		/// <summary>
@@ -78,22 +67,17 @@ namespace Unit_Tests.Unit_Tests {
 			var bestFullHouse = UnitTestHelpClass.getBestFullHouse();
 
 			// All hands below should lose against the hand specified above.
-			var worstFullHouse = UnitTestHelpClass.getWorstFullHouse();
-			var bestFlush = UnitTestHelpClass.getBestFlush();
-			var bestStraight = UnitTestHelpClass.getBestStraight();
-			var bestThreeOfAKind = UnitTestHelpClass.getBestThreeOfAKind();
-			var bestTwoPair = UnitTestHelpClass.getBestTwoPair();
-			var bestPair = UnitTestHelpClass.getBestPair();
-			var bestHighCard = UnitTestHelpClass.getBestHighCard();
+			var losingHands = new List<PokerHand>() {
+				UnitTestHelpClass.getWorstFullHouse(),
+				UnitTestHelpClass.getBestFlush(),
+				UnitTestHelpClass.getBestStraight(),
+				UnitTestHelpClass.getBestThreeOfAKind(),
+				UnitTestHelpClass.getBestTwoPair(),
+				UnitTestHelpClass.getBestPair(),
+				UnitTestHelpClass.getBestHighCard()
+			};
 
-			// Assert that the best hand wins.
-			UnitTestHelpClass.assertThatHandWins(bestFullHouse, worstFullHouse);
-			UnitTestHelpClass.assertThatHandWins(bestFullHouse, bestFlush);
-			UnitTestHelpClass.assertThatHandWins(bestFullHouse, bestStraight);
-			UnitTestHelpClass.assertThatHandWins(bestFullHouse, bestThreeOfAKind);
-			UnitTestHelpClass.assertThatHandWins(bestFullHouse, bestTwoPair);
-			UnitTestHelpClass.assertThatHandWins(bestFullHouse, bestPair);
-			UnitTestHelpClass.assertThatHandWins(bestFullHouse, bestHighCard);
+			UnitTestHelpClass.assertThatHandWins(bestFullHouse, losingHands);
 		}
 
 		/// <summary>
@@ -106,20 +90,16 @@ namespace Unit_Tests.Unit_Tests {
 			var bestFlush = UnitTestHelpClass.getBestFlush();
 
 			// All hands below should lose against the hand specified above.
-			var worstFlush = UnitTestHelpClass.getWorstFlush();
-			var bestStraight = UnitTestHelpClass.getBestStraight();
-			var bestThreeOfAKind = UnitTestHelpClass.getBestThreeOfAKind();
-			var bestTwoPair = UnitTestHelpClass.getBestTwoPair();
-			var bestPair = UnitTestHelpClass.getBestPair();
-			var bestHighCard = UnitTestHelpClass.getBestHighCard();
+			var losingHands = new List<PokerHand>() {
+				UnitTestHelpClass.getWorstFlush(),
+				UnitTestHelpClass.getBestStraight(),
+				UnitTestHelpClass.getBestThreeOfAKind(),
+				UnitTestHelpClass.getBestTwoPair(),
+				UnitTestHelpClass.getBestPair(),
+				UnitTestHelpClass.getBestHighCard()
+			};
 
-			// Assert that the best hand wins.
-			UnitTestHelpClass.assertThatHandWins(bestFlush, worstFlush);
-			UnitTestHelpClass.assertThatHandWins(bestFlush, bestStraight);
-			UnitTestHelpClass.assertThatHandWins(bestFlush, bestThreeOfAKind);
-			UnitTestHelpClass.assertThatHandWins(bestFlush, bestTwoPair);
-			UnitTestHelpClass.assertThatHandWins(bestFlush, bestPair);
-			UnitTestHelpClass.assertThatHandWins(bestFlush, bestHighCard);
+			UnitTestHelpClass.assertThatHandWins(bestFlush, losingHands);
 		}
 
 		/// <summary>
@@ -132,18 +112,15 @@ namespace Unit_Tests.Unit_Tests {
 			var bestStraight = UnitTestHelpClass.getBestStraight();
 
 			// All hands below should lose against the hand specified above.
-			var worstStraight = UnitTestHelpClass.getWorstStraight();
-			var bestThreeOfAKind = UnitTestHelpClass.getBestThreeOfAKind();
-			var bestTwoPair = UnitTestHelpClass.getBestTwoPair();
-			var bestPair = UnitTestHelpClass.getBestPair();
-			var bestHighCard = UnitTestHelpClass.getBestHighCard();
+			var losingHands = new List<PokerHand>() {
+				UnitTestHelpClass.getWorstStraight(),
+				UnitTestHelpClass.getBestThreeOfAKind(),
+				UnitTestHelpClass.getBestTwoPair(),
+				UnitTestHelpClass.getBestPair(),
+				UnitTestHelpClass.getBestHighCard()
+			};
 
-			// Assert that the best hand wins.
-			UnitTestHelpClass.assertThatHandWins(bestStraight, worstStraight);
-			UnitTestHelpClass.assertThatHandWins(bestStraight, bestThreeOfAKind);
-			UnitTestHelpClass.assertThatHandWins(bestStraight, bestTwoPair);
-			UnitTestHelpClass.assertThatHandWins(bestStraight, bestPair);
-			UnitTestHelpClass.assertThatHandWins(bestStraight, bestHighCard);
+			UnitTestHelpClass.assertThatHandWins(bestStraight, losingHands);
 		}
 
 		/// <summary>
@@ -156,16 +133,14 @@ namespace Unit_Tests.Unit_Tests {
 			var bestThreeOfAKind = UnitTestHelpClass.getBestThreeOfAKind();
 
 			// All hands below should lose against the hand specified above.
-			var worstThreeOfAKind = UnitTestHelpClass.getWorstThreeOfAKind();
-			var bestTwoPair = UnitTestHelpClass.getBestTwoPair();
-			var bestPair = UnitTestHelpClass.getBestPair();
-			var bestHighCard = UnitTestHelpClass.getBestHighCard();
+			var losingHands = new List<PokerHand>() {
+				UnitTestHelpClass.getWorstThreeOfAKind(),
+				UnitTestHelpClass.getBestTwoPair(),
+				UnitTestHelpClass.getBestPair(),
+				UnitTestHelpClass.getBestHighCard()
+			};
 
-			// Assert that the best hand wins.
-			UnitTestHelpClass.assertThatHandWins(bestThreeOfAKind, worstThreeOfAKind);
-			UnitTestHelpClass.assertThatHandWins(bestThreeOfAKind, bestTwoPair);
-			UnitTestHelpClass.assertThatHandWins(bestThreeOfAKind, bestPair);
-			UnitTestHelpClass.assertThatHandWins(bestThreeOfAKind, bestHighCard);
+			UnitTestHelpClass.assertThatHandWins(bestThreeOfAKind, losingHands);
 		}
 
 		/// <summary>
@@ -178,14 +153,13 @@ namespace Unit_Tests.Unit_Tests {
 			var bestTwoPair = UnitTestHelpClass.getBestTwoPair();
 
 			// All hands below should lose against the hand specified above.
-			var worstTwoPair = UnitTestHelpClass.getWorstTwoPair();
-			var bestPair = UnitTestHelpClass.getBestPair();
-			var bestHighCard = UnitTestHelpClass.getBestHighCard();
+			var losingHands = new List<PokerHand>() {
+				UnitTestHelpClass.getWorstTwoPair(),
+				UnitTestHelpClass.getBestPair(),
+				UnitTestHelpClass.getBestHighCard()
+			};
 
-			// Assert that the best hand wins.
-			UnitTestHelpClass.assertThatHandWins(bestTwoPair, worstTwoPair);
-			UnitTestHelpClass.assertThatHandWins(bestTwoPair, bestPair);
-			UnitTestHelpClass.assertThatHandWins(bestTwoPair, bestHighCard);
+			UnitTestHelpClass.assertThatHandWins(bestTwoPair, losingHands);
 		}
 
 		/// <summary>
@@ -198,12 +172,12 @@ namespace Unit_Tests.Unit_Tests {
 			var bestPair = UnitTestHelpClass.getBestPair();
 
 			// All hands below should lose against the hand specified above.
-			var worstPair = UnitTestHelpClass.getWorstPair();
-			var bestHighCard = UnitTestHelpClass.getBestHighCard();
+			var losingHands = new List<PokerHand>() {
+				UnitTestHelpClass.getWorstPair(),
+				UnitTestHelpClass.getBestHighCard()
+			};
 
-			// Assert that the best hand wins.
-			UnitTestHelpClass.assertThatHandWins(bestPair, worstPair);
-			UnitTestHelpClass.assertThatHandWins(bestPair, bestHighCard);
+			UnitTestHelpClass.assertThatHandWins(bestPair, losingHands);
 		}
 
 		/// <summary>
@@ -216,10 +190,11 @@ namespace Unit_Tests.Unit_Tests {
 			var bestHighCard = UnitTestHelpClass.getBestHighCard();
 
 			// All hands below should lose against the hand specified above.
-			var worstHighCard = UnitTestHelpClass.getWorstHighCard();
+			var losingHands = new List<PokerHand>() {
+				UnitTestHelpClass.getWorstHighCard()
+			};
 
-			// Assert that the best hand wins.
-			UnitTestHelpClass.assertThatHandWins(bestHighCard, worstHighCard);
+			UnitTestHelpClass.assertThatHandWins(bestHighCard, losingHands);
 		}
 	}
 }

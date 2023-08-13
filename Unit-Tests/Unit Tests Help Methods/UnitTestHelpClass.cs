@@ -1,7 +1,6 @@
 ﻿using Casino_Suite_Poker;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Poker.WinningHands;
-using System;
 using static Casino_Suite_Poker.Card;
 using static Poker.WinningHands.PokerHand;
 using System.Collections.Generic;
@@ -33,6 +32,27 @@ namespace Unit_Tests.Unit_Tests_Help_Methods {
 				$"First value: {winningHand.firstCardValue} vs. {losingHand.firstCardValue}\n" +
 				$"Second value: {winningHand.secondCardValue} vs. {losingHand.secondCardValue}\n" +
 				$"Kickers: {winningHand.kickers.getDisplayString()} vs. {losingHand.kickers.getDisplayString()}");
+		}
+
+		/// <summary>
+		/// Asserts that the given hand wins against the given losinghands.
+		/// </summary>
+		/// <param name="winningHand"></param>
+		/// <param name="losingHands"></param>
+		internal static void assertThatHandWins(PokerHand winningHand, IEnumerable<PokerHand> losingHands) {
+
+			var allhands = new List<PokerHand>() { winningHand };
+			allhands.AddRange(losingHands);
+
+			var handThatWon = PokerHand.getWinningHand(allhands);
+
+			Assert.IsTrue(handThatWon == winningHand, "Hand that should win did not win.\n" +
+				"Hand that should win vs. hand that won.\n" + 
+				$"{winningHand.handType} vs. {handThatWon.handType}\n" +
+				$"First value: {winningHand.firstCardValue} vs. {handThatWon.firstCardValue}\n" +
+				$"Second value: {winningHand.secondCardValue} vs. {handThatWon.secondCardValue}\n" +
+				$"Kickers: {winningHand.kickers.getDisplayString()} vs. {handThatWon.kickers.getDisplayString()}"
+				);
 		}
 
 		/// <summary>
