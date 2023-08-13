@@ -5,7 +5,7 @@ VisualStudioVersion = 17.6.33801.468
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Poker", "Poker\Poker.csproj", "{5488AE77-855D-4129-A81C-92BEC02DBEFC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Poker-Console", "Poker-Console\Poker-Console.csproj", "{92EA70C7-C965-4662-92F9-59D3B1795674}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Example", "Poker-Console\Example.csproj", "{92EA70C7-C965-4662-92F9-59D3B1795674}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Unit-Tests", "Unit-Tests\Unit-Tests.csproj", "{6688D787-22E0-4DF6-9DD5-8313E1E90B61}"
 EndProject
