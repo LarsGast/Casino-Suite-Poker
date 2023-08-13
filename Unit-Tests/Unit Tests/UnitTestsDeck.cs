@@ -96,16 +96,46 @@ namespace Unit_Tests {
 		[TestMethod]
 		public void drawnCardsDoNotShuffle() {
 			var deck = Deck.get();
+			deck.shuffle();
+			var numberOfCards = 10;
+
+			var firstTenCards = new List<Card>();
 
 			// Draw 10 cards.
-			for (int i = 0; i < 10; i++) {
+			for (int i = 0; i < numberOfCards; i++) {
+				firstTenCards.Add(deck.draw());
+			}
+
+			// Reset the deck so the already drawn cards go back onto the top.
+			deck.reset();
+
+			for (int i = 0; i < numberOfCards / 2; i++) {
 				deck.draw();
 			}
 
-			// Do a random shuffle.
-			// The properteis to test these are private, so test these yourself, I guess.
+			// Shuffle the remaining cards in the deck.
 			deck.shuffle(includeDrawnCards: false);
-			deck.shuffle(includeDrawnCards: true);
+
+			// Reset the deck so the already drawn cards go back onto the top.
+			deck.reset();
+
+			// The first five cards should be the same.
+			for (int i = 0; i < numberOfCards / 2; i++) {
+				Assert.IsTrue(firstTenCards[i].equals(deck.draw()), $"One of the first {numberOfCards / 2} cards is not the same");
+			}
+
+			var numberOfCardsDifferent = 0;
+
+			// The second five cards should not be the same.
+			for (int i = numberOfCards / 2; i < numberOfCards; i++) {
+				if (!firstTenCards[i].equals(deck.draw())){
+					numberOfCardsDifferent++;
+				}
+			}
+
+			var threshold = 4;
+
+			Assert.IsTrue(numberOfCardsDifferent >= threshold, $"Less than {threshold} cards are different.");
 		}
 	}
 }
