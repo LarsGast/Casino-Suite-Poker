@@ -68,7 +68,7 @@ namespace Poker.WinningHands {
 				// If the hand is a straight or straight flush from Ace to Five, then Ace is NOT the first kicker, Five is.
 				// If this is the case, move the Ace from the top of the list to the bottom.
 				if (this.handType == HandType.Straight || this.handType == HandType.StraightFlush) {
-					if (orderedKickers.Last().cardValue == CardValue.Two) {
+					if (orderedKickers.Last().cardValue == CardValue.Two && orderedKickers.First().cardValue == CardValue.Ace) {
 						orderedKickers = orderedKickers.Move(0, 1, 4).ToList();
 					}
 				}
