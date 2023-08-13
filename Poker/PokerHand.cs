@@ -109,6 +109,77 @@ namespace Poker.WinningHands {
 		#region Winning hand
 
 		/// <summary>
+		/// Gets the best hand from a list of hands.
+		/// </summary>
+		/// <param name="hands"></param>
+		/// <returns></returns>
+		public static PokerHand getWinningHand(IEnumerable<PokerHand> hands) {
+			var bestHandType = hands
+				.OrderByDescending(hand => hand.handType)
+				.First()
+				.handType;
+			var handsBestHandType = hands.Where(hand => hand.handType == bestHandType);
+			if (handsBestHandType.Count() == 1) {
+				return handsBestHandType.First();
+			}
+
+			var bestFirstCardValue = handsBestHandType
+				.OrderByDescending(hand => hand.firstCardValue)
+				.First()
+				.firstCardValue;
+			var handsBestFirstCardValue = handsBestHandType.Where(hand => hand.firstCardValue == bestFirstCardValue);
+			if (handsBestFirstCardValue.Count() == 1) {
+				return handsBestFirstCardValue.First();
+			}
+
+			var bestSecondCardValue = handsBestFirstCardValue
+				.OrderByDescending(hand => hand.secondCardValue)
+				.First()
+				.secondCardValue;
+			var handsBestSecondCardValue = handsBestFirstCardValue.Where(hand => hand.secondCardValue == bestSecondCardValue);
+			if (handsBestSecondCardValue.Count() == 1) {
+				return handsBestSecondCardValue.First();
+			}
+
+			var handsHighestKickers = PokerHand.getBestHandByKickers(handsBestSecondCardValue.ToList());
+			return handsHighestKickers.First();
+		}
+
+		/// <summary>
+		/// Gets the best hand(s) by the given hands based on solely the kickers.
+		/// </summary>
+		/// <param name="hands"></param>
+		/// <returns></returns>
+		private static List<PokerHand> getBestHandByKickers(IEnumerable<PokerHand> hands) {
+
+			var handsWithHighestKickers = hands.ToList();
+
+			// Check each kicker.
+			for (int i = 0; i < handsWithHighestKickers.First().kickers.Count(); i++) {
+				Card highestKicker = null;
+
+				// Get the highest kicker of this index.
+				foreach(var hand in hands) {
+					var handKicker = hand.kickers[i];
+					if (highestKicker == null || handKicker.cardValue > highestKicker.cardValue) {
+						highestKicker = handKicker;
+					}
+				}
+
+				// Get all hands which the kicker of the current index has the same value of the highest kicker among all the hands.
+				handsWithHighestKickers = hands.Where(hand => hand.kickers[i].cardValue == highestKicker.cardValue).ToList();
+
+				// If there is only one hand with this kicker, we found our winner and kan stop looking.
+				if (handsWithHighestKickers.Count() == 1) {
+					return handsWithHighestKickers.ToList();
+				}
+			}
+
+			// In the case of multiple hands with the exact same kickers, return these hands.
+			return handsWithHighestKickers.ToList();
+		}
+
+		/// <summary>
 		/// Checks if this hand wins against the other hand.
 		/// True if this wins.
 		/// False if other wins.
