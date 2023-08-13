@@ -1,10 +1,8 @@
-﻿using Casino_Suite_Poker;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using Casino_Suite_Poker;
 using MathNet.Numerics.Distributions;
-using Accord.Statistics.Distributions.Univariate;
-using System.Linq;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Unit_Tests {
 	[TestClass]

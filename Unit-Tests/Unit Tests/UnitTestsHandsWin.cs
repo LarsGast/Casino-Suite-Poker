@@ -1,7 +1,6 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using System.Collections.Generic;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Poker.WinningHands;
-using System;
-using System.Collections.Generic;
 using Unit_Tests.Unit_Tests_Help_Methods;
 
 namespace Unit_Tests.Unit_Tests {

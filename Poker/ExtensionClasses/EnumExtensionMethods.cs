@@ -1,9 +1,4 @@
 ﻿using Casino_Suite_Poker;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Poker {
 	public static class EnumExtensionMethods {

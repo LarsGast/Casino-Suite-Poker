@@ -1,9 +1,7 @@
-﻿using Casino_Suite_Poker;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Casino_Suite_Poker;
 
 namespace Poker.ExtentionClasses {
 	public static class ListExtentionMethods {

@@ -1,10 +1,7 @@
-﻿using Casino_Suite_Poker;
+﻿using System.Collections.Generic;
+using Casino_Suite_Poker;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Poker.ExtentionClasses;
 using Poker.WinningHands;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using Unit_Tests.Unit_Tests_Help_Methods;
 using static Casino_Suite_Poker.Card;
 using static Poker.WinningHands.PokerHand;
