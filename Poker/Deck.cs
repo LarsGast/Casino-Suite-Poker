@@ -71,7 +71,7 @@ namespace Casino_Suite_Poker {
 			}
 			else {
 				// Reset the index so cards get drawn from the top again.
-				this._index = -1;
+				this.reset();
 			}
 
 			// Actually shuffle the cards.
@@ -96,6 +96,15 @@ namespace Casino_Suite_Poker {
 			var card = this._cards[this._index];			
 
 			return card;
+		}
+
+		/// <summary>
+		/// Resets the deck.
+		/// This means adding the already drawn cards back into the deck, in the same order.
+		/// This does NOT mean un-shuffling the deck.
+		/// </summary>
+		public void reset() {
+			this._index = -1;
 		}
 	}
 }
