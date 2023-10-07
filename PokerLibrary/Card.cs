@@ -1,5 +1,4 @@
-﻿
-namespace PokerLibrary {
+﻿namespace PokerLibrary {
 	public class Card {
 
 		/// <summary>

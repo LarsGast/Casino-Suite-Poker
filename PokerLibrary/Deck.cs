@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-
-namespace PokerLibrary {
+﻿namespace PokerLibrary {
 	public class Deck {
 
 		/// <summary>

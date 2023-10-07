@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using MathNet.Numerics.Distributions;
 using PokerLibrary;
-using MathNet.Numerics.Distributions;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace PokerUnitTests {
-	[TestClass]
 	public class UnitTestsDeck {
 
 		private const int NumberOfShuffles = 1000; // Number of times to shuffle the deck
@@ -14,7 +10,7 @@ namespace PokerUnitTests {
 		/// Tests whether the deck shuffle is actually random.
 		/// So: the distribution of cards is uniform.
 		/// </summary>
-		[TestMethod]
+		[Test]
 		public void shuffleIsRandom() {
 
 			// Initiate some variables.
@@ -91,7 +87,7 @@ namespace PokerUnitTests {
 			Assert.IsFalse(chiSquare >= criticalValue, "The deck shuffle is not random.");
 		}
 
-		[TestMethod]
+		[Test]
 		public void drawnCardsDoNotShuffle() {
 			var deck = Deck.get();
 			deck.shuffle();

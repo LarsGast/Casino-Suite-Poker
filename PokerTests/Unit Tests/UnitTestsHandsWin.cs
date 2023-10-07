@@ -1,16 +1,13 @@
-﻿using System.Collections.Generic;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using PokerLibrary.WinningHands;
+﻿using PokerLibrary;
 using PokerUnitTests.Unit_Tests_Help_Methods;
 
-namespace PokerUnitTests.Unit_Tests {
-	[TestClass]
+namespace PokerUnitTests {
 	public class UnitTestsHandsWin {
 
 		/// <summary>
 		/// Asserts that the best StraightFlush always wins against inferior hands.
 		/// </summary>
-		[TestMethod]
+		[Test]
 		public void straightFlushWins() {
 
 			// This hand should win agains all other hands in this method.
@@ -35,7 +32,7 @@ namespace PokerUnitTests.Unit_Tests {
 		/// <summary>
 		/// Asserts that the best FourOfAKind always wins against inferior hands.
 		/// </summary>
-		[TestMethod]
+		[Test]
 		public void fourOfAKindWins() {
 
 			// This hand should win agains all other hands in this method.
@@ -59,7 +56,7 @@ namespace PokerUnitTests.Unit_Tests {
 		/// <summary>
 		/// Asserts that the best FullHouse always wins against inferior hands.
 		/// </summary>
-		[TestMethod]
+		[Test]
 		public void fullHouseWins() {
 
 			// This hand should win agains all other hands in this method.
@@ -82,7 +79,7 @@ namespace PokerUnitTests.Unit_Tests {
 		/// <summary>
 		/// Asserts that the best Flush always wins against inferior hands.
 		/// </summary>
-		[TestMethod]
+		[Test]
 		public void flushWins() {
 
 			// This hand should win agains all other hands in this method.
@@ -104,7 +101,7 @@ namespace PokerUnitTests.Unit_Tests {
 		/// <summary>
 		/// Asserts that the best Straight always wins against inferior hands.
 		/// </summary>
-		[TestMethod]
+		[Test]
 		public void straightWins() {
 
 			// This hand should win agains all other hands in this method.
@@ -125,7 +122,7 @@ namespace PokerUnitTests.Unit_Tests {
 		/// <summary>
 		/// Asserts that the best ThreeOfAKind always wins against inferior hands.
 		/// </summary>
-		[TestMethod]
+		[Test]
 		public void threeOfAKindWins() {
 
 			// This hand should win agains all other hands in this method.
@@ -145,7 +142,7 @@ namespace PokerUnitTests.Unit_Tests {
 		/// <summary>
 		/// Asserts that the best TwoPair always wins against inferior hands.
 		/// </summary>
-		[TestMethod]
+		[Test]
 		public void twoPairWins() {
 
 			// This hand should win agains all other hands in this method.
@@ -164,7 +161,7 @@ namespace PokerUnitTests.Unit_Tests {
 		/// <summary>
 		/// Asserts that the best Pair always wins against inferior hands.
 		/// </summary>
-		[TestMethod]
+		[Test]
 		public void pairWins() {
 
 			// This hand should win agains all other hands in this method.
@@ -182,7 +179,7 @@ namespace PokerUnitTests.Unit_Tests {
 		/// <summary>
 		/// Asserts that the best HighCard always wins against inferior hands.
 		/// </summary>
-		[TestMethod]
+		[Test]
 		public void highCardWins() {
 
 			// This hand should win agains all other hands in this method.

@@ -1,10 +1,7 @@
-﻿using System.Collections.Generic;
-using PokerLibrary;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using PokerLibrary;
 using PokerLibrary.ExtentionClasses;
-using PokerLibrary.WinningHands;
 using static PokerLibrary.Card;
-using static PokerLibrary.WinningHands.PokerHand;
+using static PokerLibrary.PokerHand;
 
 namespace PokerUnitTests.Unit_Tests_Help_Methods {
 	internal static class UnitTestHelpClass {
