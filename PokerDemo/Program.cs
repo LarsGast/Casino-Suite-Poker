@@ -6,7 +6,34 @@ namespace Poker_Console {
 	internal class Program {
 		static void Main(string[] args) {
 
-			// Define the possible players.
+			// Get all the players.
+			var players = Program.getPlayers();
+
+			// Get the deck and shuffle it.
+			var deck = Deck.get();
+			deck.shuffle();
+
+			// Draw 2 cards for each player.
+			Program.drawPlayerCards(players, deck);
+
+			// Draw 5 cards on the table.
+			List<Card> tableCards = Program.drawTableCards(deck);
+
+			// Determine the winner(s).
+			List<Player> winningPlayers = getWinningPlayers(players, tableCards);
+
+			// Display everything.
+			Program.displayGame(players, tableCards, winningPlayers);
+
+			// ReadKey so the app doesn't close.
+			Console.ReadKey();
+		}
+
+		/// <summary>
+		/// Define the possible players.
+		/// </summary>
+		/// <returns></returns>
+		private static List<Player> getPlayers() {
 			var playerNames = new List<string>() {
 				"Luz",
 				"Eda",
@@ -36,11 +63,16 @@ namespace Poker_Console {
 				players.Add(new Player(playerNames[i]));
 			}
 
-			// Get the deck and shuffle it.
-			var deck = Deck.get();
-			deck.shuffle();
+			return players;
+		}
 
-			// Draw 2 cards for each player.
+		/// <summary>
+		/// Draw two cards for each player.
+		/// </summary>
+		/// <param name="players"></param>
+		/// <param name="deck"></param>
+		/// <exception cref="Exception"></exception>
+		private static void drawPlayerCards(List<Player> players, Deck deck) {
 			for (int i = 0; i < 2; i++) {
 				foreach (var player in players) {
 					var card = deck.draw();
@@ -51,10 +83,17 @@ namespace Poker_Console {
 					player.addCard(card);
 				}
 			}
+		}
 
-			// Draw 5 cards on the table.
+		/// <summary>
+		/// Draw five cards for the table.
+		/// </summary>
+		/// <param name="deck"></param>
+		/// <returns></returns>
+		/// <exception cref="Exception"></exception>
+		private static List<Card> drawTableCards(Deck deck) {
 			var tableCards = new List<Card>();
-			for (int i = 0; i < 5; i++) { 
+			for (int i = 0; i < 5; i++) {
 				var card = deck.draw();
 				if (card == null) {
 					throw new Exception("There are no more cards in the deck.");
@@ -63,6 +102,17 @@ namespace Poker_Console {
 				tableCards.Add(card);
 			}
 
+			return tableCards;
+		}
+
+		/// <summary>
+		/// Gets a list of players with the best hand.
+		/// Only contains more than one player if the players with the best hand tie.
+		/// </summary>
+		/// <param name="players"></param>
+		/// <param name="tableCards"></param>
+		/// <returns></returns>
+		private static List<Player> getWinningPlayers(List<Player> players, List<Card> tableCards) {
 			// Determine the best hand for each player.
 			foreach (var player in players) {
 				player.setPokerHand(tableCards);
@@ -74,8 +124,16 @@ namespace Poker_Console {
 			// Get all the players that draw with the best hand.
 			// More than one player can have the best hand.
 			var winningPlayers = players.Where(player => player.hand.winsAgainst(bestHand) == null).ToList();
+			return winningPlayers;
+		}
 
-			// Display everything.
+		/// <summary>
+		/// Display everything about the game.
+		/// </summary>
+		/// <param name="players"></param>
+		/// <param name="tableCards"></param>
+		/// <param name="winningPlayers"></param>
+		private static void displayGame(List<Player> players, List<Card> tableCards, List<Player> winningPlayers) {
 			Console.WriteLine("Table:");
 			Console.WriteLine(tableCards.getDisplayString());
 			Console.WriteLine("");
@@ -94,9 +152,6 @@ namespace Poker_Console {
 			foreach (var player in winningPlayers) {
 				Console.WriteLine(player.name);
 			}
-
-			// ReadKey so the app doesn't close.
-			Console.ReadKey();
 		}
 	}
 
