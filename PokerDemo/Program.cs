@@ -1,9 +1,5 @@
 ﻿using PokerLibrary;
 using PokerLibrary.ExtentionClasses;
-using PokerLibrary.WinningHands;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace Poker_Console {
 	internal class Program {
@@ -127,7 +123,7 @@ namespace Poker_Console {
 		/// </summary>
 		/// <param name="card"></param>
 		public void addCard(Card card) {
-			cards.Add(card);
+			this.cards.Add(card);
 		}
 
 		/// <summary>

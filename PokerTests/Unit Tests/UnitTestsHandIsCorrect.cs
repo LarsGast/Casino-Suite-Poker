@@ -1,19 +1,15 @@
-﻿using System.Collections.Generic;
-using PokerLibrary;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using PokerLibrary.WinningHands;
+﻿using PokerLibrary;
 using PokerUnitTests.Unit_Tests_Help_Methods;
 using static PokerLibrary.Card;
-using static PokerLibrary.WinningHands.PokerHand;
+using static PokerLibrary.PokerHand;
 
 namespace PokerUnitTests {
-	[TestClass]
 	public class UnitTestsHandIsCorrect {
 
 		/// <summary>
 		/// Tests whether the given straightflush.
 		/// </summary>
-		[TestMethod]
+		[Test]
 		public void handIsStraightFlush() {
 
 			var cards = new List<Card>() {
@@ -46,7 +42,7 @@ namespace PokerUnitTests {
 		/// <summary>
 		/// Tests whether the given hand is a four of a kind.
 		/// </summary>
-		[TestMethod]
+		[Test]
 		public void handIsFourOfAKind() {
 
 			var cards = new List<Card>() {
@@ -75,7 +71,7 @@ namespace PokerUnitTests {
 		/// <summary>
 		/// Tests whether the given hand is a full house.
 		/// </summary>
-		[TestMethod]
+		[Test]
 		public void handIsFullHouse() {
 
 			var cards = new List<Card>() {
@@ -102,7 +98,7 @@ namespace PokerUnitTests {
 		/// <summary>
 		/// Tests whether the given hand is a flush.
 		/// </summary>
-		[TestMethod]
+		[Test]
 		public void handIsFlush() {
 
 			var cards = new List<Card>() {
@@ -135,7 +131,7 @@ namespace PokerUnitTests {
 		/// <summary>
 		/// Tests whether the given hand is a straight.
 		/// </summary>
-		[TestMethod]
+		[Test]
 		public void handIsStraight() {
 
 			var cards = new List<Card>() {
@@ -168,7 +164,7 @@ namespace PokerUnitTests {
 		/// <summary>
 		/// Tests whether the given hand is a three of a kind.
 		/// </summary>
-		[TestMethod]
+		[Test]
 		public void handIsThreeOfAKind() {
 
 			var cards = new List<Card>() {
@@ -198,7 +194,7 @@ namespace PokerUnitTests {
 		/// <summary>
 		/// Tests whether the given hand is a two pair.
 		/// </summary>
-		[TestMethod]
+		[Test]
 		public void handIsTwoPair() {
 
 			var cards = new List<Card>() {
@@ -227,7 +223,7 @@ namespace PokerUnitTests {
 		/// <summary>
 		/// Tests whether the given hand is a pair.
 		/// </summary>
-		[TestMethod]
+		[Test]
 		public void handIsPair() {
 
 			var cards = new List<Card>() {
@@ -258,7 +254,7 @@ namespace PokerUnitTests {
 		/// <summary>
 		/// Tests whether the given hand is a high card.
 		/// </summary>
-		[TestMethod]
+		[Test]
 		public void handIsHighCard() {
 
 			var cards = new List<Card>() {

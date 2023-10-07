@@ -1,10 +1,6 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using PokerLibrary;
-using MoreLinq;
-using static PokerLibrary.Card;
+﻿using static PokerLibrary.Card;
 
-namespace PokerLibrary.WinningHands {
+namespace PokerLibrary {
 	public class PokerHand {
 
 		#region Properties
@@ -69,7 +65,9 @@ namespace PokerLibrary.WinningHands {
 				// If this is the case, move the Ace from the top of the list to the bottom.
 				if (this.handType == HandType.Straight || this.handType == HandType.StraightFlush) {
 					if (orderedKickers.Last().cardValue == CardValue.Two && orderedKickers.First().cardValue == CardValue.Ace) {
-						orderedKickers = orderedKickers.Move(0, 1, 4).ToList();
+						var aceCard = orderedKickers.First();
+						orderedKickers.Remove(aceCard);
+						orderedKickers.Add(aceCard);
 					}
 				}
 
