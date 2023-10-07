@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using PokerLibrary;
+﻿using DeckOfCardsLibrary;
 
 namespace PokerLibrary.ExtentionClasses {
 	public static class ListExtentionMethods {
@@ -31,8 +28,8 @@ namespace PokerLibrary.ExtentionClasses {
 			}
 
 			// Every single card (in order) is the same.
-			var orderedCards = cards.OrderBy(card => card.cardValue).ThenBy(card => card.suit).ToList();
-			var orderedOther = other.OrderBy(card => card.cardValue).ThenBy(card => card.suit).ToList();
+			var orderedCards = cards.OrderBy(card => card.rank).ThenBy(card => card.suit).ToList();
+			var orderedOther = other.OrderBy(card => card.rank).ThenBy(card => card.suit).ToList();
 			for (var i = 0; i < cards.Count(); i++) {
 				if (!orderedCards[i].equals(orderedOther[i])) {
 					return false;
@@ -49,7 +46,7 @@ namespace PokerLibrary.ExtentionClasses {
 		/// <param name="cards"></param>
 		/// <returns></returns>
 		public static string getDisplayString(this IEnumerable<Card> cards) {
-			return String.Join(",", cards.Select(card => card.suit.getDisplayString() + card.cardValue.getDisplayString()));
+			return String.Join(",", cards.Select(card => card.suit.getDisplayString() + card.rank.getDisplayString()));
 		}
 	}
 }

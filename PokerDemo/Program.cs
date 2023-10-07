@@ -1,4 +1,5 @@
-﻿using PokerLibrary;
+﻿using DeckOfCardsLibrary;
+using PokerLibrary;
 using PokerLibrary.ExtentionClasses;
 
 namespace Poker_Console {

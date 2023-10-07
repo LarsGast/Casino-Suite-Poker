@@ -1,6 +1,7 @@
-﻿using PokerLibrary;
+﻿using DeckOfCardsLibrary;
+using PokerLibrary;
 using PokerLibrary.ExtentionClasses;
-using static PokerLibrary.Card;
+using static DeckOfCardsLibrary.Card;
 using static PokerLibrary.PokerHand;
 
 namespace PokerUnitTests.Unit_Tests_Help_Methods {
@@ -15,7 +16,7 @@ namespace PokerUnitTests.Unit_Tests_Help_Methods {
 		/// <param name="secondCardValue">Expected secondCardValue</param>
 		/// <param name="suit">Expected suit</param>
 		/// <param name="kickers">Expected kickers</param>
-		internal static void assertHand(PokerHand hand, HandType handType, CardValue? firstCardValue, CardValue? secondCardValue, Suit? suit, IEnumerable<Card> kickers) {
+		internal static void assertHand(PokerHand hand, HandType handType, Rank? firstCardValue, Rank? secondCardValue, Suit? suit, IEnumerable<Card> kickers) {
 			Assert.IsTrue(hand.handType == handType, $"Hand is not a {handType}");
 			Assert.IsTrue(hand.firstCardValue == firstCardValue, $"Highest value is not {firstCardValue}");
 			Assert.IsTrue(hand.secondCardValue == secondCardValue, $"Second highest value is not {secondCardValue}");
@@ -58,13 +59,13 @@ namespace PokerUnitTests.Unit_Tests_Help_Methods {
 		/// <returns></returns>
 		internal static PokerHand getBestStraightFlush() {
 			var cards = new List<Card>() {
-				new Card(CardValue.Ace, Suit.Hearts),
-				new Card(CardValue.King, Suit.Hearts),
-				new Card(CardValue.Queen, Suit.Hearts),
-				new Card(CardValue.Jack, Suit.Hearts),
-				new Card(CardValue.Ten, Suit.Hearts),
-				new Card(CardValue.Two, Suit.Clubs),
-				new Card(CardValue.Three, Suit.Spades)
+				new Card(Rank.Ace, Suit.Hearts),
+				new Card(Rank.King, Suit.Hearts),
+				new Card(Rank.Queen, Suit.Hearts),
+				new Card(Rank.Jack, Suit.Hearts),
+				new Card(Rank.Ten, Suit.Hearts),
+				new Card(Rank.Two, Suit.Clubs),
+				new Card(Rank.Three, Suit.Spades)
 			};
 
 			return PokerHand.getBestHand(cards);
@@ -76,13 +77,13 @@ namespace PokerUnitTests.Unit_Tests_Help_Methods {
 		/// <returns></returns>
 		internal static PokerHand getWorstStraightFlush() {
 			var cards = new List<Card>() {
-				new Card(CardValue.Ace, Suit.Hearts),
-				new Card(CardValue.Two, Suit.Hearts),
-				new Card(CardValue.Three, Suit.Hearts),
-				new Card(CardValue.Four, Suit.Hearts),
-				new Card(CardValue.Five, Suit.Hearts),
-				new Card(CardValue.Seven, Suit.Clubs),
-				new Card(CardValue.Eight, Suit.Spades)
+				new Card(Rank.Ace, Suit.Hearts),
+				new Card(Rank.Two, Suit.Hearts),
+				new Card(Rank.Three, Suit.Hearts),
+				new Card(Rank.Four, Suit.Hearts),
+				new Card(Rank.Five, Suit.Hearts),
+				new Card(Rank.Seven, Suit.Clubs),
+				new Card(Rank.Eight, Suit.Spades)
 			};
 
 			return PokerHand.getBestHand(cards);
@@ -94,13 +95,13 @@ namespace PokerUnitTests.Unit_Tests_Help_Methods {
 		/// <returns></returns>
 		internal static PokerHand getBestFourOfAKind() {
 			var cards = new List<Card>() {
-				new Card(CardValue.Ace, Suit.Hearts),
-				new Card(CardValue.Ace, Suit.Spades),
-				new Card(CardValue.Ace, Suit.Diamonds),
-				new Card(CardValue.Ace, Suit.Clubs),
-				new Card(CardValue.King, Suit.Hearts),
-				new Card(CardValue.Two, Suit.Clubs),
-				new Card(CardValue.Three, Suit.Spades)
+				new Card(Rank.Ace, Suit.Hearts),
+				new Card(Rank.Ace, Suit.Spades),
+				new Card(Rank.Ace, Suit.Diamonds),
+				new Card(Rank.Ace, Suit.Clubs),
+				new Card(Rank.King, Suit.Hearts),
+				new Card(Rank.Two, Suit.Clubs),
+				new Card(Rank.Three, Suit.Spades)
 			};
 
 			return PokerHand.getBestHand(cards);
@@ -112,13 +113,13 @@ namespace PokerUnitTests.Unit_Tests_Help_Methods {
 		/// <returns></returns>
 		internal static PokerHand getWorstFourOfAKind() {
 			var cards = new List<Card>() {
-				new Card(CardValue.Two, Suit.Hearts),
-				new Card(CardValue.Two, Suit.Spades),
-				new Card(CardValue.Two, Suit.Diamonds),
-				new Card(CardValue.Two, Suit.Clubs),
-				new Card(CardValue.Three, Suit.Hearts),
-				new Card(CardValue.Three, Suit.Clubs),
-				new Card(CardValue.Three, Suit.Spades)
+				new Card(Rank.Two, Suit.Hearts),
+				new Card(Rank.Two, Suit.Spades),
+				new Card(Rank.Two, Suit.Diamonds),
+				new Card(Rank.Two, Suit.Clubs),
+				new Card(Rank.Three, Suit.Hearts),
+				new Card(Rank.Three, Suit.Clubs),
+				new Card(Rank.Three, Suit.Spades)
 			};
 
 			return PokerHand.getBestHand(cards);
@@ -130,13 +131,13 @@ namespace PokerUnitTests.Unit_Tests_Help_Methods {
 		/// <returns></returns>
 		internal static PokerHand getBestFullHouse() {
 			var cards = new List<Card>() {
-				new Card(CardValue.Ace, Suit.Hearts),
-				new Card(CardValue.Ace, Suit.Spades),
-				new Card(CardValue.Ace, Suit.Diamonds),
-				new Card(CardValue.King, Suit.Clubs),
-				new Card(CardValue.King, Suit.Hearts),
-				new Card(CardValue.Two, Suit.Clubs),
-				new Card(CardValue.Three, Suit.Spades)
+				new Card(Rank.Ace, Suit.Hearts),
+				new Card(Rank.Ace, Suit.Spades),
+				new Card(Rank.Ace, Suit.Diamonds),
+				new Card(Rank.King, Suit.Clubs),
+				new Card(Rank.King, Suit.Hearts),
+				new Card(Rank.Two, Suit.Clubs),
+				new Card(Rank.Three, Suit.Spades)
 			};
 
 			return PokerHand.getBestHand(cards);
@@ -148,13 +149,13 @@ namespace PokerUnitTests.Unit_Tests_Help_Methods {
 		/// <returns></returns>
 		internal static PokerHand getWorstFullHouse() {
 			var cards = new List<Card>() {
-				new Card(CardValue.Two, Suit.Hearts),
-				new Card(CardValue.Two, Suit.Spades),
-				new Card(CardValue.Two, Suit.Diamonds),
-				new Card(CardValue.Three, Suit.Clubs),
-				new Card(CardValue.Three, Suit.Hearts),
-				new Card(CardValue.Five, Suit.Clubs),
-				new Card(CardValue.Six, Suit.Spades)
+				new Card(Rank.Two, Suit.Hearts),
+				new Card(Rank.Two, Suit.Spades),
+				new Card(Rank.Two, Suit.Diamonds),
+				new Card(Rank.Three, Suit.Clubs),
+				new Card(Rank.Three, Suit.Hearts),
+				new Card(Rank.Five, Suit.Clubs),
+				new Card(Rank.Six, Suit.Spades)
 			};
 
 			return PokerHand.getBestHand(cards);
@@ -166,13 +167,13 @@ namespace PokerUnitTests.Unit_Tests_Help_Methods {
 		/// <returns></returns>
 		internal static PokerHand getBestFlush() {
 			var cards = new List<Card>() {
-				new Card(CardValue.Ace, Suit.Hearts),
-				new Card(CardValue.King, Suit.Hearts),
-				new Card(CardValue.Queen, Suit.Hearts),
-				new Card(CardValue.Jack, Suit.Hearts),
-				new Card(CardValue.Nine, Suit.Hearts),
-				new Card(CardValue.Two, Suit.Clubs),
-				new Card(CardValue.Three, Suit.Spades)
+				new Card(Rank.Ace, Suit.Hearts),
+				new Card(Rank.King, Suit.Hearts),
+				new Card(Rank.Queen, Suit.Hearts),
+				new Card(Rank.Jack, Suit.Hearts),
+				new Card(Rank.Nine, Suit.Hearts),
+				new Card(Rank.Two, Suit.Clubs),
+				new Card(Rank.Three, Suit.Spades)
 			};
 
 			return PokerHand.getBestHand(cards);
@@ -184,13 +185,13 @@ namespace PokerUnitTests.Unit_Tests_Help_Methods {
 		/// <returns></returns>
 		internal static PokerHand getWorstFlush() {
 			var cards = new List<Card>() {
-				new Card(CardValue.Two, Suit.Hearts),
-				new Card(CardValue.Three, Suit.Hearts),
-				new Card(CardValue.Four, Suit.Hearts),
-				new Card(CardValue.Five, Suit.Hearts),
-				new Card(CardValue.Seven, Suit.Hearts),
-				new Card(CardValue.Two, Suit.Clubs),
-				new Card(CardValue.Three, Suit.Spades)
+				new Card(Rank.Two, Suit.Hearts),
+				new Card(Rank.Three, Suit.Hearts),
+				new Card(Rank.Four, Suit.Hearts),
+				new Card(Rank.Five, Suit.Hearts),
+				new Card(Rank.Seven, Suit.Hearts),
+				new Card(Rank.Two, Suit.Clubs),
+				new Card(Rank.Three, Suit.Spades)
 			};
 
 			return PokerHand.getBestHand(cards);
@@ -202,13 +203,13 @@ namespace PokerUnitTests.Unit_Tests_Help_Methods {
 		/// <returns></returns>
 		internal static PokerHand getBestStraight() {
 			var cards = new List<Card>() {
-				new Card(CardValue.Ace, Suit.Hearts),
-				new Card(CardValue.King, Suit.Spades),
-				new Card(CardValue.Queen, Suit.Diamonds),
-				new Card(CardValue.Jack, Suit.Clubs),
-				new Card(CardValue.Ten, Suit.Hearts),
-				new Card(CardValue.Two, Suit.Clubs),
-				new Card(CardValue.Three, Suit.Spades)
+				new Card(Rank.Ace, Suit.Hearts),
+				new Card(Rank.King, Suit.Spades),
+				new Card(Rank.Queen, Suit.Diamonds),
+				new Card(Rank.Jack, Suit.Clubs),
+				new Card(Rank.Ten, Suit.Hearts),
+				new Card(Rank.Two, Suit.Clubs),
+				new Card(Rank.Three, Suit.Spades)
 			};
 
 			return PokerHand.getBestHand(cards);
@@ -220,13 +221,13 @@ namespace PokerUnitTests.Unit_Tests_Help_Methods {
 		/// <returns></returns>
 		internal static PokerHand getWorstStraight() {
 			var cards = new List<Card>() {
-				new Card(CardValue.Ace, Suit.Hearts),
-				new Card(CardValue.Two, Suit.Spades),
-				new Card(CardValue.Three, Suit.Diamonds),
-				new Card(CardValue.Four, Suit.Clubs),
-				new Card(CardValue.Five, Suit.Hearts),
-				new Card(CardValue.Seven, Suit.Clubs),
-				new Card(CardValue.Eight, Suit.Spades)
+				new Card(Rank.Ace, Suit.Hearts),
+				new Card(Rank.Two, Suit.Spades),
+				new Card(Rank.Three, Suit.Diamonds),
+				new Card(Rank.Four, Suit.Clubs),
+				new Card(Rank.Five, Suit.Hearts),
+				new Card(Rank.Seven, Suit.Clubs),
+				new Card(Rank.Eight, Suit.Spades)
 			};
 
 			return PokerHand.getBestHand(cards);
@@ -238,13 +239,13 @@ namespace PokerUnitTests.Unit_Tests_Help_Methods {
 		/// <returns></returns>
 		internal static PokerHand getBestThreeOfAKind() {
 			var cards = new List<Card>() {
-				new Card(CardValue.Ace, Suit.Hearts),
-				new Card(CardValue.Ace, Suit.Spades),
-				new Card(CardValue.Ace, Suit.Diamonds),
-				new Card(CardValue.King, Suit.Clubs),
-				new Card(CardValue.Queen, Suit.Hearts),
-				new Card(CardValue.Two, Suit.Clubs),
-				new Card(CardValue.Three, Suit.Spades)
+				new Card(Rank.Ace, Suit.Hearts),
+				new Card(Rank.Ace, Suit.Spades),
+				new Card(Rank.Ace, Suit.Diamonds),
+				new Card(Rank.King, Suit.Clubs),
+				new Card(Rank.Queen, Suit.Hearts),
+				new Card(Rank.Two, Suit.Clubs),
+				new Card(Rank.Three, Suit.Spades)
 			};
 
 			return PokerHand.getBestHand(cards);
@@ -256,13 +257,13 @@ namespace PokerUnitTests.Unit_Tests_Help_Methods {
 		/// <returns></returns>
 		internal static PokerHand getWorstThreeOfAKind() {
 			var cards = new List<Card>() {
-				new Card(CardValue.Two, Suit.Hearts),
-				new Card(CardValue.Two, Suit.Spades),
-				new Card(CardValue.Two, Suit.Diamonds),
-				new Card(CardValue.Three, Suit.Clubs),
-				new Card(CardValue.Four, Suit.Hearts),
-				new Card(CardValue.Five, Suit.Clubs),
-				new Card(CardValue.Seven, Suit.Spades)
+				new Card(Rank.Two, Suit.Hearts),
+				new Card(Rank.Two, Suit.Spades),
+				new Card(Rank.Two, Suit.Diamonds),
+				new Card(Rank.Three, Suit.Clubs),
+				new Card(Rank.Four, Suit.Hearts),
+				new Card(Rank.Five, Suit.Clubs),
+				new Card(Rank.Seven, Suit.Spades)
 			};
 
 			return PokerHand.getBestHand(cards);
@@ -274,13 +275,13 @@ namespace PokerUnitTests.Unit_Tests_Help_Methods {
 		/// <returns></returns>
 		internal static PokerHand getBestTwoPair() {
 			var cards = new List<Card>() {
-				new Card(CardValue.Ace, Suit.Hearts),
-				new Card(CardValue.Ace, Suit.Spades),
-				new Card(CardValue.King, Suit.Diamonds),
-				new Card(CardValue.King, Suit.Clubs),
-				new Card(CardValue.Queen, Suit.Hearts),
-				new Card(CardValue.Two, Suit.Clubs),
-				new Card(CardValue.Three, Suit.Spades)
+				new Card(Rank.Ace, Suit.Hearts),
+				new Card(Rank.Ace, Suit.Spades),
+				new Card(Rank.King, Suit.Diamonds),
+				new Card(Rank.King, Suit.Clubs),
+				new Card(Rank.Queen, Suit.Hearts),
+				new Card(Rank.Two, Suit.Clubs),
+				new Card(Rank.Three, Suit.Spades)
 			};
 
 			return PokerHand.getBestHand(cards);
@@ -292,13 +293,13 @@ namespace PokerUnitTests.Unit_Tests_Help_Methods {
 		/// <returns></returns>
 		internal static PokerHand getWorstTwoPair() {
 			var cards = new List<Card>() {
-				new Card(CardValue.Two, Suit.Hearts),
-				new Card(CardValue.Two, Suit.Spades),
-				new Card(CardValue.Three, Suit.Diamonds),
-				new Card(CardValue.Three, Suit.Clubs),
-				new Card(CardValue.Four, Suit.Hearts),
-				new Card(CardValue.Five, Suit.Clubs),
-				new Card(CardValue.Seven, Suit.Spades)
+				new Card(Rank.Two, Suit.Hearts),
+				new Card(Rank.Two, Suit.Spades),
+				new Card(Rank.Three, Suit.Diamonds),
+				new Card(Rank.Three, Suit.Clubs),
+				new Card(Rank.Four, Suit.Hearts),
+				new Card(Rank.Five, Suit.Clubs),
+				new Card(Rank.Seven, Suit.Spades)
 			};
 
 			return PokerHand.getBestHand(cards);
@@ -310,13 +311,13 @@ namespace PokerUnitTests.Unit_Tests_Help_Methods {
 		/// <returns></returns>
 		internal static PokerHand getBestPair() {
 			var cards = new List<Card>() {
-				new Card(CardValue.Ace, Suit.Hearts),
-				new Card(CardValue.Ace, Suit.Spades),
-				new Card(CardValue.King, Suit.Diamonds),
-				new Card(CardValue.Queen, Suit.Clubs),
-				new Card(CardValue.Jack, Suit.Hearts),
-				new Card(CardValue.Two, Suit.Clubs),
-				new Card(CardValue.Three, Suit.Spades)
+				new Card(Rank.Ace, Suit.Hearts),
+				new Card(Rank.Ace, Suit.Spades),
+				new Card(Rank.King, Suit.Diamonds),
+				new Card(Rank.Queen, Suit.Clubs),
+				new Card(Rank.Jack, Suit.Hearts),
+				new Card(Rank.Two, Suit.Clubs),
+				new Card(Rank.Three, Suit.Spades)
 			};
 
 			return PokerHand.getBestHand(cards);
@@ -328,13 +329,13 @@ namespace PokerUnitTests.Unit_Tests_Help_Methods {
 		/// <returns></returns>
 		internal static PokerHand getWorstPair() {
 			var cards = new List<Card>() {
-				new Card(CardValue.Two, Suit.Hearts),
-				new Card(CardValue.Two, Suit.Spades),
-				new Card(CardValue.Three, Suit.Diamonds),
-				new Card(CardValue.Four, Suit.Clubs),
-				new Card(CardValue.Five, Suit.Hearts),
-				new Card(CardValue.Seven, Suit.Clubs),
-				new Card(CardValue.Eight, Suit.Spades)
+				new Card(Rank.Two, Suit.Hearts),
+				new Card(Rank.Two, Suit.Spades),
+				new Card(Rank.Three, Suit.Diamonds),
+				new Card(Rank.Four, Suit.Clubs),
+				new Card(Rank.Five, Suit.Hearts),
+				new Card(Rank.Seven, Suit.Clubs),
+				new Card(Rank.Eight, Suit.Spades)
 			};
 
 			return PokerHand.getBestHand(cards);
@@ -346,13 +347,13 @@ namespace PokerUnitTests.Unit_Tests_Help_Methods {
 		/// <returns></returns>
 		internal static PokerHand getBestHighCard() {
 			var cards = new List<Card>() {
-				new Card(CardValue.Ace, Suit.Hearts),
-				new Card(CardValue.King, Suit.Spades),
-				new Card(CardValue.Queen, Suit.Diamonds),
-				new Card(CardValue.Jack, Suit.Clubs),
-				new Card(CardValue.Nine, Suit.Hearts),
-				new Card(CardValue.Two, Suit.Clubs),
-				new Card(CardValue.Three, Suit.Spades)
+				new Card(Rank.Ace, Suit.Hearts),
+				new Card(Rank.King, Suit.Spades),
+				new Card(Rank.Queen, Suit.Diamonds),
+				new Card(Rank.Jack, Suit.Clubs),
+				new Card(Rank.Nine, Suit.Hearts),
+				new Card(Rank.Two, Suit.Clubs),
+				new Card(Rank.Three, Suit.Spades)
 			};
 
 			return PokerHand.getBestHand(cards);
@@ -364,13 +365,13 @@ namespace PokerUnitTests.Unit_Tests_Help_Methods {
 		/// <returns></returns>
 		internal static PokerHand getWorstHighCard() {
 			var cards = new List<Card>() {
-				new Card(CardValue.Two, Suit.Hearts),
-				new Card(CardValue.Three, Suit.Spades),
-				new Card(CardValue.Four, Suit.Diamonds),
-				new Card(CardValue.Five, Suit.Clubs),
-				new Card(CardValue.Seven, Suit.Hearts),
-				new Card(CardValue.Eight, Suit.Clubs),
-				new Card(CardValue.Nine, Suit.Spades)
+				new Card(Rank.Two, Suit.Hearts),
+				new Card(Rank.Three, Suit.Spades),
+				new Card(Rank.Four, Suit.Diamonds),
+				new Card(Rank.Five, Suit.Clubs),
+				new Card(Rank.Seven, Suit.Hearts),
+				new Card(Rank.Eight, Suit.Clubs),
+				new Card(Rank.Nine, Suit.Spades)
 			};
 
 			return PokerHand.getBestHand(cards);
