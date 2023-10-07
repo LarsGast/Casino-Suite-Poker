@@ -10,8 +10,8 @@ namespace PokerLibrary {
 		/// </summary>
 		/// <param name="suit"></param>
 		/// <returns></returns>
-		public static string getDisplayString(this Suit suit) { 
-			switch(suit) {
+		public static string? getDisplayString(this Suit suit) {
+			switch (suit) {
 				case Card.Suit.Hearts:
 					return "\u2665";
 				case Card.Suit.Spades:
@@ -20,9 +20,9 @@ namespace PokerLibrary {
 					return "\u2666";
 				case Card.Suit.Clubs:
 					return "\u2663";
+				default:
+					return null;
 			}
-
-			return null;
 		}
 
 		/// <summary>

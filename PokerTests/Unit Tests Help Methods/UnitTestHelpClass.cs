@@ -17,15 +17,17 @@ namespace PokerUnitTests.Unit_Tests_Help_Methods {
 		/// <param name="suit">Expected suit</param>
 		/// <param name="kickers">Expected kickers</param>
 		internal static void assertHand(PokerHand hand, HandType handType, Rank? firstCardValue, Rank? secondCardValue, Suit? suit, IEnumerable<Card> kickers) {
-			Assert.IsTrue(hand.handType == handType, $"Hand is not a {handType}");
-			Assert.IsTrue(hand.firstCardValue == firstCardValue, $"Highest value is not {firstCardValue}");
-			Assert.IsTrue(hand.secondCardValue == secondCardValue, $"Second highest value is not {secondCardValue}");
-			Assert.IsTrue(hand.suit == suit, $"Suit is not {suit}");
-			Assert.IsTrue(hand.kickers.equals(kickers), $"Kickers are not the same. Oberved: {hand.kickers.getDisplayString()}. Expected: {kickers.getDisplayString()}");
+			Assert.Multiple(() => {
+				Assert.That(hand.handType, Is.EqualTo(handType), $"Hand is not a {handType}");
+				Assert.That(hand.firstCardValue, Is.EqualTo(firstCardValue), $"Highest value is not {firstCardValue}");
+				Assert.That(hand.secondCardValue, Is.EqualTo(secondCardValue), $"Second highest value is not {secondCardValue}");
+				Assert.That(hand.suit, Is.EqualTo(suit), $"Suit is not {suit}");
+				Assert.That(hand.kickers.equals(kickers), Is.True, $"Kickers are not the same. Oberved: {hand.kickers.getDisplayString()}. Expected: {kickers.getDisplayString()}");
+			});
 		}
 
 		internal static void assertThatHandWins(PokerHand winningHand, PokerHand losingHand) {
-			Assert.IsTrue(winningHand.winsAgainst(losingHand), 
+			Assert.That(winningHand.winsAgainst(losingHand), Is.True, 
 				$"{winningHand.handType} does not win against {losingHand.handType}\n" +
 				$"First value: {winningHand.firstCardValue} vs. {losingHand.firstCardValue}\n" +
 				$"Second value: {winningHand.secondCardValue} vs. {losingHand.secondCardValue}\n" +
@@ -44,7 +46,7 @@ namespace PokerUnitTests.Unit_Tests_Help_Methods {
 
 			var handThatWon = PokerHand.getWinningHand(allhands);
 
-			Assert.IsTrue(handThatWon == winningHand, "Hand that should win did not win.\n" +
+			Assert.That(handThatWon, Is.EqualTo(winningHand), "Hand that should win did not win.\n" +
 				"Hand that should win vs. hand that won.\n" + 
 				$"{winningHand.handType} vs. {handThatWon.handType}\n" +
 				$"First value: {winningHand.firstCardValue} vs. {handThatWon.firstCardValue}\n" +

@@ -43,14 +43,24 @@ namespace Poker_Console {
 			// Draw 2 cards for each player.
 			for (int i = 0; i < 2; i++) {
 				foreach (var player in players) {
-					player.addCard(deck.draw());
+					var card = deck.draw();
+					if (card == null) {
+						throw new Exception("There are no more cards in the deck.");
+					}
+
+					player.addCard(card);
 				}
 			}
 
 			// Draw 5 cards on the table.
 			var tableCards = new List<Card>();
-			for (int i = 0; i < 5; i++) {
-				tableCards.Add(deck.draw());
+			for (int i = 0; i < 5; i++) { 
+				var card = deck.draw();
+				if (card == null) {
+					throw new Exception("There are no more cards in the deck.");
+				}
+
+				tableCards.Add(card);
 			}
 
 			// Determine the best hand for each player.
@@ -74,8 +84,8 @@ namespace Poker_Console {
 				Console.WriteLine($"Name: {player.name}");
 				Console.WriteLine($"Cards: {player.cards.getDisplayString()}");
 				Console.WriteLine($"Hand Type: {player.hand.handType}");
-				Console.WriteLine($"Highest value for this hand type: {(player.hand.firstCardValue != null ? player.hand.firstCardValue.Value.getDisplayString() : null)}");
-				Console.WriteLine($"Second highest value for this hand type: {(player.hand.secondCardValue != null ? player.hand.secondCardValue.Value.getDisplayString() : null)}\n" +
+				Console.WriteLine($"Highest value for this hand type: {(player.hand.firstCardValue?.getDisplayString())}");
+				Console.WriteLine($"Second highest value for this hand type: {(player.hand.secondCardValue?.getDisplayString())}\n" +
 					$"Kickers: {player.hand.kickers.getDisplayString()}");
 				Console.WriteLine("");
 			}
@@ -107,8 +117,22 @@ namespace Poker_Console {
 
 		/// <summary>
 		/// The best possible hand considering the cards the player received and the cards on the table.
+		/// Null if not yet assigned.
 		/// </summary>
-		public PokerHand hand { get; set; }
+		private PokerHand? _hand { get; set; }
+
+		/// <summary>
+		/// The best possible hand considering the cards the player received and the cards on the table.
+		/// </summary>
+		public PokerHand hand { 
+			get {
+				if (this._hand == null) {
+					throw new Exception("No valid hand");
+				}
+
+				return this._hand;
+			} 
+		}
 
 		/// <summary>
 		/// Constructor.
@@ -128,11 +152,11 @@ namespace Poker_Console {
 		}
 
 		/// <summary>
-		/// Set the pokerHand property to the best possible hand the player can make.
+		/// Set the _pokerHand property to the best possible hand the player can make with the given cards.
 		/// </summary>
 		/// <param name="tableCards"></param>
 		public void setPokerHand(List<Card> tableCards) {
-			this.hand = PokerHand.getBestHand(tableCards.Union(this.cards));
+			this._hand = PokerHand.getBestHand(tableCards.Union(this.cards));
 		}
 	}
 }

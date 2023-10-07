@@ -154,8 +154,8 @@ namespace PokerLibrary {
 			var handsWithHighestKickers = hands.ToList();
 
 			// Check each kicker.
-			for (int i = 0; i < handsWithHighestKickers.First().kickers.Count(); i++) {
-				Card highestKicker = null;
+			for (int i = 0; i < handsWithHighestKickers.First().kickers.Count; i++) {
+				Card? highestKicker = null;
 
 				// Get the highest kicker of this index.
 				foreach(var hand in hands) {
@@ -165,11 +165,15 @@ namespace PokerLibrary {
 					}
 				}
 
+				if (highestKicker == null) {
+					throw new Exception("No kicker found");
+				}
+
 				// Get all hands which the kicker of the current index has the same value of the highest kicker among all the hands.
 				handsWithHighestKickers = hands.Where(hand => hand.kickers[i].rank == highestKicker.rank).ToList();
 
 				// If there is only one hand with this kicker, we found our winner and kan stop looking.
-				if (handsWithHighestKickers.Count() == 1) {
+				if (handsWithHighestKickers.Count == 1) {
 					return handsWithHighestKickers.ToList();
 				}
 			}
@@ -347,11 +351,11 @@ namespace PokerLibrary {
 		/// </summary>
 		/// <param name="cards"></param>
 		/// <returns>null if there is no straight flush.</returns>
-		private static PokerHand getBestStraightFlush(IEnumerable<Card> cards) {
+		private static PokerHand? getBestStraightFlush(IEnumerable<Card> cards) {
 
 			var highestStraightFlushCards = PokerHand.getHighestStraightCards(cards, mustBeFlush: true).OrderByDescending(card => card.rank);
 
-			if (highestStraightFlushCards.Count() == 0) {
+			if (!highestStraightFlushCards.Any()) {
 				return null;
 			}
 
@@ -365,7 +369,7 @@ namespace PokerLibrary {
 		/// </summary>
 		/// <param name="cards"></param>
 		/// <returns>null if there is no four of a kind.</returns>
-		private static PokerHand getBestFourOfAKind(IEnumerable<Card> cards) {
+		private static PokerHand? getBestFourOfAKind(IEnumerable<Card> cards) {
 
 			// Only 1 four of a kind is possible, so we do not have to check if the one we find is the highest one.
 			var highestFourOrAKindValue = PokerHand.getHighestOfAKindValue(cards, 4);
@@ -383,7 +387,7 @@ namespace PokerLibrary {
 		/// </summary>
 		/// <param name="cards"></param>
 		/// <returns>null if there is no full house.</returns>
-		private static PokerHand getBestFullHouse(IEnumerable<Card> cards) {
+		private static PokerHand? getBestFullHouse(IEnumerable<Card> cards) {
 
 			var highestThreeOfAKindValue = PokerHand.getHighestOfAKindValue(cards, 3);
 
@@ -407,13 +411,13 @@ namespace PokerLibrary {
 		/// </summary>
 		/// <param name="cards"></param>
 		/// <returns>null if there is no flush.</returns>
-		private static PokerHand getBestFlush(IEnumerable<Card> cards) {
+		private static PokerHand? getBestFlush(IEnumerable<Card> cards) {
 			var flushCards = cards
 				.GroupBy(card => card.suit)
 				.Where(group => group.Count() >= 5)
 				.SelectMany(group => group);
 
-			if (flushCards.Count() == 0) {
+			if (!flushCards.Any()) {
 				return null;
 			}
 
@@ -427,11 +431,11 @@ namespace PokerLibrary {
 		/// </summary>
 		/// <param name="cards"></param>
 		/// <returns>null if there is no straight.</returns>
-		private static PokerHand getBestStraight(IEnumerable<Card> cards) {
+		private static PokerHand? getBestStraight(IEnumerable<Card> cards) {
 
 			var highestStraightCards = PokerHand.getHighestStraightCards(cards, mustBeFlush: false).OrderByDescending(card => card.rank);
 
-			if (highestStraightCards.Count() == 0) {
+			if (!highestStraightCards.Any()) {
 				return null;
 			}
 
@@ -443,7 +447,7 @@ namespace PokerLibrary {
 		/// </summary>
 		/// <param name="cards"></param>
 		/// <returns>null if there is no three of a kind.</returns>
-		private static PokerHand getBestThreeOfAKind(IEnumerable<Card> cards) {
+		private static PokerHand? getBestThreeOfAKind(IEnumerable<Card> cards) {
 
 			var highestThreeOfAKindValue = PokerHand.getHighestOfAKindValue(cards, 3);
 
@@ -460,7 +464,7 @@ namespace PokerLibrary {
 		/// </summary>
 		/// <param name="cards"></param>
 		/// <returns>null if there is no two pair.</returns>
-		private static PokerHand getBestTwoPair(IEnumerable<Card> cards) {
+		private static PokerHand? getBestTwoPair(IEnumerable<Card> cards) {
 
 			var highestPairValue = PokerHand.getHighestOfAKindValue(cards, 2);
 
@@ -487,7 +491,7 @@ namespace PokerLibrary {
 		/// </summary>
 		/// <param name="cards"></param>
 		/// <returns>null if there is no pair.</returns>
-		private static PokerHand getBestPair(IEnumerable<Card> cards) {
+		private static PokerHand? getBestPair(IEnumerable<Card> cards) {
 
 			var highestPairValue = PokerHand.getHighestOfAKindValue(cards, 2);
 
@@ -528,7 +532,7 @@ namespace PokerLibrary {
 				.GroupBy(card => card.rank)
 				.Where(group => group.Count() == numberOfAKind);
 
-			if (highestOfAKindCards.Count() == 0) {
+			if (!highestOfAKindCards.Any()) {
 				return null;
 			}
 
