@@ -129,17 +129,17 @@ namespace Poker_Console {
 		/// <param name="winningPlayers"></param>
 		private static void displayGame(List<Player> players, List<Card> tableCards, List<Player> winningPlayers) {
 			Console.WriteLine("Table:");
-			Console.WriteLine(tableCards.getDisplayString());
+			Console.WriteLine(tableCards.getDisplayString(displayTenAsT: true));
 			Console.WriteLine("");
 			Console.WriteLine("Players:");
 
 			foreach (var player in players) {
 				Console.WriteLine($"Name: {player.name}");
-				Console.WriteLine($"Cards: {player.cards.getDisplayString()}");
+				Console.WriteLine($"Cards: {player.cards.getDisplayString(displayTenAsT: true)}");
 				Console.WriteLine($"Hand Type: {player.hand!.handType}");
-				Console.WriteLine($"Highest value for this hand type: {(player.hand.firstCardValue?.getDisplayString())}");
-				Console.WriteLine($"Second highest value for this hand type: {(player.hand.secondCardValue?.getDisplayString())}\n" +
-					$"Kickers: {player.hand.kickers.getDisplayString()}");
+				Console.WriteLine($"Highest value for this hand type: {(player.hand.firstCardValue?.getDisplayString(displayTenAsT: true))}");
+				Console.WriteLine($"Second highest value for this hand type: {(player.hand.secondCardValue?.getDisplayString(displayTenAsT: true))}\n" +
+					$"Kickers: {player.hand.kickers.getDisplayString(displayTenAsT: true)}");
 				Console.WriteLine("");
 			}
 

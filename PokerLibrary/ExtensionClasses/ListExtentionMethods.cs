@@ -45,8 +45,8 @@ namespace PokerLibrary.ExtentionClasses {
 		/// </summary>
 		/// <param name="cards"></param>
 		/// <returns></returns>
-		public static string getDisplayString(this IEnumerable<Card> cards) {
-			return String.Join(",", cards.Select(card => card.suit.getDisplayString() + card.rank.getDisplayString()));
+		public static string getDisplayString(this IEnumerable<Card> cards, bool displayTenAsT = false) {
+			return String.Join(",", cards.Select(card => card.getDisplayString(displayTenAsT: displayTenAsT)));
 		}
 	}
 }
