@@ -14,10 +14,10 @@ namespace Poker_Console {
 			deck.shuffle();
 
 			// Draw 2 cards for each player.
-			Program.drawPlayerCards(players, deck);
+			Program.drawCardsForPlayers(players, deck);
 
 			// Draw 5 cards on the table.
-			List<Card> tableCards = Program.drawTableCards(deck);
+			List<Card> tableCards = Program.drawCardsForTable(deck);
 
 			// Determine the winner(s).
 			List<Player> winningPlayers = getWinningPlayers(players, tableCards);
@@ -25,7 +25,7 @@ namespace Poker_Console {
 			// Display everything.
 			Program.displayGame(players, tableCards, winningPlayers);
 
-			// ReadKey so the app doesn't close.
+			// ReadKey so the window doesn't instantly close.
 			Console.ReadKey();
 		}
 
@@ -72,13 +72,10 @@ namespace Poker_Console {
 		/// <param name="players"></param>
 		/// <param name="deck"></param>
 		/// <exception cref="Exception"></exception>
-		private static void drawPlayerCards(List<Player> players, Deck deck) {
+		private static void drawCardsForPlayers(List<Player> players, Deck deck) {
 			for (int i = 0; i < 2; i++) {
 				foreach (var player in players) {
-					var card = deck.draw();
-					if (card == null) {
-						throw new Exception("There are no more cards in the deck.");
-					}
+					var card = deck.draw() ?? throw new Exception("There are no more cards in the deck.");
 
 					player.addCard(card);
 				}
@@ -91,13 +88,10 @@ namespace Poker_Console {
 		/// <param name="deck"></param>
 		/// <returns></returns>
 		/// <exception cref="Exception"></exception>
-		private static List<Card> drawTableCards(Deck deck) {
+		private static List<Card> drawCardsForTable(Deck deck) {
 			var tableCards = new List<Card>();
 			for (int i = 0; i < 5; i++) {
-				var card = deck.draw();
-				if (card == null) {
-					throw new Exception("There are no more cards in the deck.");
-				}
+				var card = deck.draw() ?? throw new Exception("There are no more cards in the deck.");
 
 				tableCards.Add(card);
 			}
@@ -119,11 +113,11 @@ namespace Poker_Console {
 			}
 
 			// Get the best hand amongst all the players.
-			var bestHand = PokerHand.getWinningHand(players.Select(player => player.hand));
+			var bestHand = PokerHand.getWinningHand(players.Select(player => player.hand!));
 
 			// Get all the players that draw with the best hand.
 			// More than one player can have the best hand.
-			var winningPlayers = players.Where(player => player.hand.winsAgainst(bestHand) == null).ToList();
+			var winningPlayers = players.Where(player => player.hand!.winsAgainst(bestHand) == null).ToList();
 			return winningPlayers;
 		}
 
@@ -137,11 +131,12 @@ namespace Poker_Console {
 			Console.WriteLine("Table:");
 			Console.WriteLine(tableCards.getDisplayString());
 			Console.WriteLine("");
+			Console.WriteLine("Players:");
 
 			foreach (var player in players) {
 				Console.WriteLine($"Name: {player.name}");
 				Console.WriteLine($"Cards: {player.cards.getDisplayString()}");
-				Console.WriteLine($"Hand Type: {player.hand.handType}");
+				Console.WriteLine($"Hand Type: {player.hand!.handType}");
 				Console.WriteLine($"Highest value for this hand type: {(player.hand.firstCardValue?.getDisplayString())}");
 				Console.WriteLine($"Second highest value for this hand type: {(player.hand.secondCardValue?.getDisplayString())}\n" +
 					$"Kickers: {player.hand.kickers.getDisplayString()}");
@@ -152,6 +147,9 @@ namespace Poker_Console {
 			foreach (var player in winningPlayers) {
 				Console.WriteLine(player.name);
 			}
+
+			Console.WriteLine("");
+			Console.WriteLine("(Press any key to close this window)");
 		}
 	}
 
@@ -174,20 +172,7 @@ namespace Poker_Console {
 		/// The best possible hand considering the cards the player received and the cards on the table.
 		/// Null if not yet assigned.
 		/// </summary>
-		private PokerHand? _hand { get; set; }
-
-		/// <summary>
-		/// The best possible hand considering the cards the player received and the cards on the table.
-		/// </summary>
-		public PokerHand hand { 
-			get {
-				if (this._hand == null) {
-					throw new Exception("No valid hand");
-				}
-
-				return this._hand;
-			} 
-		}
+		public PokerHand? hand { get; set; }
 
 		/// <summary>
 		/// Constructor.
@@ -211,7 +196,7 @@ namespace Poker_Console {
 		/// </summary>
 		/// <param name="tableCards"></param>
 		public void setPokerHand(List<Card> tableCards) {
-			this._hand = PokerHand.getBestHand(tableCards.Union(this.cards));
+			this.hand = PokerHand.getBestHand(tableCards.Union(this.cards));
 		}
 	}
 }
