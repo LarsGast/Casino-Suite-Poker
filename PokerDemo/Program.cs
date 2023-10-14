@@ -34,7 +34,8 @@ namespace Poker_Console {
 		/// </summary>
 		/// <returns></returns>
 		private static List<Player> getPlayers() {
-			var playerNames = new List<string>() {
+			// Define the possible players.
+			var playerIdentifiers = new List<string>() {
 				"Luz",
 				"Eda",
 				"King",
@@ -49,8 +50,8 @@ namespace Poker_Console {
 			var numberOfPlayers = 3;
 
 			// No more players than the number of names.
-			if (numberOfPlayers > playerNames.Count) {
-				throw new Exception("Not enough player names");
+			if (numberOfPlayers > playerIdentifiers.Count) {
+				throw new Exception("Not enough player identifiers");
 			}
 
 			if (numberOfPlayers < 2) {
@@ -60,7 +61,7 @@ namespace Poker_Console {
 			// Make a player for each player name.
 			var players = new List<Player>();
 			for (int i = 0; i < numberOfPlayers; i++) {
-				players.Add(new Player(playerNames[i]));
+				players.Add(new Player(playerIdentifiers[i]));
 			}
 
 			return players;
@@ -139,7 +140,7 @@ namespace Poker_Console {
 			Console.WriteLine("");
 
 			foreach (var player in players) {
-				Console.WriteLine($"Name: {player.name}");
+				Console.WriteLine($"Identifier: {player.identifier}");
 				Console.WriteLine($"Cards: {player.cards.getDisplayString()}");
 				Console.WriteLine($"Hand Type: {player.hand.handType}");
 				Console.WriteLine($"Highest value for this hand type: {(player.hand.firstCardValue?.getDisplayString())}");
@@ -150,7 +151,7 @@ namespace Poker_Console {
 
 			Console.WriteLine("Winning player(s):");
 			foreach (var player in winningPlayers) {
-				Console.WriteLine(player.name);
+				Console.WriteLine(player.identifier);
 			}
 		}
 	}

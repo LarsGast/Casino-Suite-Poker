@@ -5,9 +5,10 @@ namespace PokerLibrary {
 	public class Player {
 
 		/// <summary>
-		/// Name of the player.
+		/// Unique identifier.
+		/// E.g. name of player number.
 		/// </summary>
-		public string name { get; set; }
+		public string identifier { get; set; }
 
 		/// <summary>
 		/// The cards that the player gets dealt.
@@ -36,9 +37,9 @@ namespace PokerLibrary {
 		/// <summary>
 		/// Constructor.
 		/// </summary>
-		/// <param name="name"></param>
-		public Player(string name) {
-			this.name = name;
+		/// <param name="identifier"></param>
+		public Player(string identifier) {
+			this.identifier = identifier;
 			this.cards = new List<Card>();
 		}
 
