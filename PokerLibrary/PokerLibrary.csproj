@@ -7,7 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="DeckOfPlayingCards" Version="1.0.0" />
+    <PackageReference Include="DeckOfPlayingCards" Version="1.1.1" />
   </ItemGroup>
 
 </Project>
