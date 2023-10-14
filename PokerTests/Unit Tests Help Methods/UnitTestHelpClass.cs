@@ -22,7 +22,7 @@ namespace PokerUnitTests.Unit_Tests_Help_Methods {
 				Assert.That(hand.firstCardValue, Is.EqualTo(firstCardValue), $"Highest value is not {firstCardValue}");
 				Assert.That(hand.secondCardValue, Is.EqualTo(secondCardValue), $"Second highest value is not {secondCardValue}");
 				Assert.That(hand.suit, Is.EqualTo(suit), $"Suit is not {suit}");
-				Assert.That(hand.kickers.equals(kickers), Is.True, $"Kickers are not the same. Oberved: {hand.kickers.getDisplayString()}. Expected: {kickers.getDisplayString()}");
+				Assert.That(hand.kickers.equals(kickers), Is.True, $"Kickers are not the same. Oberved: {hand.kickers.getDisplayString(displayTenAsT: true)}. Expected: {kickers.getDisplayString(displayTenAsT: true)}");
 			});
 		}
 
@@ -31,7 +31,7 @@ namespace PokerUnitTests.Unit_Tests_Help_Methods {
 				$"{winningHand.handType} does not win against {losingHand.handType}\n" +
 				$"First value: {winningHand.firstCardValue} vs. {losingHand.firstCardValue}\n" +
 				$"Second value: {winningHand.secondCardValue} vs. {losingHand.secondCardValue}\n" +
-				$"Kickers: {winningHand.kickers.getDisplayString()} vs. {losingHand.kickers.getDisplayString()}");
+				$"Kickers: {winningHand.kickers.getDisplayString(displayTenAsT: true)} vs. {losingHand.kickers.getDisplayString(displayTenAsT: true)}");
 		}
 
 		/// <summary>
@@ -51,7 +51,7 @@ namespace PokerUnitTests.Unit_Tests_Help_Methods {
 				$"{winningHand.handType} vs. {handThatWon.handType}\n" +
 				$"First value: {winningHand.firstCardValue} vs. {handThatWon.firstCardValue}\n" +
 				$"Second value: {winningHand.secondCardValue} vs. {handThatWon.secondCardValue}\n" +
-				$"Kickers: {winningHand.kickers.getDisplayString()} vs. {handThatWon.kickers.getDisplayString()}"
+				$"Kickers: {winningHand.kickers.getDisplayString(displayTenAsT: true)} vs. {handThatWon.kickers.getDisplayString(displayTenAsT: true)}"
 				);
 		}
 
