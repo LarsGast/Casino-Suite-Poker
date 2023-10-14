@@ -1,5 +1,4 @@
-﻿using DeckOfCardsLibrary;
-using static DeckOfCardsLibrary.Card;
+﻿using static DeckOfCardsLibrary.Card;
 
 namespace PokerLibrary {
 	public static class EnumExtensionMethods {
@@ -12,13 +11,13 @@ namespace PokerLibrary {
 		/// <returns></returns>
 		public static string? getDisplayString(this Suit suit) {
 			switch (suit) {
-				case Card.Suit.Hearts:
+				case Suit.Hearts:
 					return "\u2665";
-				case Card.Suit.Spades:
+				case Suit.Spades:
 					return "\u2660";
-				case Card.Suit.Diamonds:
+				case Suit.Diamonds:
 					return "\u2666";
-				case Card.Suit.Clubs:
+				case Suit.Clubs:
 					return "\u2663";
 				default:
 					return null;
@@ -27,22 +26,22 @@ namespace PokerLibrary {
 
 		/// <summary>
 		/// Extension method.
-		/// Gets the value of the card as a string for displaying.
+		/// Gets the value of the rank as a string for displaying.
 		/// </summary>
-		/// <param name="cardValue"></param>
+		/// <param name="rank"></param>
 		/// <returns></returns>
-		public static string getDisplayString(this Rank cardValue) {
-			switch (cardValue) {
-				case Card.Rank.Jack:
+		public static string getDisplayString(this Rank rank) {
+			switch (rank) {
+				case Rank.Jack:
 					return "J";
-				case Card.Rank.Queen:
+				case Rank.Queen:
 					return "Q";
-				case Card.Rank.King:
+				case Rank.King:
 					return "K";
-				case Card.Rank.Ace:
+				case Rank.Ace:
 					return "A";
 				default:
-					return ((int)cardValue).ToString();
+					return ((int)rank).ToString();
 			}
 		}
 	}
