@@ -4,7 +4,29 @@
     <TargetFramework>net7.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <PackageId>CasinoSuite.Poker</PackageId>
+    <Title>Poker</Title>
+    <Authors>Lars Hoekstra</Authors>
+    <Description>A comprehensive library for working with poker hands and cards in C#.
+This library includes classes for representing poker hands, cards, and offers utility methods for evaluating and comparing poker hands. </Description>
+    <Copyright>Copyright (c) Lars Hoekstra 2023</Copyright>
+    <PackageProjectUrl>https://github.com/LarsGast/Casino-Suite-Poker</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/LarsGast/Casino-Suite-Poker</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageTags>Poker;Card games;Cards;Casino</PackageTags>
+    <PackageReleaseNotes>First iteration, see README.md</PackageReleaseNotes>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <GenerateDocumentationFile>True</GenerateDocumentationFile>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="..\README.md">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="DeckOfPlayingCards" Version="1.1.1" />
