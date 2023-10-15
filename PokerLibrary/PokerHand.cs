@@ -105,212 +105,9 @@ namespace PokerLibrary {
 
 		#endregion
 
-		#region Functions
+		#region Methods
 
-		#region Winning hand
-
-		/// <summary>
-		/// Determines the best hand from a list of hands based on various criteria.
-		/// Only returns one hand in case of a draw.
-		/// </summary>
-		/// <param name="hands">A list of PokerHands to evaluate.</param>
-		/// <returns>The best PokerHand among the provided list.</returns>
-		public static PokerHand getWinningHand(IEnumerable<PokerHand> hands) {
-
-			// Find the highest hand rank among the provided hands.
-			var bestHandRank = hands
-				.OrderByDescending(hand => hand.handRank)
-				.First()
-				.handRank;
-
-			// Filter hands with the best hand rank.
-			var handsBestHandRank = hands.Where(hand => hand.handRank == bestHandRank);
-
-			// If only one hand has the best hand rank, return it.
-			if (handsBestHandRank.Count() == 1) {
-				return handsBestHandRank.First();
-			}
-
-			// Continue comparing by the primary card rank.
-			var bestPrimaryCardRank = handsBestHandRank
-				.OrderByDescending(hand => hand.primaryCardRank)
-				.First()
-				.primaryCardRank;
-
-			// Filter hands with the best primary card rank.
-			var handsBestPrimaryCardRank = handsBestHandRank.Where(hand => hand.primaryCardRank == bestPrimaryCardRank);
-
-			// If only one hand has the best primary card rank, return it.
-			if (handsBestPrimaryCardRank.Count() == 1) {
-				return handsBestPrimaryCardRank.First();
-			}
-
-			// Continue comparing by the secondary card rank.
-			var bestSecondaryCardRank = handsBestPrimaryCardRank
-				.OrderByDescending(hand => hand.secondaryCardRank)
-				.First()
-				.secondaryCardRank;
-
-			// Filter hands with the best secondary card rank.
-			var handsBestSecondaryCardRank = handsBestPrimaryCardRank.Where(hand => hand.secondaryCardRank == bestSecondaryCardRank);
-
-			// If only one hand has the best secondary card rank, return it.
-			if (handsBestSecondaryCardRank.Count() == 1) {
-				return handsBestSecondaryCardRank.First();
-			}
-
-			// If no clear winner, determine the best hand by kickers.
-			var handsHighestKickers = PokerHand.getBestHandByKickers(handsBestSecondaryCardRank.ToList());
-
-			// If there are multiple same-quality hands (so a draw), return one of those hands.
-			return handsHighestKickers.First();
-		}
-
-		/// <summary>
-		/// Gets the best hand(s) among the given hands based solely on the kickers.
-		/// </summary>
-		/// <param name="hands">A list of PokerHands to evaluate.</param>
-		/// <returns>A list of PokerHands with the best kickers.</returns>
-		private static List<PokerHand> getBestHandByKickers(IEnumerable<PokerHand> hands) {
-
-			// Create a list of hands with the highest kickers.
-			var handsWithHighestKickers = hands.ToList();
-
-			// Iterate through each kicker position.
-			for (int i = 0; i < handsWithHighestKickers.First().kickers.Count; i++) {
-				Card? highestKicker = null;
-
-				// Find the highest kicker at the current index among all hands.
-				foreach (var hand in hands) {
-					var handKicker = hand.kickers[i];
-					if (highestKicker == null || handKicker.rank > highestKicker.rank) {
-						highestKicker = handKicker;
-					}
-				}
-
-				// Filter hands with the kicker of the current index having the same rank as the highest kicker.
-				handsWithHighestKickers = hands.Where(hand => hand.kickers[i].rank == highestKicker!.rank).ToList();
-
-				// If there's only one hand with this kicker, the winner is found.
-				if (handsWithHighestKickers.Count == 1) {
-					return handsWithHighestKickers.ToList();
-				}
-			}
-
-			// In the case of multiple hands with the exact same kickers, return these hands.
-			return handsWithHighestKickers.ToList();
-		}
-
-		/// <summary>
-		/// Checks if this hand wins against the other hand based on various criteria.
-		/// </summary>
-		/// <param name="other">The other PokerHand to compare against.</param>
-		/// <returns>
-		///     True if this hand wins, 
-		///     False if the other hand wins, 
-		///     Null if it's a draw.
-		/// </returns>
-		public bool? winsAgainst(PokerHand other) {
-
-			// Check if this hand has a better hand rank than the other.
-			var hasBetterHandRank = this.hasBetterHandRank(other);
-			if (hasBetterHandRank != null) {
-				return hasBetterHandRank;
-			}
-
-			// If hand rank is the same, check by the primary card rank.
-			var hasBetterFirstCard = this.hasBetterFirstCard(other);
-			if (hasBetterFirstCard != null) {
-				return hasBetterFirstCard;
-			}
-
-			// If the primary card rank is the same, check by the secondary card rank.
-			var hasBetterSecondCard = this.hasBetterSecondCard(other);
-			if (hasBetterSecondCard != null) {
-				return hasBetterSecondCard;
-			}
-
-			// If all previous comparisons result in a draw, compare by kickers.
-			return this.hasBetterKickers(other);
-		}
-
-		/// <summary>
-		/// Checks if this hand has a better hand rank than the other hand.
-		/// </summary>
-		/// <param name="other">The other hand to compare against.</param>
-		/// <returns>
-		///     True if this hand has a better hand rank,
-		///     False if the other hand has a better hand rank,
-		///     Null if they have the same hand rank.
-		/// </returns>
-		private bool? hasBetterHandRank(PokerHand other) {
-			if (this.handRank == other.handRank) {
-				return null;
-			}
-
-			return this.handRank > other.handRank;
-		}
-
-		/// <summary>
-		/// Checks if this hand has a better primary card rank than the other hand.
-		/// </summary>
-		/// <param name="other">The other hand to compare against.</param>
-		/// <returns>
-		///     True if this hand has a better primary card rank,
-		///     False if the other hand has a better primary card rank,
-		///     Null if they have the same primary card rank.
-		/// </returns>
-		private bool? hasBetterFirstCard(PokerHand other) {
-			if (this.primaryCardRank == other.primaryCardRank) {
-				return null;
-			}
-
-			return this.primaryCardRank > other.primaryCardRank;
-		}
-
-		/// <summary>
-		/// Checks if this hand has a better secondary card rank than the other hand.
-		/// </summary>
-		/// <param name="other">The other hand to compare against.</param>
-		/// <returns>
-		///     True if this hand has a better secondary card rank,
-		///     False if the other hand has a better secondary card rank,
-		///     Null if they have the same secondary card rank.
-		/// </returns>
-		private bool? hasBetterSecondCard(PokerHand other) {
-			if (this.secondaryCardRank == other.secondaryCardRank) {
-				return null;
-			}
-
-			return this.secondaryCardRank > other.secondaryCardRank;
-		}
-
-		/// <summary>
-		/// Checks if this hand has better kickers than the other hand.
-		/// </summary>
-		/// <param name="other">The other hand to compare against.</param>
-		/// <returns>
-		///     True if this hand has better kickers,
-		///     False if the other hand has better kickers,
-		///     Null if they have the same kickers.
-		/// </returns>
-		private bool? hasBetterKickers(PokerHand other) {
-			for (int i = 0; i < this.kickers.Count; i++) {
-				if (this.kickers[i].rank > other.kickers[i].rank) {
-					return true;
-				}
-
-				if (this.kickers[i].rank < other.kickers[i].rank) {
-					return false;
-				}
-			}
-
-			return null;
-		}
-
-		#endregion
-
-		#region Get best hand
+		#region Public Methods
 
 		/// <summary>
 		/// Gets the best hand possible with the given cards.
@@ -363,6 +160,102 @@ namespace PokerLibrary {
 
 			return PokerHand.getBestHighCard(cards);
 		}
+
+		/// <summary>
+		/// Checks if this hand wins against the other hand based on various criteria.
+		/// </summary>
+		/// <param name="other">The other PokerHand to compare against.</param>
+		/// <returns>
+		///     True if this hand wins, 
+		///     False if the other hand wins, 
+		///     Null if it's a draw.
+		/// </returns>
+		public bool? winsAgainst(PokerHand other) {
+
+			// Check if this hand has a better hand rank than the other.
+			var hasBetterHandRank = this.hasBetterHandRank(other);
+			if (hasBetterHandRank != null) {
+				return hasBetterHandRank;
+			}
+
+			// If hand rank is the same, check by the primary card rank.
+			var hasBetterFirstCard = this.hasBetterFirstCard(other);
+			if (hasBetterFirstCard != null) {
+				return hasBetterFirstCard;
+			}
+
+			// If the primary card rank is the same, check by the secondary card rank.
+			var hasBetterSecondCard = this.hasBetterSecondCard(other);
+			if (hasBetterSecondCard != null) {
+				return hasBetterSecondCard;
+			}
+
+			// If all previous comparisons result in a draw, compare by kickers.
+			return this.hasBetterKickers(other);
+		}
+
+		/// <summary>
+		/// Determines the best hand from a list of hands based on various criteria.
+		/// Only returns one hand in case of a draw.
+		/// </summary>
+		/// <param name="hands">A list of PokerHands to evaluate.</param>
+		/// <returns>The best PokerHand among the provided list.</returns>
+		public static PokerHand getWinningHand(IEnumerable<PokerHand> hands) {
+
+			// Find the highest hand rank among the provided hands.
+			var bestHandRank = hands
+				.OrderByDescending(hand => hand.handRank)
+				.First()
+				.handRank;
+
+			// Filter hands with the best hand rank.
+			var handsBestHandRank = hands.Where(hand => hand.handRank == bestHandRank);
+
+			// If only one hand has the best hand rank, return it.
+			if (handsBestHandRank.Count() == 1) {
+				return handsBestHandRank.First();
+			}
+
+			// Continue comparing by the primary card rank.
+			var bestPrimaryCardRank = handsBestHandRank
+				.OrderByDescending(hand => hand.primaryCardRank)
+				.First()
+				.primaryCardRank;
+
+			// Filter hands with the best primary card rank.
+			var handsBestPrimaryCardRank = handsBestHandRank.Where(hand => hand.primaryCardRank == bestPrimaryCardRank);
+
+			// If only one hand has the best primary card rank, return it.
+			if (handsBestPrimaryCardRank.Count() == 1) {
+				return handsBestPrimaryCardRank.First();
+			}
+
+			// Continue comparing by the secondary card rank.
+			var bestSecondaryCardRank = handsBestPrimaryCardRank
+				.OrderByDescending(hand => hand.secondaryCardRank)
+				.First()
+				.secondaryCardRank;
+
+			// Filter hands with the best secondary card rank.
+			var handsBestSecondaryCardRank = handsBestPrimaryCardRank.Where(hand => hand.secondaryCardRank == bestSecondaryCardRank);
+
+			// If only one hand has the best secondary card rank, return it.
+			if (handsBestSecondaryCardRank.Count() == 1) {
+				return handsBestSecondaryCardRank.First();
+			}
+
+			// If no clear winner, determine the best hand by kickers.
+			var handsHighestKickers = PokerHand.getWinningHandByKickers(handsBestSecondaryCardRank.ToList());
+
+			// If there are multiple same-quality hands (so a draw), return one of those hands.
+			return handsHighestKickers.First();
+		}
+
+		#endregion
+
+		#region Helper methods
+
+		#region getBestHand
 
 		/// <summary>
 		/// Gets the best straight flush possible with the given cards.
@@ -567,8 +460,6 @@ namespace PokerLibrary {
 			return new PokerHand(HandRank.HighCard, null, null, null, kickers);
 		}
 
-		#region Help Functions
-
 		/// <summary>
 		/// Gets the highest value of an "X of a kind" from the given cards.
 		/// </summary>
@@ -643,6 +534,123 @@ namespace PokerLibrary {
 				   card.rank == highestCard.rank - 4 ||
 				   (highestCard.rank == Rank.Five && card.rank == Rank.Ace)) &&
 				   (!mustBeFlush || card.suit == highestCard.suit);
+		}
+
+		#endregion
+
+		#region winsAgainst
+
+		/// <summary>
+		/// Checks if this hand has a better hand rank than the other hand.
+		/// </summary>
+		/// <param name="other">The other hand to compare against.</param>
+		/// <returns>
+		///     True if this hand has a better hand rank,
+		///     False if the other hand has a better hand rank,
+		///     Null if they have the same hand rank.
+		/// </returns>
+		private bool? hasBetterHandRank(PokerHand other) {
+			if (this.handRank == other.handRank) {
+				return null;
+			}
+
+			return this.handRank > other.handRank;
+		}
+
+		/// <summary>
+		/// Checks if this hand has a better primary card rank than the other hand.
+		/// </summary>
+		/// <param name="other">The other hand to compare against.</param>
+		/// <returns>
+		///     True if this hand has a better primary card rank,
+		///     False if the other hand has a better primary card rank,
+		///     Null if they have the same primary card rank.
+		/// </returns>
+		private bool? hasBetterFirstCard(PokerHand other) {
+			if (this.primaryCardRank == other.primaryCardRank) {
+				return null;
+			}
+
+			return this.primaryCardRank > other.primaryCardRank;
+		}
+
+		/// <summary>
+		/// Checks if this hand has a better secondary card rank than the other hand.
+		/// </summary>
+		/// <param name="other">The other hand to compare against.</param>
+		/// <returns>
+		///     True if this hand has a better secondary card rank,
+		///     False if the other hand has a better secondary card rank,
+		///     Null if they have the same secondary card rank.
+		/// </returns>
+		private bool? hasBetterSecondCard(PokerHand other) {
+			if (this.secondaryCardRank == other.secondaryCardRank) {
+				return null;
+			}
+
+			return this.secondaryCardRank > other.secondaryCardRank;
+		}
+
+		/// <summary>
+		/// Checks if this hand has better kickers than the other hand.
+		/// </summary>
+		/// <param name="other">The other hand to compare against.</param>
+		/// <returns>
+		///     True if this hand has better kickers,
+		///     False if the other hand has better kickers,
+		///     Null if they have the same kickers.
+		/// </returns>
+		private bool? hasBetterKickers(PokerHand other) {
+			for (int i = 0; i < this.kickers.Count; i++) {
+				if (this.kickers[i].rank > other.kickers[i].rank) {
+					return true;
+				}
+
+				if (this.kickers[i].rank < other.kickers[i].rank) {
+					return false;
+				}
+			}
+
+			return null;
+		}
+
+		#endregion
+
+		#region getWinningHand
+
+		/// <summary>
+		/// Gets the best hand(s) among the given hands based solely on the kickers.
+		/// </summary>
+		/// <param name="hands">A list of PokerHands to evaluate.</param>
+		/// <returns>A list of PokerHands with the best kickers.</returns>
+		private static List<PokerHand> getWinningHandByKickers(IEnumerable<PokerHand> hands) {
+
+			// Create a list of hands with the highest kickers.
+			var handsWithHighestKickers = hands.ToList();
+
+			// Iterate through each kicker position.
+			for (int i = 0; i < handsWithHighestKickers.First().kickers.Count; i++) {
+				Card? highestKicker = null;
+
+				// Find the highest kicker at the current index among all hands.
+				foreach (var hand in hands) {
+					var handKicker = hand.kickers[i];
+					if (highestKicker == null || handKicker.rank > highestKicker.rank) {
+						highestKicker = handKicker;
+					}
+				}
+
+				// Filter hands with the kicker of the current index having the same rank as the highest kicker.
+				handsWithHighestKickers = hands.Where(hand => hand.kickers[i].rank == highestKicker!.rank).ToList();
+
+				// If there's only one hand with this kicker, the winner is found.
+				if (handsWithHighestKickers.Count == 1) {
+					return handsWithHighestKickers.ToList();
+				}
+			}
+
+			// In the case of multiple hands with the exact same kickers, return these hands.
+			return handsWithHighestKickers.ToList();
 		}
 
 		#endregion
