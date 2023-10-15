@@ -19,8 +19,8 @@ namespace PokerUnitTests.Unit_Tests_Help_Methods {
 		internal static void assertHand(PokerHand hand, HandType handType, Rank? firstCardValue, Rank? secondCardValue, Suit? suit, IEnumerable<Card> kickers) {
 			Assert.Multiple(() => {
 				Assert.That(hand.handType, Is.EqualTo(handType), $"Hand is not a {handType}");
-				Assert.That(hand.firstCardValue, Is.EqualTo(firstCardValue), $"Highest value is not {firstCardValue}");
-				Assert.That(hand.secondCardValue, Is.EqualTo(secondCardValue), $"Second highest value is not {secondCardValue}");
+				Assert.That(hand.primaryCardRank, Is.EqualTo(firstCardValue), $"Highest value is not {firstCardValue}");
+				Assert.That(hand.secondaryCardRank, Is.EqualTo(secondCardValue), $"Second highest value is not {secondCardValue}");
 				Assert.That(hand.suit, Is.EqualTo(suit), $"Suit is not {suit}");
 				Assert.That(hand.kickers.equals(kickers), Is.True, $"Kickers are not the same. Oberved: {hand.kickers.getDisplayString(displayTenAsT: true)}. Expected: {kickers.getDisplayString(displayTenAsT: true)}");
 			});
@@ -29,8 +29,8 @@ namespace PokerUnitTests.Unit_Tests_Help_Methods {
 		internal static void assertThatHandWins(PokerHand winningHand, PokerHand losingHand) {
 			Assert.That(winningHand.winsAgainst(losingHand), Is.True, 
 				$"{winningHand.handType} does not win against {losingHand.handType}\n" +
-				$"First value: {winningHand.firstCardValue} vs. {losingHand.firstCardValue}\n" +
-				$"Second value: {winningHand.secondCardValue} vs. {losingHand.secondCardValue}\n" +
+				$"First value: {winningHand.primaryCardRank} vs. {losingHand.primaryCardRank}\n" +
+				$"Second value: {winningHand.secondaryCardRank} vs. {losingHand.secondaryCardRank}\n" +
 				$"Kickers: {winningHand.kickers.getDisplayString(displayTenAsT: true)} vs. {losingHand.kickers.getDisplayString(displayTenAsT: true)}");
 		}
 
@@ -49,8 +49,8 @@ namespace PokerUnitTests.Unit_Tests_Help_Methods {
 			Assert.That(handThatWon, Is.EqualTo(winningHand), "Hand that should win did not win.\n" +
 				"Hand that should win vs. hand that won.\n" + 
 				$"{winningHand.handType} vs. {handThatWon.handType}\n" +
-				$"First value: {winningHand.firstCardValue} vs. {handThatWon.firstCardValue}\n" +
-				$"Second value: {winningHand.secondCardValue} vs. {handThatWon.secondCardValue}\n" +
+				$"First value: {winningHand.primaryCardRank} vs. {handThatWon.primaryCardRank}\n" +
+				$"Second value: {winningHand.secondaryCardRank} vs. {handThatWon.secondaryCardRank}\n" +
 				$"Kickers: {winningHand.kickers.getDisplayString(displayTenAsT: true)} vs. {handThatWon.kickers.getDisplayString(displayTenAsT: true)}"
 				);
 		}

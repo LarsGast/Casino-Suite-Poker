@@ -137,8 +137,8 @@ namespace Poker_Console {
 				Console.WriteLine($"Name: {player.name}");
 				Console.WriteLine($"Cards: {player.cards.getDisplayString(displayTenAsT: true)}");
 				Console.WriteLine($"Hand Type: {player.hand!.handType}");
-				Console.WriteLine($"Highest value for this hand type: {(player.hand.firstCardValue?.getDisplayString(displayTenAsT: true))}");
-				Console.WriteLine($"Second highest value for this hand type: {(player.hand.secondCardValue?.getDisplayString(displayTenAsT: true))}\n" +
+				Console.WriteLine($"Highest value for this hand type: {(player.hand.primaryCardRank?.getDisplayString(displayTenAsT: true))}");
+				Console.WriteLine($"Second highest value for this hand type: {(player.hand.secondaryCardRank?.getDisplayString(displayTenAsT: true))}\n" +
 					$"Kickers: {player.hand.kickers.getDisplayString(displayTenAsT: true)}");
 				Console.WriteLine("");
 			}
