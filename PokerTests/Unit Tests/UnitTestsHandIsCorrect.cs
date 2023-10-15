@@ -5,10 +5,14 @@ using static DeckOfCardsLibrary.Card;
 using static PokerLibrary.PokerHand;
 
 namespace PokerUnitTests {
+
+	/// <summary>
+	/// Contains unit tests to verify the correctness of Poker hands evaluation.
+	/// </summary>
 	public class UnitTestsHandIsCorrect {
 
 		/// <summary>
-		/// Tests whether the given straightflush.
+		/// Tests whether the given hand is a straight flush.
 		/// </summary>
 		[Test]
 		public void handIsStraightFlush() {
@@ -25,9 +29,9 @@ namespace PokerUnitTests {
 
 			var bestHand = PokerHand.getBestHand(cards);
 
-			var handType = HandType.StraightFlush;
-			Rank? firstValue = null;
-			Rank? secondValue = null;
+			var handRank = HandRank.StraightFlush;
+			Rank? primaryCardRank = null;
+			Rank? secondaryCardRank = null;
 			Suit? suit = Suit.Hearts;
 			var kickers = new List<Card>() {
 				new Card(Rank.Ace, Suit.Hearts),
@@ -37,7 +41,7 @@ namespace PokerUnitTests {
 				new Card(Rank.Ten, Suit.Hearts)
 			};
 
-			UnitTestHelpClass.assertHand(bestHand, handType, firstValue, secondValue, suit, kickers);
+			UnitTestHelpClass.assertHand(bestHand, handRank, primaryCardRank, secondaryCardRank, suit, kickers);
 		}
 
 		/// <summary>
@@ -58,15 +62,15 @@ namespace PokerUnitTests {
 
 			var bestHand = PokerHand.getBestHand(cards);
 
-			var handType = HandType.FourOfAKind;
-			Rank? firstValue = Rank.Ace;
-			Rank? secondValue = null;
+			var handRank = HandRank.FourOfAKind;
+			Rank? primaryCardRank = Rank.Ace;
+			Rank? secondaryCardRank = null;
 			Suit? suit = null;
 			var kickers = new List<Card>() {
 				new Card(Rank.King, Suit.Hearts)
 			};
 
-			UnitTestHelpClass.assertHand(bestHand, handType, firstValue, secondValue, suit, kickers);
+			UnitTestHelpClass.assertHand(bestHand, handRank, primaryCardRank, secondaryCardRank, suit, kickers);
 		}
 
 		/// <summary>
@@ -87,13 +91,13 @@ namespace PokerUnitTests {
 
 			var bestHand = PokerHand.getBestHand(cards);
 
-			var handType = HandType.FullHouse;
-			Rank? firstValue = Rank.Ace;
-			Rank? secondValue = Rank.King;
+			var handRank = HandRank.FullHouse;
+			Rank? primaryCardRank = Rank.Ace;
+			Rank? secondaryCardRank = Rank.King;
 			Suit? suit = null;
 			var kickers = new List<Card>();
 
-			UnitTestHelpClass.assertHand(bestHand, handType, firstValue, secondValue, suit, kickers);
+			UnitTestHelpClass.assertHand(bestHand, handRank, primaryCardRank, secondaryCardRank, suit, kickers);
 		}
 
 		/// <summary>
@@ -114,9 +118,9 @@ namespace PokerUnitTests {
 
 			var bestHand = PokerHand.getBestHand(cards);
 
-			var handType = HandType.Flush;
-			Rank? firstValue = null;
-			Rank? secondValue = null;
+			var handRank = HandRank.Flush;
+			Rank? primaryCardRank = null;
+			Rank? secondaryCardRank = null;
 			Suit? suit = Suit.Hearts;
 			var kickers = new List<Card>() {
 				new Card(Rank.Ace, Suit.Hearts),
@@ -126,7 +130,7 @@ namespace PokerUnitTests {
 				new Card(Rank.Nine, Suit.Hearts)
 			};
 
-			UnitTestHelpClass.assertHand(bestHand, handType, firstValue, secondValue, suit, kickers);
+			UnitTestHelpClass.assertHand(bestHand, handRank, primaryCardRank, secondaryCardRank, suit, kickers);
 		}
 
 		/// <summary>
@@ -147,9 +151,9 @@ namespace PokerUnitTests {
 
 			var bestHand = PokerHand.getBestHand(cards);
 
-			var handType = HandType.Straight;
-			Rank? firstValue = null;
-			Rank? secondValue = null;
+			var handRank = HandRank.Straight;
+			Rank? primaryCardRank = null;
+			Rank? secondaryCardRank = null;
 			Suit? suit = null;
 			var kickers = new List<Card>() {
 				new Card(Rank.Ace, Suit.Hearts),
@@ -159,7 +163,7 @@ namespace PokerUnitTests {
 				new Card(Rank.Ten, Suit.Hearts)
 			};
 
-			UnitTestHelpClass.assertHand(bestHand, handType, firstValue, secondValue, suit, kickers);
+			UnitTestHelpClass.assertHand(bestHand, handRank, primaryCardRank, secondaryCardRank, suit, kickers);
 		}
 
 		/// <summary>
@@ -180,16 +184,16 @@ namespace PokerUnitTests {
 
 			var bestHand = PokerHand.getBestHand(cards);
 
-			var handType = HandType.ThreeOfAKind;
-			Rank? firstValue = Rank.Ace;
-			Rank? secondValue = null;
+			var handRank = HandRank.ThreeOfAKind;
+			Rank? primaryCardRank = Rank.Ace;
+			Rank? secondaryCardRank = null;
 			Suit? suit = null;
 			var kickers = new List<Card>() {
 				new Card(Rank.King, Suit.Clubs),
 				new Card(Rank.Queen, Suit.Hearts)
 			};
 
-			UnitTestHelpClass.assertHand(bestHand, handType, firstValue, secondValue, suit, kickers);
+			UnitTestHelpClass.assertHand(bestHand, handRank, primaryCardRank, secondaryCardRank, suit, kickers);
 		}
 
 		/// <summary>
@@ -210,15 +214,15 @@ namespace PokerUnitTests {
 
 			var bestHand = PokerHand.getBestHand(cards);
 
-			var handType = HandType.TwoPair;
-			Rank? firstValue = Rank.Ace;
-			Rank? secondValue = Rank.King;
+			var handRank = HandRank.TwoPair;
+			Rank? primaryCardRank = Rank.Ace;
+			Rank? secondaryCardRank = Rank.King;
 			Suit? suit = null;
 			var kickers = new List<Card>() {
 				new Card(Rank.Queen, Suit.Hearts)
 			};
 
-			UnitTestHelpClass.assertHand(bestHand, handType, firstValue, secondValue, suit, kickers);
+			UnitTestHelpClass.assertHand(bestHand, handRank, primaryCardRank, secondaryCardRank, suit, kickers);
 		}
 
 		/// <summary>
@@ -239,9 +243,9 @@ namespace PokerUnitTests {
 
 			var bestHand = PokerHand.getBestHand(cards);
 
-			var handType = HandType.Pair;
-			Rank? firstValue = Rank.Ace;
-			Rank? secondValue = null;
+			var handRank = HandRank.Pair;
+			Rank? primaryCardRank = Rank.Ace;
+			Rank? secondaryCardRank = null;
 			Suit? suit = null;
 			var kickers = new List<Card>() {
 				new Card(Rank.King, Suit.Diamonds),
@@ -249,7 +253,7 @@ namespace PokerUnitTests {
 				new Card(Rank.Jack, Suit.Hearts)
 			};
 
-			UnitTestHelpClass.assertHand(bestHand, handType, firstValue, secondValue, suit, kickers);
+			UnitTestHelpClass.assertHand(bestHand, handRank, primaryCardRank, secondaryCardRank, suit, kickers);
 		}
 
 		/// <summary>
@@ -270,9 +274,9 @@ namespace PokerUnitTests {
 
 			var bestHand = PokerHand.getBestHand(cards);
 
-			var handType = HandType.HighCard;
-			Rank? firstValue = null;
-			Rank? secondValue = null;
+			var handRank = HandRank.HighCard;
+			Rank? primaryCardRank = null;
+			Rank? secondaryCardRank = null;
 			Suit? suit = null;
 			var kickers = new List<Card>() {
 				new Card(Rank.Ace, Suit.Hearts),
@@ -282,7 +286,7 @@ namespace PokerUnitTests {
 				new Card(Rank.Nine, Suit.Hearts),
 			};
 
-			UnitTestHelpClass.assertHand(bestHand, handType, firstValue, secondValue, suit, kickers);
+			UnitTestHelpClass.assertHand(bestHand, handRank, primaryCardRank, secondaryCardRank, suit, kickers);
 		}
 	}
 }

@@ -1,9 +1,8 @@
 ﻿using DeckOfCardsLibrary;
 using PokerLibrary;
-using PokerLibrary.ExtentionClasses;
 
 namespace Poker_Console {
-	internal class Program {
+    internal class Program {
 		static void Main(string[] args) {
 
 			// Get all the players.
@@ -136,9 +135,9 @@ namespace Poker_Console {
 			foreach (var player in players) {
 				Console.WriteLine($"Name: {player.name}");
 				Console.WriteLine($"Cards: {player.cards.getDisplayString(displayTenAsT: true)}");
-				Console.WriteLine($"Hand Type: {player.hand!.handType}");
-				Console.WriteLine($"Highest value for this hand type: {(player.hand.firstCardValue?.getDisplayString(displayTenAsT: true))}");
-				Console.WriteLine($"Second highest value for this hand type: {(player.hand.secondCardValue?.getDisplayString(displayTenAsT: true))}\n" +
+				Console.WriteLine($"Hand Rank: {player.hand!.handRank}");
+				Console.WriteLine($"Highest value for this hand rank: {(player.hand.primaryCardRank?.getDisplayString(displayTenAsT: true))}");
+				Console.WriteLine($"Second highest value for this hand rank: {(player.hand.secondaryCardRank?.getDisplayString(displayTenAsT: true))}\n" +
 					$"Kickers: {player.hand.kickers.getDisplayString(displayTenAsT: true)}");
 				Console.WriteLine("");
 			}
