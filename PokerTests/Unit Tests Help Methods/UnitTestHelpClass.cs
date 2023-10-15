@@ -1,11 +1,10 @@
 ﻿using DeckOfCardsLibrary;
 using PokerLibrary;
-using PokerLibrary.ExtensionClasses;
 using static DeckOfCardsLibrary.Card;
 using static PokerLibrary.PokerHand;
 
 namespace PokerUnitTests.Unit_Tests_Help_Methods {
-	internal static class UnitTestHelpClass {
+    internal static class UnitTestHelpClass {
 
 		/// <summary>
 		/// Help function to assert a PokerHand.

@@ -1,9 +1,8 @@
 ﻿using DeckOfCardsLibrary;
 using PokerLibrary;
-using PokerLibrary.ExtensionClasses;
 
 namespace Poker_Console {
-	internal class Program {
+    internal class Program {
 		static void Main(string[] args) {
 
 			// Get all the players.
