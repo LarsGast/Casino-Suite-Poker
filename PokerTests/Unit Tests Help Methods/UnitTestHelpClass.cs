@@ -1,6 +1,6 @@
 ﻿using DeckOfCardsLibrary;
 using PokerLibrary;
-using PokerLibrary.ExtentionClasses;
+using PokerLibrary.ExtensionClasses;
 using static DeckOfCardsLibrary.Card;
 using static PokerLibrary.PokerHand;
 

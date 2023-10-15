@@ -1,6 +1,6 @@
 ﻿using DeckOfCardsLibrary;
 using PokerLibrary;
-using PokerLibrary.ExtentionClasses;
+using PokerLibrary.ExtensionClasses;
 
 namespace Poker_Console {
 	internal class Program {
