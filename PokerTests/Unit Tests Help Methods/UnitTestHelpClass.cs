@@ -11,15 +11,15 @@ namespace PokerUnitTests.Unit_Tests_Help_Methods {
 		/// </summary>
 		/// <param name="hand">Observed hand</param>
 		/// <param name="handRank">Expected handRank</param>
-		/// <param name="firstCardValue">Expected firstCardValue</param>
-		/// <param name="secondCardValue">Expected secondCardValue</param>
+		/// <param name="primaryCardRank">Expected primaryCardRank</param>
+		/// <param name="secondaryCardRank">Expected secondaryCardRank</param>
 		/// <param name="suit">Expected suit</param>
 		/// <param name="kickers">Expected kickers</param>
-		internal static void assertHand(PokerHand hand, HandRank handRank, Rank? firstCardValue, Rank? secondCardValue, Suit? suit, IEnumerable<Card> kickers) {
+		internal static void assertHand(PokerHand hand, HandRank handRank, Rank? primaryCardRank, Rank? secondaryCardRank, Suit? suit, IEnumerable<Card> kickers) {
 			Assert.Multiple(() => {
 				Assert.That(hand.handRank, Is.EqualTo(handRank), $"Hand is not a {handRank}");
-				Assert.That(hand.primaryCardRank, Is.EqualTo(firstCardValue), $"Highest value is not {firstCardValue}");
-				Assert.That(hand.secondaryCardRank, Is.EqualTo(secondCardValue), $"Second highest value is not {secondCardValue}");
+				Assert.That(hand.primaryCardRank, Is.EqualTo(primaryCardRank), $"Primary card rank is not {primaryCardRank}");
+				Assert.That(hand.secondaryCardRank, Is.EqualTo(secondaryCardRank), $"Secondary card rank is not {secondaryCardRank}");
 				Assert.That(hand.suit, Is.EqualTo(suit), $"Suit is not {suit}");
 				Assert.That(hand.kickers.equals(kickers), Is.True, $"Kickers are not the same. Oberved: {hand.kickers.getDisplayString(displayTenAsT: true)}. Expected: {kickers.getDisplayString(displayTenAsT: true)}");
 			});
@@ -28,8 +28,8 @@ namespace PokerUnitTests.Unit_Tests_Help_Methods {
 		internal static void assertThatHandWins(PokerHand winningHand, PokerHand losingHand) {
 			Assert.That(winningHand.winsAgainst(losingHand), Is.True, 
 				$"{winningHand.handRank} does not win against {losingHand.handRank}\n" +
-				$"First value: {winningHand.primaryCardRank} vs. {losingHand.primaryCardRank}\n" +
-				$"Second value: {winningHand.secondaryCardRank} vs. {losingHand.secondaryCardRank}\n" +
+				$"Primary card rank: {winningHand.primaryCardRank} vs. {losingHand.primaryCardRank}\n" +
+				$"Secondary card rank: {winningHand.secondaryCardRank} vs. {losingHand.secondaryCardRank}\n" +
 				$"Kickers: {winningHand.kickers.getDisplayString(displayTenAsT: true)} vs. {losingHand.kickers.getDisplayString(displayTenAsT: true)}");
 		}
 
@@ -48,8 +48,8 @@ namespace PokerUnitTests.Unit_Tests_Help_Methods {
 			Assert.That(handThatWon, Is.EqualTo(winningHand), "Hand that should win did not win.\n" +
 				"Hand that should win vs. hand that won.\n" + 
 				$"{winningHand.handRank} vs. {handThatWon.handRank}\n" +
-				$"First value: {winningHand.primaryCardRank} vs. {handThatWon.primaryCardRank}\n" +
-				$"Second value: {winningHand.secondaryCardRank} vs. {handThatWon.secondaryCardRank}\n" +
+				$"Primary card rank: {winningHand.primaryCardRank} vs. {handThatWon.primaryCardRank}\n" +
+				$"Secondary card rank: {winningHand.secondaryCardRank} vs. {handThatWon.secondaryCardRank}\n" +
 				$"Kickers: {winningHand.kickers.getDisplayString(displayTenAsT: true)} vs. {handThatWon.kickers.getDisplayString(displayTenAsT: true)}"
 				);
 		}
