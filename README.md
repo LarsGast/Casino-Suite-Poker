@@ -57,6 +57,7 @@ The code snippet below will demonstrate how to get a deck, draw some cards, crea
 
 ```cs
 using PokerLibrary;
+using DeckOfCardsLibrary;
 
 // Get a new deck and shuffle it.
 var deck = Deck.get();
