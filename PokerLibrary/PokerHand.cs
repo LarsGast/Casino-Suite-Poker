@@ -1,17 +1,21 @@
 ﻿using DeckOfCardsLibrary;
-using System.Runtime.CompilerServices;
 using static DeckOfCardsLibrary.Card;
 
 namespace PokerLibrary {
+
+	/// <summary>
+	/// Represents a poker hand, which is a combination of playing cards used in various poker games.
+	/// This class provides methods to evaluate and compare poker hands based on standard hand ranks.
+	/// </summary>
 	public class PokerHand {
 
 		#region Properties
 
 		/// <summary>
-		/// Represents the type of poker hand, ranging from High Card to Straight Flush.
+		/// Represents the rank of poker hand, ranging from High Card to Straight Flush.
 		/// Excludes the Royal Flush, which is the highest form of a Straight Flush.
 		/// </summary>
-		public enum HandType {
+		public enum HandRank {
 			HighCard,
 			Pair,
 			TwoPair,
@@ -24,16 +28,16 @@ namespace PokerLibrary {
 		}
 
 		/// <summary>
-		/// The specific type of the hand, such as High Card or Straight Flush.
+		/// The specific rank of the hand, such as High Card or Straight Flush.
 		/// </summary>
-		public HandType handType { get; private set; }
+		public HandRank handRank { get; private set; }
 
 		/// <summary>
 		/// The primary card rank relevant to this hand.
 		/// For Pair and TwoPair: the rank of the highest pair.
 		/// For ThreeOfAKind and FullHouse: the rank of the three of a kind.
 		/// For FourOfAKind: the rank of the four of a kind.
-		/// Null for other hand types.
+		/// Null for other hand ranks.
 		/// </summary>
 		public Rank? primaryCardRank { get; private set; }
 
@@ -41,13 +45,13 @@ namespace PokerLibrary {
 		/// The secondary card rank relevant to this hand.
 		/// For TwoPair: the rank of the second-highest pair.
 		/// For FullHouse: the rank of the highest pair that is not a three of a kind.
-		/// Null for other hand types.
+		/// Null for other hand ranks.
 		/// </summary>
 		public Rank? secondaryCardRank { get; private set; }
 
 		/// <summary>
 		/// The suit of the hand, relevant for Flush and StraightFlush.
-		/// Null for other hand types.
+		/// Null for other hand ranks.
 		/// </summary>
 		public Suit? suit { get; private set; }
 
@@ -62,7 +66,7 @@ namespace PokerLibrary {
 
 				// If the hand is a straight or straight flush from Ace to Five, move the Ace to the end.
 				// In this case, the ace is the lowest rank of the hand, not the highest.
-				if (this.handType == HandType.Straight || this.handType == HandType.StraightFlush) {
+				if (this.handRank == HandRank.Straight || this.handRank == HandRank.StraightFlush) {
 					if (orderedKickers.Last().rank == Rank.Two && orderedKickers.First().rank == Rank.Ace) {
 						var aceCard = orderedKickers.First();
 						orderedKickers.Remove(aceCard);
@@ -86,13 +90,13 @@ namespace PokerLibrary {
 		/// <summary>
 		/// Constructor for initializing a PokerHand.
 		/// </summary>
-		/// <param name="handType">The type of the hand.</param>
+		/// <param name="handRank">The rank of the hand.</param>
 		/// <param name="primaryCardRank">The primary card rank.</param>
 		/// <param name="secondaryCardRank">The secondary card rank.</param>
 		/// <param name="suit">The suit of the hand (if relevant).</param>
 		/// <param name="kickers">(Unsorted) list of kickers.</param>
-		private PokerHand(HandType handType, Rank? primaryCardRank, Rank? secondaryCardRank, Suit? suit, IEnumerable<Card> kickers) {
-			this.handType = handType;
+		private PokerHand(HandRank handRank, Rank? primaryCardRank, Rank? secondaryCardRank, Suit? suit, IEnumerable<Card> kickers) {
+			this.handRank = handRank;
 			this.primaryCardRank = primaryCardRank;
 			this.secondaryCardRank = secondaryCardRank;
 			this.suit = suit;
@@ -113,28 +117,28 @@ namespace PokerLibrary {
 		/// <returns>The best PokerHand among the provided list.</returns>
 		public static PokerHand getWinningHand(IEnumerable<PokerHand> hands) {
 
-			// Find the highest hand type among the provided hands.
-			var bestHandType = hands
-				.OrderByDescending(hand => hand.handType)
+			// Find the highest hand rank among the provided hands.
+			var bestHandRank = hands
+				.OrderByDescending(hand => hand.handRank)
 				.First()
-				.handType;
+				.handRank;
 
-			// Filter hands with the best hand type.
-			var handsBestHandType = hands.Where(hand => hand.handType == bestHandType);
+			// Filter hands with the best hand rank.
+			var handsBestHandRank = hands.Where(hand => hand.handRank == bestHandRank);
 
-			// If only one hand has the best hand type, return it.
-			if (handsBestHandType.Count() == 1) {
-				return handsBestHandType.First();
+			// If only one hand has the best hand rank, return it.
+			if (handsBestHandRank.Count() == 1) {
+				return handsBestHandRank.First();
 			}
 
 			// Continue comparing by the primary card rank.
-			var bestPrimaryCardRank = handsBestHandType
+			var bestPrimaryCardRank = handsBestHandRank
 				.OrderByDescending(hand => hand.primaryCardRank)
 				.First()
 				.primaryCardRank;
 
 			// Filter hands with the best primary card rank.
-			var handsBestPrimaryCardRank = handsBestHandType.Where(hand => hand.primaryCardRank == bestPrimaryCardRank);
+			var handsBestPrimaryCardRank = handsBestHandRank.Where(hand => hand.primaryCardRank == bestPrimaryCardRank);
 
 			// If only one hand has the best primary card rank, return it.
 			if (handsBestPrimaryCardRank.Count() == 1) {
@@ -208,13 +212,13 @@ namespace PokerLibrary {
 		/// </returns>
 		public bool? winsAgainst(PokerHand other) {
 
-			// Check if this hand has a better hand type than the other.
-			var hasBetterHandType = this.hasBetterHandType(other);
-			if (hasBetterHandType != null) {
-				return hasBetterHandType;
+			// Check if this hand has a better hand rank than the other.
+			var hasBetterHandRank = this.hasBetterHandRank(other);
+			if (hasBetterHandRank != null) {
+				return hasBetterHandRank;
 			}
 
-			// If hand type is the same, check by the primary card rank.
+			// If hand rank is the same, check by the primary card rank.
 			var hasBetterFirstCard = this.hasBetterFirstCard(other);
 			if (hasBetterFirstCard != null) {
 				return hasBetterFirstCard;
@@ -231,20 +235,20 @@ namespace PokerLibrary {
 		}
 
 		/// <summary>
-		/// Checks if this hand has a better hand type than the other hand.
+		/// Checks if this hand has a better hand rank than the other hand.
 		/// </summary>
 		/// <param name="other">The other hand to compare against.</param>
 		/// <returns>
-		///     True if this hand has a better hand type,
-		///     False if the other hand has a better hand type,
-		///     Null if they have the same hand type.
+		///     True if this hand has a better hand rank,
+		///     False if the other hand has a better hand rank,
+		///     Null if they have the same hand rank.
 		/// </returns>
-		private bool? hasBetterHandType(PokerHand other) {
-			if (this.handType == other.handType) {
+		private bool? hasBetterHandRank(PokerHand other) {
+			if (this.handRank == other.handRank) {
 				return null;
 			}
 
-			return this.handType > other.handType;
+			return this.handRank > other.handRank;
 		}
 
 		/// <summary>
@@ -379,7 +383,7 @@ namespace PokerLibrary {
 
 			var suit = highestStraightFlushCards.First().suit;
 			var kickers = highestStraightFlushCards.OrderByDescending(card => card.rank);
-			return new PokerHand(HandType.StraightFlush, null, null, suit, kickers);
+			return new PokerHand(HandRank.StraightFlush, null, null, suit, kickers);
 		}
 
 		/// <summary>
@@ -400,7 +404,7 @@ namespace PokerLibrary {
 			}
 
 			var kickers = cards.OrderByDescending(card => card.rank).Where(card => card.rank != highestFourOrAKindValue).Take(1);
-			return new PokerHand(HandType.FourOfAKind, highestFourOrAKindValue, null, null, kickers);
+			return new PokerHand(HandRank.FourOfAKind, highestFourOrAKindValue, null, null, kickers);
 		}
 
 		/// <summary>
@@ -426,7 +430,7 @@ namespace PokerLibrary {
 			}
 
 			var kickers = new List<Card>();
-			return new PokerHand(HandType.FullHouse, highestThreeOfAKindValue, highestPairValue, null, kickers);
+			return new PokerHand(HandRank.FullHouse, highestThreeOfAKindValue, highestPairValue, null, kickers);
 		}
 
 		/// <summary>
@@ -449,7 +453,7 @@ namespace PokerLibrary {
 
 			var flushSuit = flushCards.First().suit;
 			var kickers = flushCards.OrderByDescending(card => card.rank);
-			return new PokerHand(HandType.Flush, null, null, flushSuit, kickers);
+			return new PokerHand(HandRank.Flush, null, null, flushSuit, kickers);
 		}
 
 		/// <summary>
@@ -470,7 +474,7 @@ namespace PokerLibrary {
 			}
 
 			var kickers = highestStraightCards.OrderByDescending(card => card.rank);
-			return new PokerHand(HandType.Straight, null, null, null, kickers);
+			return new PokerHand(HandRank.Straight, null, null, null, kickers);
 		}
 
 		/// <summary>
@@ -491,7 +495,7 @@ namespace PokerLibrary {
 			}
 
 			var kickers = cards.Where(card => card.rank != highestThreeOfAKindValue).OrderByDescending(card => card.rank).Take(2);
-			return new PokerHand(HandType.ThreeOfAKind, highestThreeOfAKindValue, null, null, kickers);
+			return new PokerHand(HandRank.ThreeOfAKind, highestThreeOfAKindValue, null, null, kickers);
 		}
 
 		/// <summary>
@@ -522,7 +526,7 @@ namespace PokerLibrary {
 				.OrderByDescending(card => card.rank)
 				.Take(1);
 
-			return new PokerHand(HandType.TwoPair, highestPairValue, secondHighestPairValue, null, kickers);
+			return new PokerHand(HandRank.TwoPair, highestPairValue, secondHighestPairValue, null, kickers);
 		}
 
 		/// <summary>
@@ -547,7 +551,7 @@ namespace PokerLibrary {
 				.OrderByDescending(card => card.rank)
 				.Take(3);
 
-			return new PokerHand(HandType.Pair, highestPairValue, null, null, kickers);
+			return new PokerHand(HandRank.Pair, highestPairValue, null, null, kickers);
 		}
 
 		/// <summary>
@@ -560,7 +564,7 @@ namespace PokerLibrary {
 			// Find the five highest cards as kickers and return as a PokerHand.
 			var orderedCards = cards.OrderByDescending(card => card.rank);
 			var kickers = orderedCards.Take(5);
-			return new PokerHand(HandType.HighCard, null, null, null, kickers);
+			return new PokerHand(HandRank.HighCard, null, null, null, kickers);
 		}
 
 		#region Help Functions

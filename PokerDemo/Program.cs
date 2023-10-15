@@ -135,9 +135,9 @@ namespace Poker_Console {
 			foreach (var player in players) {
 				Console.WriteLine($"Name: {player.name}");
 				Console.WriteLine($"Cards: {player.cards.getDisplayString(displayTenAsT: true)}");
-				Console.WriteLine($"Hand Type: {player.hand!.handType}");
-				Console.WriteLine($"Highest value for this hand type: {(player.hand.primaryCardRank?.getDisplayString(displayTenAsT: true))}");
-				Console.WriteLine($"Second highest value for this hand type: {(player.hand.secondaryCardRank?.getDisplayString(displayTenAsT: true))}\n" +
+				Console.WriteLine($"Hand Rank: {player.hand!.handRank}");
+				Console.WriteLine($"Highest value for this hand rank: {(player.hand.primaryCardRank?.getDisplayString(displayTenAsT: true))}");
+				Console.WriteLine($"Second highest value for this hand rank: {(player.hand.secondaryCardRank?.getDisplayString(displayTenAsT: true))}\n" +
 					$"Kickers: {player.hand.kickers.getDisplayString(displayTenAsT: true)}");
 				Console.WriteLine("");
 			}
