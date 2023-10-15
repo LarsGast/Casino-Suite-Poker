@@ -5,10 +5,14 @@ using static DeckOfCardsLibrary.Card;
 using static PokerLibrary.PokerHand;
 
 namespace PokerUnitTests {
+
+	/// <summary>
+	/// Contains unit tests to verify the correctness of Poker hands evaluation.
+	/// </summary>
 	public class UnitTestsHandIsCorrect {
 
 		/// <summary>
-		/// Tests whether the given straightflush.
+		/// Tests whether the given hand is a straight flush.
 		/// </summary>
 		[Test]
 		public void handIsStraightFlush() {
