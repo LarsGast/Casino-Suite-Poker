@@ -1,6 +1,6 @@
 # CasinoSuite.Poker
 
-[![Nuget](https://img.shields.io/nuget/v/CasinoSuite.Poker?color=green)]()
+[![Nuget](https://img.shields.io/nuget/v/CasinoSuite.Poker?color=green)](https://www.nuget.org/packages/CasinoSuite.Poker)
 
 
 ## Table of Contents
