@@ -25,14 +25,6 @@ namespace PokerUnitTests.Unit_Tests_Help_Methods {
 			});
 		}
 
-		internal static void assertThatHandWins(PokerHand winningHand, PokerHand losingHand) {
-			Assert.That(winningHand.winsAgainst(losingHand), Is.True, 
-				$"{winningHand.handRank} does not win against {losingHand.handRank}\n" +
-				$"Primary card rank: {winningHand.primaryCardRank} vs. {losingHand.primaryCardRank}\n" +
-				$"Secondary card rank: {winningHand.secondaryCardRank} vs. {losingHand.secondaryCardRank}\n" +
-				$"Kickers: {winningHand.kickers.getDisplayString(displayTenAsT: true)} vs. {losingHand.kickers.getDisplayString(displayTenAsT: true)}");
-		}
-
 		/// <summary>
 		/// Asserts that the given hand wins against the given losinghands.
 		/// </summary>
