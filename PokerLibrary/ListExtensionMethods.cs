@@ -1,7 +1,11 @@
 ﻿using DeckOfCardsLibrary;
 
 namespace PokerLibrary {
-    public static class ListExtensionMethods {
+
+	/// <summary>
+	/// Provides extension methods for working with lists of cards.
+	/// </summary>
+	public static class ListExtensionMethods {
 
         /// <summary>
         /// Extension method.
