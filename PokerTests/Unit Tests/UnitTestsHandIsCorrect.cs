@@ -4,289 +4,363 @@ using PokerUnitTests.Unit_Tests_Help_Methods;
 using static DeckOfCardsLibrary.Card;
 using static PokerLibrary.PokerHand;
 
-namespace PokerUnitTests {
+namespace PokerUnitTests
+{
+    /// <summary>
+    /// Contains unit tests to verify the correctness of Poker hands evaluation.
+    /// </summary>
+    public class UnitTestsHandIsCorrect
+    {
+        /// <summary>
+        /// Tests whether the given hand is a straight flush.
+        /// </summary>
+        [Test]
+        public void HandIsStraightFlush()
+        {
+            var cards = new List<Card>()
+            {
+                new(Rank.Ace, Suit.Hearts),
+                new(Rank.King, Suit.Hearts),
+                new(Rank.Queen, Suit.Hearts),
+                new(Rank.Jack, Suit.Hearts),
+                new(Rank.Ten, Suit.Hearts),
+                new(Rank.Two, Suit.Clubs),
+                new(Rank.Three, Suit.Spades),
+            };
 
-	/// <summary>
-	/// Contains unit tests to verify the correctness of Poker hands evaluation.
-	/// </summary>
-	public class UnitTestsHandIsCorrect {
+            var bestHand = PokerHand.GetBestHand(cards);
 
-		/// <summary>
-		/// Tests whether the given hand is a straight flush.
-		/// </summary>
-		[Test]
-        public void HandIsStraightFlush() {
+            var handRank = HandRankEnum.StraightFlush;
+            Rank? primaryCardRank = null;
+            Rank? secondaryCardRank = null;
+            Suit? suit = Suit.Hearts;
+            var kickers = new List<Card>()
+            {
+                new(Rank.Ace, Suit.Hearts),
+                new(Rank.King, Suit.Hearts),
+                new(Rank.Queen, Suit.Hearts),
+                new(Rank.Jack, Suit.Hearts),
+                new(Rank.Ten, Suit.Hearts),
+            };
 
-			var cards = new List<Card>() {
-				new(Rank.Ace, Suit.Hearts),
-				new(Rank.King, Suit.Hearts),
-				new(Rank.Queen, Suit.Hearts),
-				new(Rank.Jack, Suit.Hearts),
-				new(Rank.Ten, Suit.Hearts),
-				new(Rank.Two, Suit.Clubs),
-				new(Rank.Three, Suit.Spades)
-			};
+            UnitTestHelpClass.AssertHand(
+                bestHand,
+                handRank,
+                primaryCardRank,
+                secondaryCardRank,
+                suit,
+                kickers
+            );
+        }
 
-			var bestHand = PokerHand.GetBestHand(cards);
+        /// <summary>
+        /// Tests whether the given hand is a four of a kind.
+        /// </summary>
+        [Test]
+        public void HandIsFourOfAKind()
+        {
+            var cards = new List<Card>()
+            {
+                new(Rank.Ace, Suit.Hearts),
+                new(Rank.Ace, Suit.Clubs),
+                new(Rank.Ace, Suit.Diamonds),
+                new(Rank.Ace, Suit.Spades),
+                new(Rank.King, Suit.Hearts),
+                new(Rank.Two, Suit.Clubs),
+                new(Rank.Three, Suit.Spades),
+            };
 
-			var handRank = HandRankEnum.StraightFlush;
-			Rank? primaryCardRank = null;
-			Rank? secondaryCardRank = null;
-			Suit? suit = Suit.Hearts;
-			var kickers = new List<Card>() {
-				new(Rank.Ace, Suit.Hearts),
-				new(Rank.King, Suit.Hearts),
-				new(Rank.Queen, Suit.Hearts),
-				new(Rank.Jack, Suit.Hearts),
-				new(Rank.Ten, Suit.Hearts)
-			};
+            var bestHand = PokerHand.GetBestHand(cards);
 
-			UnitTestHelpClass.AssertHand(bestHand, handRank, primaryCardRank, secondaryCardRank, suit, kickers);
-		}
+            var handRank = HandRankEnum.FourOfAKind;
+            Rank? primaryCardRank = Rank.Ace;
+            Rank? secondaryCardRank = null;
+            Suit? suit = null;
+            var kickers = new List<Card>() { new(Rank.King, Suit.Hearts) };
 
-		/// <summary>
-		/// Tests whether the given hand is a four of a kind.
-		/// </summary>
-		[Test]
-		public void HandIsFourOfAKind() {
+            UnitTestHelpClass.AssertHand(
+                bestHand,
+                handRank,
+                primaryCardRank,
+                secondaryCardRank,
+                suit,
+                kickers
+            );
+        }
 
-			var cards = new List<Card>() {
-				new(Rank.Ace, Suit.Hearts),
-				new(Rank.Ace, Suit.Clubs),
-				new(Rank.Ace, Suit.Diamonds),
-				new(Rank.Ace, Suit.Spades),
-				new(Rank.King, Suit.Hearts),
-				new(Rank.Two, Suit.Clubs),
-				new(Rank.Three, Suit.Spades)
-			};
+        /// <summary>
+        /// Tests whether the given hand is a full house.
+        /// </summary>
+        [Test]
+        public void HandIsFullHouse()
+        {
+            var cards = new List<Card>()
+            {
+                new(Rank.Ace, Suit.Hearts),
+                new(Rank.Ace, Suit.Spades),
+                new(Rank.Ace, Suit.Clubs),
+                new(Rank.King, Suit.Hearts),
+                new(Rank.King, Suit.Spades),
+                new(Rank.Two, Suit.Clubs),
+                new(Rank.Three, Suit.Spades),
+            };
 
-			var bestHand = PokerHand.GetBestHand(cards);
+            var bestHand = PokerHand.GetBestHand(cards);
 
-			var handRank = HandRankEnum.FourOfAKind;
-			Rank? primaryCardRank = Rank.Ace;
-			Rank? secondaryCardRank = null;
-			Suit? suit = null;
-			var kickers = new List<Card>() {
-				new(Rank.King, Suit.Hearts)
-			};
+            var handRank = HandRankEnum.FullHouse;
+            Rank? primaryCardRank = Rank.Ace;
+            Rank? secondaryCardRank = Rank.King;
+            Suit? suit = null;
+            var kickers = new List<Card>();
 
-			UnitTestHelpClass.AssertHand(bestHand, handRank, primaryCardRank, secondaryCardRank, suit, kickers);
-		}
+            UnitTestHelpClass.AssertHand(
+                bestHand,
+                handRank,
+                primaryCardRank,
+                secondaryCardRank,
+                suit,
+                kickers
+            );
+        }
 
-		/// <summary>
-		/// Tests whether the given hand is a full house.
-		/// </summary>
-		[Test]
-		public void HandIsFullHouse() {
+        /// <summary>
+        /// Tests whether the given hand is a flush.
+        /// </summary>
+        [Test]
+        public void HandIsFlush()
+        {
+            var cards = new List<Card>()
+            {
+                new(Rank.Ace, Suit.Hearts),
+                new(Rank.King, Suit.Hearts),
+                new(Rank.Queen, Suit.Hearts),
+                new(Rank.Jack, Suit.Hearts),
+                new(Rank.Nine, Suit.Hearts),
+                new(Rank.Two, Suit.Clubs),
+                new(Rank.Three, Suit.Spades),
+            };
 
-			var cards = new List<Card>() {
-				new(Rank.Ace, Suit.Hearts),
-				new(Rank.Ace, Suit.Spades),
-				new(Rank.Ace, Suit.Clubs),
-				new(Rank.King, Suit.Hearts),
-				new(Rank.King, Suit.Spades),
-				new(Rank.Two, Suit.Clubs),
-				new(Rank.Three, Suit.Spades)
-			};
+            var bestHand = PokerHand.GetBestHand(cards);
 
-			var bestHand = PokerHand.GetBestHand(cards);
+            var handRank = HandRankEnum.Flush;
+            Rank? primaryCardRank = null;
+            Rank? secondaryCardRank = null;
+            Suit? suit = Suit.Hearts;
+            var kickers = new List<Card>()
+            {
+                new(Rank.Ace, Suit.Hearts),
+                new(Rank.King, Suit.Hearts),
+                new(Rank.Queen, Suit.Hearts),
+                new(Rank.Jack, Suit.Hearts),
+                new(Rank.Nine, Suit.Hearts),
+            };
 
-			var handRank = HandRankEnum.FullHouse;
-			Rank? primaryCardRank = Rank.Ace;
-			Rank? secondaryCardRank = Rank.King;
-			Suit? suit = null;
-			var kickers = new List<Card>();
+            UnitTestHelpClass.AssertHand(
+                bestHand,
+                handRank,
+                primaryCardRank,
+                secondaryCardRank,
+                suit,
+                kickers
+            );
+        }
 
-			UnitTestHelpClass.AssertHand(bestHand, handRank, primaryCardRank, secondaryCardRank, suit, kickers);
-		}
+        /// <summary>
+        /// Tests whether the given hand is a straight.
+        /// </summary>
+        [Test]
+        public void HandIsStraight()
+        {
+            var cards = new List<Card>()
+            {
+                new(Rank.Ace, Suit.Hearts),
+                new(Rank.King, Suit.Spades),
+                new(Rank.Queen, Suit.Diamonds),
+                new(Rank.Jack, Suit.Clubs),
+                new(Rank.Ten, Suit.Hearts),
+                new(Rank.Two, Suit.Clubs),
+                new(Rank.Three, Suit.Spades),
+            };
 
-		/// <summary>
-		/// Tests whether the given hand is a flush.
-		/// </summary>
-		[Test]
-		public void HandIsFlush() {
+            var bestHand = PokerHand.GetBestHand(cards);
 
-			var cards = new List<Card>() {
-				new(Rank.Ace, Suit.Hearts),
-				new(Rank.King, Suit.Hearts),
-				new(Rank.Queen, Suit.Hearts),
-				new(Rank.Jack, Suit.Hearts),
-				new(Rank.Nine, Suit.Hearts),
-				new(Rank.Two, Suit.Clubs),
-				new(Rank.Three, Suit.Spades)
-			};
+            var handRank = HandRankEnum.Straight;
+            Rank? primaryCardRank = null;
+            Rank? secondaryCardRank = null;
+            Suit? suit = null;
+            var kickers = new List<Card>()
+            {
+                new(Rank.Ace, Suit.Hearts),
+                new(Rank.King, Suit.Spades),
+                new(Rank.Queen, Suit.Diamonds),
+                new(Rank.Jack, Suit.Clubs),
+                new(Rank.Ten, Suit.Hearts),
+            };
 
-			var bestHand = PokerHand.GetBestHand(cards);
+            UnitTestHelpClass.AssertHand(
+                bestHand,
+                handRank,
+                primaryCardRank,
+                secondaryCardRank,
+                suit,
+                kickers
+            );
+        }
 
-			var handRank = HandRankEnum.Flush;
-			Rank? primaryCardRank = null;
-			Rank? secondaryCardRank = null;
-			Suit? suit = Suit.Hearts;
-			var kickers = new List<Card>() {
-				new(Rank.Ace, Suit.Hearts),
-				new(Rank.King, Suit.Hearts),
-				new(Rank.Queen, Suit.Hearts),
-				new(Rank.Jack, Suit.Hearts),
-				new(Rank.Nine, Suit.Hearts)
-			};
+        /// <summary>
+        /// Tests whether the given hand is a three of a kind.
+        /// </summary>
+        [Test]
+        public void HandIsThreeOfAKind()
+        {
+            var cards = new List<Card>()
+            {
+                new(Rank.Ace, Suit.Hearts),
+                new(Rank.Ace, Suit.Spades),
+                new(Rank.Ace, Suit.Diamonds),
+                new(Rank.King, Suit.Clubs),
+                new(Rank.Queen, Suit.Hearts),
+                new(Rank.Two, Suit.Clubs),
+                new(Rank.Three, Suit.Spades),
+            };
 
-			UnitTestHelpClass.AssertHand(bestHand, handRank, primaryCardRank, secondaryCardRank, suit, kickers);
-		}
+            var bestHand = PokerHand.GetBestHand(cards);
 
-		/// <summary>
-		/// Tests whether the given hand is a straight.
-		/// </summary>
-		[Test]
-		public void HandIsStraight() {
+            var handRank = HandRankEnum.ThreeOfAKind;
+            Rank? primaryCardRank = Rank.Ace;
+            Rank? secondaryCardRank = null;
+            Suit? suit = null;
+            var kickers = new List<Card>()
+            {
+                new(Rank.King, Suit.Clubs),
+                new(Rank.Queen, Suit.Hearts),
+            };
 
-			var cards = new List<Card>() {
-				new(Rank.Ace, Suit.Hearts),
-				new(Rank.King, Suit.Spades),
-				new(Rank.Queen, Suit.Diamonds),
-				new(Rank.Jack, Suit.Clubs),
-				new(Rank.Ten, Suit.Hearts),
-				new(Rank.Two, Suit.Clubs),
-				new(Rank.Three, Suit.Spades)
-			};
+            UnitTestHelpClass.AssertHand(
+                bestHand,
+                handRank,
+                primaryCardRank,
+                secondaryCardRank,
+                suit,
+                kickers
+            );
+        }
 
-			var bestHand = PokerHand.GetBestHand(cards);
+        /// <summary>
+        /// Tests whether the given hand is a two pair.
+        /// </summary>
+        [Test]
+        public void HandIsTwoPair()
+        {
+            var cards = new List<Card>()
+            {
+                new(Rank.Ace, Suit.Hearts),
+                new(Rank.Ace, Suit.Spades),
+                new(Rank.King, Suit.Diamonds),
+                new(Rank.King, Suit.Clubs),
+                new(Rank.Queen, Suit.Hearts),
+                new(Rank.Two, Suit.Clubs),
+                new(Rank.Three, Suit.Spades),
+            };
 
-			var handRank = HandRankEnum.Straight;
-			Rank? primaryCardRank = null;
-			Rank? secondaryCardRank = null;
-			Suit? suit = null;
-			var kickers = new List<Card>() {
-				new(Rank.Ace, Suit.Hearts),
-				new(Rank.King, Suit.Spades),
-				new(Rank.Queen, Suit.Diamonds),
-				new(Rank.Jack, Suit.Clubs),
-				new(Rank.Ten, Suit.Hearts)
-			};
+            var bestHand = PokerHand.GetBestHand(cards);
 
-			UnitTestHelpClass.AssertHand(bestHand, handRank, primaryCardRank, secondaryCardRank, suit, kickers);
-		}
+            var handRank = HandRankEnum.TwoPair;
+            Rank? primaryCardRank = Rank.Ace;
+            Rank? secondaryCardRank = Rank.King;
+            Suit? suit = null;
+            var kickers = new List<Card>() { new(Rank.Queen, Suit.Hearts) };
 
-		/// <summary>
-		/// Tests whether the given hand is a three of a kind.
-		/// </summary>
-		[Test]
-        public void HandIsThreeOfAKind() {
+            UnitTestHelpClass.AssertHand(
+                bestHand,
+                handRank,
+                primaryCardRank,
+                secondaryCardRank,
+                suit,
+                kickers
+            );
+        }
 
-			var cards = new List<Card>() {
-				new(Rank.Ace, Suit.Hearts),
-				new(Rank.Ace, Suit.Spades),
-				new(Rank.Ace, Suit.Diamonds),
-				new(Rank.King, Suit.Clubs),
-				new(Rank.Queen, Suit.Hearts),
-				new(Rank.Two, Suit.Clubs),
-				new(Rank.Three, Suit.Spades)
-			};
+        /// <summary>
+        /// Tests whether the given hand is a pair.
+        /// </summary>
+        [Test]
+        public void HandIsPair()
+        {
+            var cards = new List<Card>()
+            {
+                new(Rank.Ace, Suit.Hearts),
+                new(Rank.Ace, Suit.Spades),
+                new(Rank.King, Suit.Diamonds),
+                new(Rank.Queen, Suit.Clubs),
+                new(Rank.Jack, Suit.Hearts),
+                new(Rank.Two, Suit.Clubs),
+                new(Rank.Three, Suit.Spades),
+            };
 
-			var bestHand = PokerHand.GetBestHand(cards);
+            var bestHand = PokerHand.GetBestHand(cards);
 
-			var handRank = HandRankEnum.ThreeOfAKind;
-			Rank? primaryCardRank = Rank.Ace;
-			Rank? secondaryCardRank = null;
-			Suit? suit = null;
-			var kickers = new List<Card>() {
-				new(Rank.King, Suit.Clubs),
-				new(Rank.Queen, Suit.Hearts)
-			};
+            var handRank = HandRankEnum.Pair;
+            Rank? primaryCardRank = Rank.Ace;
+            Rank? secondaryCardRank = null;
+            Suit? suit = null;
+            var kickers = new List<Card>()
+            {
+                new(Rank.King, Suit.Diamonds),
+                new(Rank.Queen, Suit.Clubs),
+                new(Rank.Jack, Suit.Hearts),
+            };
 
-			UnitTestHelpClass.AssertHand(bestHand, handRank, primaryCardRank, secondaryCardRank, suit, kickers);
-		}
+            UnitTestHelpClass.AssertHand(
+                bestHand,
+                handRank,
+                primaryCardRank,
+                secondaryCardRank,
+                suit,
+                kickers
+            );
+        }
 
-		/// <summary>
-		/// Tests whether the given hand is a two pair.
-		/// </summary>
-		[Test]
-        public void HandIsTwoPair() {
+        /// <summary>
+        /// Tests whether the given hand is a high card.
+        /// </summary>
+        [Test]
+        public void HandIsHighCard()
+        {
+            var cards = new List<Card>()
+            {
+                new(Rank.Ace, Suit.Hearts),
+                new(Rank.King, Suit.Spades),
+                new(Rank.Queen, Suit.Diamonds),
+                new(Rank.Jack, Suit.Clubs),
+                new(Rank.Nine, Suit.Hearts),
+                new(Rank.Two, Suit.Clubs),
+                new(Rank.Three, Suit.Spades),
+            };
 
-			var cards = new List<Card>() {
-				new(Rank.Ace, Suit.Hearts),
-				new(Rank.Ace, Suit.Spades),
-				new(Rank.King, Suit.Diamonds),
-				new(Rank.King, Suit.Clubs),
-				new(Rank.Queen, Suit.Hearts),
-				new(Rank.Two, Suit.Clubs),
-				new(Rank.Three, Suit.Spades)
-			};
+            var bestHand = PokerHand.GetBestHand(cards);
 
-			var bestHand = PokerHand.GetBestHand(cards);
+            var handRank = HandRankEnum.HighCard;
+            Rank? primaryCardRank = null;
+            Rank? secondaryCardRank = null;
+            Suit? suit = null;
+            var kickers = new List<Card>()
+            {
+                new(Rank.Ace, Suit.Hearts),
+                new(Rank.King, Suit.Spades),
+                new(Rank.Queen, Suit.Diamonds),
+                new(Rank.Jack, Suit.Clubs),
+                new(Rank.Nine, Suit.Hearts),
+            };
 
-			var handRank = HandRankEnum.TwoPair;
-			Rank? primaryCardRank = Rank.Ace;
-			Rank? secondaryCardRank = Rank.King;
-			Suit? suit = null;
-			var kickers = new List<Card>() {
-				new(Rank.Queen, Suit.Hearts)
-			};
-
-			UnitTestHelpClass.AssertHand(bestHand, handRank, primaryCardRank, secondaryCardRank, suit, kickers);
-		}
-
-		/// <summary>
-		/// Tests whether the given hand is a pair.
-		/// </summary>
-		[Test]
-		public void HandIsPair() {
-
-			var cards = new List<Card>() {
-				new(Rank.Ace, Suit.Hearts),
-				new(Rank.Ace, Suit.Spades),
-				new(Rank.King, Suit.Diamonds),
-				new(Rank.Queen, Suit.Clubs),
-				new(Rank.Jack, Suit.Hearts),
-				new(Rank.Two, Suit.Clubs),
-				new(Rank.Three, Suit.Spades)
-			};
-
-			var bestHand = PokerHand.GetBestHand(cards);
-
-			var handRank = HandRankEnum.Pair;
-			Rank? primaryCardRank = Rank.Ace;
-			Rank? secondaryCardRank = null;
-			Suit? suit = null;
-			var kickers = new List<Card>() {
-				new(Rank.King, Suit.Diamonds),
-				new(Rank.Queen, Suit.Clubs),
-				new(Rank.Jack, Suit.Hearts)
-			};
-
-			UnitTestHelpClass.AssertHand(bestHand, handRank, primaryCardRank, secondaryCardRank, suit, kickers);
-		}
-
-		/// <summary>
-		/// Tests whether the given hand is a high card.
-		/// </summary>
-		[Test]
-		public void HandIsHighCard() {
-
-			var cards = new List<Card>() {
-				new(Rank.Ace, Suit.Hearts),
-				new(Rank.King, Suit.Spades),
-				new(Rank.Queen, Suit.Diamonds),
-				new(Rank.Jack, Suit.Clubs),
-				new(Rank.Nine, Suit.Hearts),
-				new(Rank.Two, Suit.Clubs),
-				new(Rank.Three, Suit.Spades)
-			};
-
-			var bestHand = PokerHand.GetBestHand(cards);
-
-			var handRank = HandRankEnum.HighCard;
-			Rank? primaryCardRank = null;
-			Rank? secondaryCardRank = null;
-			Suit? suit = null;
-			var kickers = new List<Card>() {
-				new(Rank.Ace, Suit.Hearts),
-				new(Rank.King, Suit.Spades),
-				new(Rank.Queen, Suit.Diamonds),
-				new(Rank.Jack, Suit.Clubs),
-				new(Rank.Nine, Suit.Hearts),
-			};
-
-			UnitTestHelpClass.AssertHand(bestHand, handRank, primaryCardRank, secondaryCardRank, suit, kickers);
-		}
-	}
+            UnitTestHelpClass.AssertHand(
+                bestHand,
+                handRank,
+                primaryCardRank,
+                secondaryCardRank,
+                suit,
+                kickers
+            );
+        }
+    }
 }
