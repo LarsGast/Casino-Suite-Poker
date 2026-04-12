@@ -1,8 +1,8 @@
 ﻿using DeckOfCardsLibrary;
 using PokerLibrary;
+using PokerLibrary.Enums;
 using PokerUnitTests.Unit_Tests_Help_Methods;
 using static DeckOfCardsLibrary.Card;
-using static PokerLibrary.PokerHand;
 
 namespace PokerUnitTests
 {
@@ -30,7 +30,7 @@ namespace PokerUnitTests
 
             var bestHand = PokerHand.GetBestHand(cards);
 
-            var handRank = HandRankEnum.StraightFlush;
+            var handRank = HandRanking.StraightFlush;
             Rank? primaryCardRank = null;
             Rank? secondaryCardRank = null;
             Suit? suit = Suit.Hearts;
@@ -72,7 +72,7 @@ namespace PokerUnitTests
 
             var bestHand = PokerHand.GetBestHand(cards);
 
-            var handRank = HandRankEnum.FourOfAKind;
+            var handRank = HandRanking.FourOfAKind;
             Rank? primaryCardRank = Rank.Ace;
             Rank? secondaryCardRank = null;
             Suit? suit = null;
@@ -107,7 +107,7 @@ namespace PokerUnitTests
 
             var bestHand = PokerHand.GetBestHand(cards);
 
-            var handRank = HandRankEnum.FullHouse;
+            var handRank = HandRanking.FullHouse;
             Rank? primaryCardRank = Rank.Ace;
             Rank? secondaryCardRank = Rank.King;
             Suit? suit = null;
@@ -142,7 +142,7 @@ namespace PokerUnitTests
 
             var bestHand = PokerHand.GetBestHand(cards);
 
-            var handRank = HandRankEnum.Flush;
+            var handRank = HandRanking.Flush;
             Rank? primaryCardRank = null;
             Rank? secondaryCardRank = null;
             Suit? suit = Suit.Hearts;
@@ -184,7 +184,7 @@ namespace PokerUnitTests
 
             var bestHand = PokerHand.GetBestHand(cards);
 
-            var handRank = HandRankEnum.Straight;
+            var handRank = HandRanking.Straight;
             Rank? primaryCardRank = null;
             Rank? secondaryCardRank = null;
             Suit? suit = null;
@@ -226,7 +226,7 @@ namespace PokerUnitTests
 
             var bestHand = PokerHand.GetBestHand(cards);
 
-            var handRank = HandRankEnum.ThreeOfAKind;
+            var handRank = HandRanking.ThreeOfAKind;
             Rank? primaryCardRank = Rank.Ace;
             Rank? secondaryCardRank = null;
             Suit? suit = null;
@@ -265,7 +265,7 @@ namespace PokerUnitTests
 
             var bestHand = PokerHand.GetBestHand(cards);
 
-            var handRank = HandRankEnum.TwoPair;
+            var handRank = HandRanking.TwoPair;
             Rank? primaryCardRank = Rank.Ace;
             Rank? secondaryCardRank = Rank.King;
             Suit? suit = null;
@@ -300,7 +300,7 @@ namespace PokerUnitTests
 
             var bestHand = PokerHand.GetBestHand(cards);
 
-            var handRank = HandRankEnum.Pair;
+            var handRank = HandRanking.Pair;
             Rank? primaryCardRank = Rank.Ace;
             Rank? secondaryCardRank = null;
             Suit? suit = null;
@@ -340,7 +340,7 @@ namespace PokerUnitTests
 
             var bestHand = PokerHand.GetBestHand(cards);
 
-            var handRank = HandRankEnum.HighCard;
+            var handRank = HandRanking.HighCard;
             Rank? primaryCardRank = null;
             Rank? secondaryCardRank = null;
             Suit? suit = null;

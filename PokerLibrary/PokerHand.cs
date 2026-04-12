@@ -1,4 +1,5 @@
 ﻿using DeckOfCardsLibrary;
+using PokerLibrary.Enums;
 using static DeckOfCardsLibrary.Card;
 
 namespace PokerLibrary
@@ -12,26 +13,9 @@ namespace PokerLibrary
         #region Properties
 
         /// <summary>
-        /// Represents the rank of poker hand, ranging from High Card to Straight Flush.
-        /// Excludes the Royal Flush, which is the highest form of a Straight Flush.
-        /// </summary>
-        public enum HandRankEnum
-        {
-            HighCard,
-            Pair,
-            TwoPair,
-            ThreeOfAKind,
-            Straight,
-            Flush,
-            FullHouse,
-            FourOfAKind,
-            StraightFlush,
-        }
-
-        /// <summary>
         /// The specific rank of the hand, such as High Card or Straight Flush.
         /// </summary>
-        public HandRankEnum HandRank { get; private set; }
+        public HandRanking HandRank { get; private set; }
 
         /// <summary>
         /// The primary card rank relevant to this hand.
@@ -70,8 +54,8 @@ namespace PokerLibrary
                 // If the hand is a straight or straight flush from Ace to Five, move the Ace to the end.
                 // In this case, the ace is the lowest rank of the hand, not the highest.
                 if (
-                    this.HandRank == HandRankEnum.Straight
-                    || this.HandRank == HandRankEnum.StraightFlush
+                    this.HandRank == HandRanking.Straight
+                    || this.HandRank == HandRanking.StraightFlush
                 )
                 {
                     if (
@@ -107,7 +91,7 @@ namespace PokerLibrary
         /// <param name="suit">The suit of the hand (if relevant).</param>
         /// <param name="kickers">(Unsorted) list of kickers.</param>
         private PokerHand(
-            HandRankEnum handRank,
+            HandRanking handRank,
             Rank? primaryCardRank,
             Rank? secondaryCardRank,
             Suit? suit,
@@ -315,7 +299,7 @@ namespace PokerLibrary
 
             var suit = highestStraightFlushCards.First().suit;
             var kickers = highestStraightFlushCards.OrderByDescending(card => card.rank);
-            return new PokerHand(HandRankEnum.StraightFlush, null, null, suit, kickers);
+            return new PokerHand(HandRanking.StraightFlush, null, null, suit, kickers);
         }
 
         /// <summary>
@@ -341,7 +325,7 @@ namespace PokerLibrary
                 .Where(card => card.rank != highestFourOrAKindValue)
                 .Take(1);
             return new PokerHand(
-                HandRankEnum.FourOfAKind,
+                HandRanking.FourOfAKind,
                 highestFourOrAKindValue,
                 null,
                 null,
@@ -379,7 +363,7 @@ namespace PokerLibrary
 
             var kickers = new List<Card>();
             return new PokerHand(
-                HandRankEnum.FullHouse,
+                HandRanking.FullHouse,
                 highestThreeOfAKindValue,
                 highestPairValue,
                 null,
@@ -409,7 +393,7 @@ namespace PokerLibrary
 
             var flushSuit = flushCards.First().suit;
             var kickers = flushCards.OrderByDescending(card => card.rank);
-            return new PokerHand(HandRankEnum.Flush, null, null, flushSuit, kickers);
+            return new PokerHand(HandRanking.Flush, null, null, flushSuit, kickers);
         }
 
         /// <summary>
@@ -431,7 +415,7 @@ namespace PokerLibrary
             }
 
             var kickers = highestStraightCards.OrderByDescending(card => card.rank);
-            return new PokerHand(HandRankEnum.Straight, null, null, null, kickers);
+            return new PokerHand(HandRanking.Straight, null, null, null, kickers);
         }
 
         /// <summary>
@@ -457,7 +441,7 @@ namespace PokerLibrary
                 .OrderByDescending(card => card.rank)
                 .Take(2);
             return new PokerHand(
-                HandRankEnum.ThreeOfAKind,
+                HandRanking.ThreeOfAKind,
                 highestThreeOfAKindValue,
                 null,
                 null,
@@ -499,7 +483,7 @@ namespace PokerLibrary
                 .Take(1);
 
             return new PokerHand(
-                HandRankEnum.TwoPair,
+                HandRanking.TwoPair,
                 highestPairValue,
                 secondHighestPairValue,
                 null,
@@ -530,7 +514,7 @@ namespace PokerLibrary
                 .OrderByDescending(card => card.rank)
                 .Take(3);
 
-            return new PokerHand(HandRankEnum.Pair, highestPairValue, null, null, kickers);
+            return new PokerHand(HandRanking.Pair, highestPairValue, null, null, kickers);
         }
 
         /// <summary>
@@ -543,7 +527,7 @@ namespace PokerLibrary
             // Find the five highest cards as kickers and return as a PokerHand.
             var orderedCards = cards.OrderByDescending(card => card.rank);
             var kickers = orderedCards.Take(5);
-            return new PokerHand(HandRankEnum.HighCard, null, null, null, kickers);
+            return new PokerHand(HandRanking.HighCard, null, null, null, kickers);
         }
 
         /// <summary>

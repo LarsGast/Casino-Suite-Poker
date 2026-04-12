@@ -1,7 +1,7 @@
 ﻿using DeckOfCardsLibrary;
 using PokerLibrary;
+using PokerLibrary.Enums;
 using static DeckOfCardsLibrary.Card;
-using static PokerLibrary.PokerHand;
 
 namespace PokerUnitTests.Unit_Tests_Help_Methods
 {
@@ -21,7 +21,7 @@ namespace PokerUnitTests.Unit_Tests_Help_Methods
         /// <param name="kickers">Expected kickers</param>
         internal static void AssertHand(
             PokerHand hand,
-            HandRankEnum handRank,
+            HandRanking handRank,
             Rank? primaryCardRank,
             Rank? secondaryCardRank,
             Suit? suit,
@@ -33,7 +33,7 @@ namespace PokerUnitTests.Unit_Tests_Help_Methods
                     () =>
                     {
                         Assert.That(
-                            (HandRankEnum)hand.HandRank,
+                            (HandRanking)hand.HandRank,
                             Is.EqualTo(handRank),
                             $"Hand is not a {handRank}"
                         );
