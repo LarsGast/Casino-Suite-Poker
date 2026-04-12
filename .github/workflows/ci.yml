@@ -14,6 +14,18 @@ concurrency:
 
 jobs:
 
+  check_formatting:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+
+      - name: Run formatting check
+        run: |
+          dotnet tool restore
+          dotnet csharpier check .
+
   build-and-test:
     runs-on: ubuntu-latest
 
