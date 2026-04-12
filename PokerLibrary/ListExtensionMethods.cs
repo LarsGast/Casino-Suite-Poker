@@ -14,7 +14,7 @@ namespace PokerLibrary {
         /// <param name="cards">The first list of cards.</param>
         /// <param name="other">The second list of cards.</param>
         /// <returns>True if the lists are equal, otherwise false.</returns>
-        public static bool equals(this IEnumerable<Card> cards, IEnumerable<Card> other) {
+        public static bool Equals(this IEnumerable<Card> cards, IEnumerable<Card> other) {
 
             // Both lists are null.
             if (cards == null && other == null) {
@@ -50,7 +50,7 @@ namespace PokerLibrary {
         /// <param name="cards">The list of cards.</param>
         /// <param name="displayTenAsT">Whether the rank "Ten" should be displayed as "T". Default is false (displays "10").</param>
         /// <returns>A string representation of the cards.</returns>
-        public static string getDisplayString(this IEnumerable<Card> cards, bool displayTenAsT = false) {
+        public static string GetDisplayString(this IEnumerable<Card> cards, bool displayTenAsT = false) {
             return string.Join(",", cards.Select(card => card.getDisplayString(displayTenAsT: displayTenAsT)));
         }
     }

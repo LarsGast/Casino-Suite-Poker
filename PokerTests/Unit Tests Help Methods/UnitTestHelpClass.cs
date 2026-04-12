@@ -19,14 +19,14 @@ namespace PokerUnitTests.Unit_Tests_Help_Methods {
 		/// <param name="secondaryCardRank">Expected secondaryCardRank</param>
 		/// <param name="suit">Expected suit</param>
 		/// <param name="kickers">Expected kickers</param>
-		internal static void assertHand(PokerHand hand, HandRank handRank, Rank? primaryCardRank, Rank? secondaryCardRank, Suit? suit, IEnumerable<Card> kickers) {
-			Assert.Multiple(() => {
-				Assert.That(hand.handRank, Is.EqualTo(handRank), $"Hand is not a {handRank}");
-				Assert.That(hand.primaryCardRank, Is.EqualTo(primaryCardRank), $"Primary card rank is not {primaryCardRank}");
-				Assert.That(hand.secondaryCardRank, Is.EqualTo(secondaryCardRank), $"Secondary card rank is not {secondaryCardRank}");
-				Assert.That(hand.suit, Is.EqualTo(suit), $"Suit is not {suit}");
-				Assert.That(hand.kickers.equals(kickers), Is.True, $"Kickers are not the same. Oberved: {hand.kickers.getDisplayString(displayTenAsT: true)}. Expected: {kickers.getDisplayString(displayTenAsT: true)}");
-			});
+		internal static void AssertHand(PokerHand hand, HandRankEnum handRank, Rank? primaryCardRank, Rank? secondaryCardRank, Suit? suit, IEnumerable<Card> kickers) {
+            Assert.Multiple((TestDelegate)(() => {
+                Assert.That((HandRankEnum)hand.HandRank, Is.EqualTo(handRank), $"Hand is not a {handRank}");
+                Assert.That(hand.PrimaryCardRank, Is.EqualTo(primaryCardRank), $"Primary card rank is not {primaryCardRank}");
+                Assert.That(hand.SecondaryCardRank, Is.EqualTo(secondaryCardRank), $"Secondary card rank is not {secondaryCardRank}");
+                Assert.That(hand.Suit, Is.EqualTo(suit), $"Suit is not {suit}");
+                Assert.That(ListExtensionMethods.Equals(hand.Kickers, kickers), Is.True, $"Kickers are not the same. Oberved: {(hand.Kickers.GetDisplayString(displayTenAsT: true))}. Expected: {(kickers.GetDisplayString(displayTenAsT: true))}");
+			}));
 		}
 
 		/// <summary>
@@ -34,19 +34,19 @@ namespace PokerUnitTests.Unit_Tests_Help_Methods {
 		/// </summary>
 		/// <param name="winningHand"></param>
 		/// <param name="losingHands"></param>
-		internal static void assertThatHandWins(PokerHand winningHand, IEnumerable<PokerHand> losingHands) {
+		internal static void AssertThatHandWins(PokerHand winningHand, IEnumerable<PokerHand> losingHands) {
 
 			var allhands = new List<PokerHand>() { winningHand };
 			allhands.AddRange(losingHands);
 
-			var handThatWon = PokerHand.getWinningHand(allhands);
+			var handThatWon = PokerHand.GetWinningHand(allhands);
 
 			Assert.That(handThatWon, Is.EqualTo(winningHand), "Hand that should win did not win.\n" +
 				"Hand that should win vs. hand that won.\n" + 
-				$"{winningHand.handRank} vs. {handThatWon.handRank}\n" +
-				$"Primary card rank: {winningHand.primaryCardRank} vs. {handThatWon.primaryCardRank}\n" +
-				$"Secondary card rank: {winningHand.secondaryCardRank} vs. {handThatWon.secondaryCardRank}\n" +
-				$"Kickers: {winningHand.kickers.getDisplayString(displayTenAsT: true)} vs. {handThatWon.kickers.getDisplayString(displayTenAsT: true)}"
+				$"{winningHand.HandRank} vs. {handThatWon.HandRank}\n" +
+				$"Primary card rank: {winningHand.PrimaryCardRank} vs. {handThatWon.PrimaryCardRank}\n" +
+				$"Secondary card rank: {winningHand.SecondaryCardRank} vs. {handThatWon.SecondaryCardRank}\n" +
+				$"Kickers: {winningHand.Kickers.GetDisplayString(displayTenAsT: true)} vs. {handThatWon.Kickers.GetDisplayString(displayTenAsT: true)}"
 				);
 		}
 
@@ -54,324 +54,324 @@ namespace PokerUnitTests.Unit_Tests_Help_Methods {
 		/// Gets the best StraightFlush as a PokerHand.
 		/// </summary>
 		/// <returns></returns>
-		internal static PokerHand getBestStraightFlush() {
+		internal static PokerHand GetBestStraightFlush() {
 			var cards = new List<Card>() {
-				new Card(Rank.Ace, Suit.Hearts),
-				new Card(Rank.King, Suit.Hearts),
-				new Card(Rank.Queen, Suit.Hearts),
-				new Card(Rank.Jack, Suit.Hearts),
-				new Card(Rank.Ten, Suit.Hearts),
-				new Card(Rank.Two, Suit.Clubs),
-				new Card(Rank.Three, Suit.Spades)
+				new(Rank.Ace, Suit.Hearts),
+				new(Rank.King, Suit.Hearts),
+				new(Rank.Queen, Suit.Hearts),
+				new(Rank.Jack, Suit.Hearts),
+				new(Rank.Ten, Suit.Hearts),
+				new(Rank.Two, Suit.Clubs),
+				new(Rank.Three, Suit.Spades)
 			};
 
-			return PokerHand.getBestHand(cards);
+			return PokerHand.GetBestHand(cards);
 		}
 
 		/// <summary>
 		/// Gets the worst StraightFlush as a PokerHand.
 		/// </summary>
 		/// <returns></returns>
-		internal static PokerHand getWorstStraightFlush() {
+		internal static PokerHand GetWorstStraightFlush() {
 			var cards = new List<Card>() {
-				new Card(Rank.Ace, Suit.Hearts),
-				new Card(Rank.Two, Suit.Hearts),
-				new Card(Rank.Three, Suit.Hearts),
-				new Card(Rank.Four, Suit.Hearts),
-				new Card(Rank.Five, Suit.Hearts),
-				new Card(Rank.Seven, Suit.Clubs),
-				new Card(Rank.Eight, Suit.Spades)
+				new(Rank.Ace, Suit.Hearts),
+				new(Rank.Two, Suit.Hearts),
+				new(Rank.Three, Suit.Hearts),
+				new(Rank.Four, Suit.Hearts),
+				new(Rank.Five, Suit.Hearts),
+				new(Rank.Seven, Suit.Clubs),
+				new(Rank.Eight, Suit.Spades)
 			};
 
-			return PokerHand.getBestHand(cards);
+			return PokerHand.GetBestHand(cards);
 		}
 
 		/// <summary>
 		/// Gets the best FourOfAKind as a PokerHand.
 		/// </summary>
 		/// <returns></returns>
-		internal static PokerHand getBestFourOfAKind() {
+		internal static PokerHand GetBestFourOfAKind() {
 			var cards = new List<Card>() {
-				new Card(Rank.Ace, Suit.Hearts),
-				new Card(Rank.Ace, Suit.Spades),
-				new Card(Rank.Ace, Suit.Diamonds),
-				new Card(Rank.Ace, Suit.Clubs),
-				new Card(Rank.King, Suit.Hearts),
-				new Card(Rank.Two, Suit.Clubs),
-				new Card(Rank.Three, Suit.Spades)
+				new(Rank.Ace, Suit.Hearts),
+				new(Rank.Ace, Suit.Spades),
+				new(Rank.Ace, Suit.Diamonds),
+				new(Rank.Ace, Suit.Clubs),
+				new(Rank.King, Suit.Hearts),
+				new(Rank.Two, Suit.Clubs),
+				new(Rank.Three, Suit.Spades)
 			};
 
-			return PokerHand.getBestHand(cards);
+			return PokerHand.GetBestHand(cards);
 		}
 
 		/// <summary>
 		/// Gets the worst FourOfAKind as a PokerHand.
 		/// </summary>
 		/// <returns></returns>
-		internal static PokerHand getWorstFourOfAKind() {
+		internal static PokerHand GetWorstFourOfAKind() {
 			var cards = new List<Card>() {
-				new Card(Rank.Two, Suit.Hearts),
-				new Card(Rank.Two, Suit.Spades),
-				new Card(Rank.Two, Suit.Diamonds),
-				new Card(Rank.Two, Suit.Clubs),
-				new Card(Rank.Three, Suit.Hearts),
-				new Card(Rank.Three, Suit.Clubs),
-				new Card(Rank.Three, Suit.Spades)
+				new(Rank.Two, Suit.Hearts),
+				new(Rank.Two, Suit.Spades),
+				new(Rank.Two, Suit.Diamonds),
+				new(Rank.Two, Suit.Clubs),
+				new(Rank.Three, Suit.Hearts),
+				new(Rank.Three, Suit.Clubs),
+				new(Rank.Three, Suit.Spades)
 			};
 
-			return PokerHand.getBestHand(cards);
+			return PokerHand.GetBestHand(cards);
 		}
 
 		/// <summary>
 		/// Gets the best FullHouse as a PokerHand.
 		/// </summary>
 		/// <returns></returns>
-		internal static PokerHand getBestFullHouse() {
+		internal static PokerHand GetBestFullHouse() {
 			var cards = new List<Card>() {
-				new Card(Rank.Ace, Suit.Hearts),
-				new Card(Rank.Ace, Suit.Spades),
-				new Card(Rank.Ace, Suit.Diamonds),
-				new Card(Rank.King, Suit.Clubs),
-				new Card(Rank.King, Suit.Hearts),
-				new Card(Rank.Two, Suit.Clubs),
-				new Card(Rank.Three, Suit.Spades)
+				new(Rank.Ace, Suit.Hearts),
+				new(Rank.Ace, Suit.Spades),
+				new(Rank.Ace, Suit.Diamonds),
+				new(Rank.King, Suit.Clubs),
+				new(Rank.King, Suit.Hearts),
+				new(Rank.Two, Suit.Clubs),
+				new(Rank.Three, Suit.Spades)
 			};
 
-			return PokerHand.getBestHand(cards);
+			return PokerHand.GetBestHand(cards);
 		}
 
 		/// <summary>
 		/// Gets the worst FullHouse as a PokerHand.
 		/// </summary>
 		/// <returns></returns>
-		internal static PokerHand getWorstFullHouse() {
+		internal static PokerHand GetWorstFullHouse() {
 			var cards = new List<Card>() {
-				new Card(Rank.Two, Suit.Hearts),
-				new Card(Rank.Two, Suit.Spades),
-				new Card(Rank.Two, Suit.Diamonds),
-				new Card(Rank.Three, Suit.Clubs),
-				new Card(Rank.Three, Suit.Hearts),
-				new Card(Rank.Five, Suit.Clubs),
-				new Card(Rank.Six, Suit.Spades)
+				new(Rank.Two, Suit.Hearts),
+				new(Rank.Two, Suit.Spades),
+				new(Rank.Two, Suit.Diamonds),
+				new(Rank.Three, Suit.Clubs),
+				new(Rank.Three, Suit.Hearts),
+				new(Rank.Five, Suit.Clubs),
+				new(Rank.Six, Suit.Spades)
 			};
 
-			return PokerHand.getBestHand(cards);
+			return PokerHand.GetBestHand(cards);
 		}
 
 		/// <summary>
 		/// Gets the best Flush as a PokerHand.
 		/// </summary>
 		/// <returns></returns>
-		internal static PokerHand getBestFlush() {
+		internal static PokerHand GetBestFlush() {
 			var cards = new List<Card>() {
-				new Card(Rank.Ace, Suit.Hearts),
-				new Card(Rank.King, Suit.Hearts),
-				new Card(Rank.Queen, Suit.Hearts),
-				new Card(Rank.Jack, Suit.Hearts),
-				new Card(Rank.Nine, Suit.Hearts),
-				new Card(Rank.Two, Suit.Clubs),
-				new Card(Rank.Three, Suit.Spades)
+				new(Rank.Ace, Suit.Hearts),
+				new(Rank.King, Suit.Hearts),
+				new(Rank.Queen, Suit.Hearts),
+				new(Rank.Jack, Suit.Hearts),
+				new(Rank.Nine, Suit.Hearts),
+				new(Rank.Two, Suit.Clubs),
+				new(Rank.Three, Suit.Spades)
 			};
 
-			return PokerHand.getBestHand(cards);
+			return PokerHand.GetBestHand(cards);
 		}
 
-		/// <summary>
-		/// Gets the worst Flush as a PokerHand.
-		/// </summary>
-		/// <returns></returns>
-		internal static PokerHand getWorstFlush() {
+        /// <summary>
+        /// Gets the worst Flush as a PokerHand.
+        /// </summary>
+        /// <returns></returns>
+        internal static PokerHand GetWorstFlush() {
 			var cards = new List<Card>() {
-				new Card(Rank.Two, Suit.Hearts),
-				new Card(Rank.Three, Suit.Hearts),
-				new Card(Rank.Four, Suit.Hearts),
-				new Card(Rank.Five, Suit.Hearts),
-				new Card(Rank.Seven, Suit.Hearts),
-				new Card(Rank.Two, Suit.Clubs),
-				new Card(Rank.Three, Suit.Spades)
+				new(Rank.Two, Suit.Hearts),
+				new(Rank.Three, Suit.Hearts),
+				new(Rank.Four, Suit.Hearts),
+				new(Rank.Five, Suit.Hearts),
+				new(Rank.Seven, Suit.Hearts),
+				new(Rank.Two, Suit.Clubs),
+				new(Rank.Three, Suit.Spades)
 			};
 
-			return PokerHand.getBestHand(cards);
+			return PokerHand.GetBestHand(cards);
 		}
 
-		/// <summary>
-		/// Gets the best Straight as a PokerHand.
-		/// </summary>
-		/// <returns></returns>
-		internal static PokerHand getBestStraight() {
+        /// <summary>
+        /// Gets the best Straight as a PokerHand.
+        /// </summary>
+        /// <returns></returns>
+        internal static PokerHand GetBestStraight() {
 			var cards = new List<Card>() {
-				new Card(Rank.Ace, Suit.Hearts),
-				new Card(Rank.King, Suit.Spades),
-				new Card(Rank.Queen, Suit.Diamonds),
-				new Card(Rank.Jack, Suit.Clubs),
-				new Card(Rank.Ten, Suit.Hearts),
-				new Card(Rank.Two, Suit.Clubs),
-				new Card(Rank.Three, Suit.Spades)
+				new(Rank.Ace, Suit.Hearts),
+				new(Rank.King, Suit.Spades),
+				new(Rank.Queen, Suit.Diamonds),
+				new(Rank.Jack, Suit.Clubs),
+				new(Rank.Ten, Suit.Hearts),
+				new(Rank.Two, Suit.Clubs),
+				new(Rank.Three, Suit.Spades)
 			};
 
-			return PokerHand.getBestHand(cards);
+			return PokerHand.GetBestHand(cards);
 		}
 
 		/// <summary>
 		/// Gets the worst Straight as a PokerHand.
 		/// </summary>
 		/// <returns></returns>
-		internal static PokerHand getWorstStraight() {
+		internal static PokerHand GetWorstStraight() {
 			var cards = new List<Card>() {
-				new Card(Rank.Ace, Suit.Hearts),
-				new Card(Rank.Two, Suit.Spades),
-				new Card(Rank.Three, Suit.Diamonds),
-				new Card(Rank.Four, Suit.Clubs),
-				new Card(Rank.Five, Suit.Hearts),
-				new Card(Rank.Seven, Suit.Clubs),
-				new Card(Rank.Eight, Suit.Spades)
+				new(Rank.Ace, Suit.Hearts),
+				new(Rank.Two, Suit.Spades),
+				new(Rank.Three, Suit.Diamonds),
+				new(Rank.Four, Suit.Clubs),
+				new(Rank.Five, Suit.Hearts),
+				new(Rank.Seven, Suit.Clubs),
+				new(Rank.Eight, Suit.Spades)
 			};
 
-			return PokerHand.getBestHand(cards);
+			return PokerHand.GetBestHand(cards);
 		}
 
-		/// <summary>
-		/// Gets the best ThreeOfAKind as a PokerHand.
-		/// </summary>
-		/// <returns></returns>
-		internal static PokerHand getBestThreeOfAKind() {
+        /// <summary>
+        /// Gets the best ThreeOfAKind as a PokerHand.
+        /// </summary>
+        /// <returns></returns>
+        internal static PokerHand GetBestThreeOfAKind() {
 			var cards = new List<Card>() {
-				new Card(Rank.Ace, Suit.Hearts),
-				new Card(Rank.Ace, Suit.Spades),
-				new Card(Rank.Ace, Suit.Diamonds),
-				new Card(Rank.King, Suit.Clubs),
-				new Card(Rank.Queen, Suit.Hearts),
-				new Card(Rank.Two, Suit.Clubs),
-				new Card(Rank.Three, Suit.Spades)
+				new(Rank.Ace, Suit.Hearts),
+				new(Rank.Ace, Suit.Spades),
+				new(Rank.Ace, Suit.Diamonds),
+				new(Rank.King, Suit.Clubs),
+				new(Rank.Queen, Suit.Hearts),
+				new(Rank.Two, Suit.Clubs),
+				new(Rank.Three, Suit.Spades)
 			};
 
-			return PokerHand.getBestHand(cards);
+			return PokerHand.GetBestHand(cards);
 		}
 
-		/// <summary>
-		/// Gets the worst ThreeOfAKind as a PokerHand.
-		/// </summary>
-		/// <returns></returns>
-		internal static PokerHand getWorstThreeOfAKind() {
+        /// <summary>
+        /// Gets the worst ThreeOfAKind as a PokerHand.
+        /// </summary>
+        /// <returns></returns>
+        internal static PokerHand GetWorstThreeOfAKind() {
 			var cards = new List<Card>() {
-				new Card(Rank.Two, Suit.Hearts),
-				new Card(Rank.Two, Suit.Spades),
-				new Card(Rank.Two, Suit.Diamonds),
-				new Card(Rank.Three, Suit.Clubs),
-				new Card(Rank.Four, Suit.Hearts),
-				new Card(Rank.Five, Suit.Clubs),
-				new Card(Rank.Seven, Suit.Spades)
+				new(Rank.Two, Suit.Hearts),
+				new(Rank.Two, Suit.Spades),
+				new(Rank.Two, Suit.Diamonds),
+				new(Rank.Three, Suit.Clubs),
+				new(Rank.Four, Suit.Hearts),
+				new(Rank.Five, Suit.Clubs),
+				new(Rank.Seven, Suit.Spades)
 			};
 
-			return PokerHand.getBestHand(cards);
+			return PokerHand.GetBestHand(cards);
 		}
 
 		/// <summary>
 		/// Gets the best TwoPair as a PokerHand.
 		/// </summary>
 		/// <returns></returns>
-		internal static PokerHand getBestTwoPair() {
+		internal static PokerHand GetBestTwoPair() {
 			var cards = new List<Card>() {
-				new Card(Rank.Ace, Suit.Hearts),
-				new Card(Rank.Ace, Suit.Spades),
-				new Card(Rank.King, Suit.Diamonds),
-				new Card(Rank.King, Suit.Clubs),
-				new Card(Rank.Queen, Suit.Hearts),
-				new Card(Rank.Two, Suit.Clubs),
-				new Card(Rank.Three, Suit.Spades)
+				new(Rank.Ace, Suit.Hearts),
+				new(Rank.Ace, Suit.Spades),
+				new(Rank.King, Suit.Diamonds),
+				new(Rank.King, Suit.Clubs),
+				new(Rank.Queen, Suit.Hearts),
+				new(Rank.Two, Suit.Clubs),
+				new(Rank.Three, Suit.Spades)
 			};
 
-			return PokerHand.getBestHand(cards);
+			return PokerHand.GetBestHand(cards);
 		}
 
 		/// <summary>
 		/// Gets the worst TwoPair as a PokerHand.
 		/// </summary>
 		/// <returns></returns>
-		internal static PokerHand getWorstTwoPair() {
+		internal static PokerHand GetWorstTwoPair() {
 			var cards = new List<Card>() {
-				new Card(Rank.Two, Suit.Hearts),
-				new Card(Rank.Two, Suit.Spades),
-				new Card(Rank.Three, Suit.Diamonds),
-				new Card(Rank.Three, Suit.Clubs),
-				new Card(Rank.Four, Suit.Hearts),
-				new Card(Rank.Five, Suit.Clubs),
-				new Card(Rank.Seven, Suit.Spades)
+				new(Rank.Two, Suit.Hearts),
+				new(Rank.Two, Suit.Spades),
+				new(Rank.Three, Suit.Diamonds),
+				new(Rank.Three, Suit.Clubs),
+				new(Rank.Four, Suit.Hearts),
+				new(Rank.Five, Suit.Clubs),
+				new(Rank.Seven, Suit.Spades)
 			};
 
-			return PokerHand.getBestHand(cards);
+			return PokerHand.GetBestHand(cards);
 		}
 
 		/// <summary>
 		/// Gets the best Pair as a PokerHand.
 		/// </summary>
 		/// <returns></returns>
-		internal static PokerHand getBestPair() {
+		internal static PokerHand GetBestPair() {
 			var cards = new List<Card>() {
-				new Card(Rank.Ace, Suit.Hearts),
-				new Card(Rank.Ace, Suit.Spades),
-				new Card(Rank.King, Suit.Diamonds),
-				new Card(Rank.Queen, Suit.Clubs),
-				new Card(Rank.Jack, Suit.Hearts),
-				new Card(Rank.Two, Suit.Clubs),
-				new Card(Rank.Three, Suit.Spades)
+				new(Rank.Ace, Suit.Hearts),
+				new(Rank.Ace, Suit.Spades),
+				new(Rank.King, Suit.Diamonds),
+				new(Rank.Queen, Suit.Clubs),
+				new(Rank.Jack, Suit.Hearts),
+				new(Rank.Two, Suit.Clubs),
+				new(Rank.Three, Suit.Spades)
 			};
 
-			return PokerHand.getBestHand(cards);
+			return PokerHand.GetBestHand(cards);
 		}
 
-		/// <summary>
-		/// Gets the worst Pair as a PokerHand.
-		/// </summary>
-		/// <returns></returns>
-		internal static PokerHand getWorstPair() {
+        /// <summary>
+        /// Gets the worst Pair as a PokerHand.
+        /// </summary>
+        /// <returns></returns>
+        internal static PokerHand getWorstPair() {
 			var cards = new List<Card>() {
-				new Card(Rank.Two, Suit.Hearts),
-				new Card(Rank.Two, Suit.Spades),
-				new Card(Rank.Three, Suit.Diamonds),
-				new Card(Rank.Four, Suit.Clubs),
-				new Card(Rank.Five, Suit.Hearts),
-				new Card(Rank.Seven, Suit.Clubs),
-				new Card(Rank.Eight, Suit.Spades)
+				new(Rank.Two, Suit.Hearts),
+				new(Rank.Two, Suit.Spades),
+				new(Rank.Three, Suit.Diamonds),
+				new(Rank.Four, Suit.Clubs),
+				new(Rank.Five, Suit.Hearts),
+				new(Rank.Seven, Suit.Clubs),
+				new(Rank.Eight, Suit.Spades)
 			};
 
-			return PokerHand.getBestHand(cards);
+			return PokerHand.GetBestHand(cards);
 		}
 
 		/// <summary>
 		/// Gets the best HighCard as a PokerHand.
 		/// </summary>
 		/// <returns></returns>
-		internal static PokerHand getBestHighCard() {
+		internal static PokerHand GetBestHighCard() {
 			var cards = new List<Card>() {
-				new Card(Rank.Ace, Suit.Hearts),
-				new Card(Rank.King, Suit.Spades),
-				new Card(Rank.Queen, Suit.Diamonds),
-				new Card(Rank.Jack, Suit.Clubs),
-				new Card(Rank.Nine, Suit.Hearts),
-				new Card(Rank.Two, Suit.Clubs),
-				new Card(Rank.Three, Suit.Spades)
+				new(Rank.Ace, Suit.Hearts),
+				new(Rank.King, Suit.Spades),
+				new(Rank.Queen, Suit.Diamonds),
+				new(Rank.Jack, Suit.Clubs),
+				new(Rank.Nine, Suit.Hearts),
+				new(Rank.Two, Suit.Clubs),
+				new(Rank.Three, Suit.Spades)
 			};
 
-			return PokerHand.getBestHand(cards);
+			return PokerHand.GetBestHand(cards);
 		}
 
 		/// <summary>
 		/// Gets the worst HighCard as a PokerHand.
 		/// </summary>
 		/// <returns></returns>
-		internal static PokerHand getWorstHighCard() {
+		internal static PokerHand GetWorstHighCard() {
 			var cards = new List<Card>() {
-				new Card(Rank.Two, Suit.Hearts),
-				new Card(Rank.Three, Suit.Spades),
-				new Card(Rank.Four, Suit.Diamonds),
-				new Card(Rank.Five, Suit.Clubs),
-				new Card(Rank.Seven, Suit.Hearts),
-				new Card(Rank.Eight, Suit.Clubs),
-				new Card(Rank.Nine, Suit.Spades)
+				new(Rank.Two, Suit.Hearts),
+				new(Rank.Three, Suit.Spades),
+				new(Rank.Four, Suit.Diamonds),
+				new(Rank.Five, Suit.Clubs),
+				new(Rank.Seven, Suit.Hearts),
+				new(Rank.Eight, Suit.Clubs),
+				new(Rank.Nine, Suit.Spades)
 			};
 
-			return PokerHand.getBestHand(cards);
+			return PokerHand.GetBestHand(cards);
 		}
 	}
 }
