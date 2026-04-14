@@ -47,7 +47,7 @@ namespace PokerUnitTests.Unit_Tests_Help_Methods
                             Is.EqualTo(secondaryCardRank),
                             $"Secondary card rank is not {secondaryCardRank}"
                         );
-                        Assert.That(hand.Suit, Is.EqualTo(suit), $"Suit is not {suit}");
+                        Assert.That(hand.HandSuit, Is.EqualTo(suit), $"Suit is not {suit}");
                         Assert.That(
                             ListExtensionMethods.Equals(hand.Kickers, kickers),
                             Is.True,
