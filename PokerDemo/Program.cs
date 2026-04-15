@@ -182,7 +182,7 @@ namespace PokerDemo
         }
 
         /// <summary>
-        /// Gets a readable display string for a list of cards, e.g. "A♥, K♦, 10♣".
+        /// Gets a readable display string for a list of cards, e.g. "A♥, K♦, T♣".
         /// </summary>
         /// <param name="cards"></param>
         /// <returns></returns>

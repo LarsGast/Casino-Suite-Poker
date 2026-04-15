@@ -529,10 +529,10 @@ namespace PokerLibrary
         }
 
         /// <summary>
-        /// Gets the best <see cref="HandRanking.Pair"/> possible with the given cards.
+        /// Gets the best <see cref="HandRanking.HighCard"/> possible with the given cards.
         /// </summary>
         /// <param name="cards">A collection of cards to evaluate.</param>
-        /// <returns>The best <see cref="HandRanking.Pair"/> <see cref="PokerHand"/> that can be formed with the given cards.</returns>
+        /// <returns>The best <see cref="HandRanking.HighCard"/> <see cref="PokerHand"/> that can be formed with the given cards.</returns>
         private static PokerHand GetBestHighCard(IEnumerable<Card> cards)
         {
             // Find the five highest cards as kickers and return as a PokerHand.
@@ -575,7 +575,7 @@ namespace PokerLibrary
         /// <param name="mustBeFlush">Specifies whether the hand must be a <see cref="HandRanking.StraightFlush"/>.</param>
         /// <returns>
         /// A list of cards that form the highest <see cref="HandRanking.Straight"/> or <see cref="HandRanking.StraightFlush"/>.
-        /// <see langword="null"/>if none is found.
+        /// <see langword="null"/> if none is found.
         /// </returns>
         private static List<Card>? GetHighestStraightCards(
             IEnumerable<Card> cards,
@@ -623,7 +623,7 @@ namespace PokerLibrary
         /// </summary>
         /// <param name="highestCard">The highest card to start the <see cref="HandRanking.Straight"/> from.</param>
         /// <param name="card">The card to check.</param>
-        /// <param name="mustBeFlush">Specifies whether the hand must be a <see cref="HandRanking.StraightFlush "/>.</param>
+        /// <param name="mustBeFlush">Specifies whether the hand must be a <see cref="HandRanking.StraightFlush"/>.</param>
         /// <returns>True if the card is part of a <see cref="HandRanking.Straight"/>, false otherwise.</returns>
         private static bool IsStraightCard(Card highestCard, Card card, bool mustBeFlush = false)
         {

@@ -34,6 +34,9 @@ namespace PokerLibrary.Enums
         /// <summary>
         /// Five consecutive cards of different <see cref="CardSuit"/>s.
         /// </summary>
+        /// <remarks>
+        /// If all cards are of the same <see cref="CardSuit"/>, it would be a <see cref="StraightFlush"/>.
+        /// </remarks>
         Straight,
 
         /// <summary>
