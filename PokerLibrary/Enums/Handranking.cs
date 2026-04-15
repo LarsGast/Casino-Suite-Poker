@@ -1,4 +1,4 @@
-﻿using static DeckOfCardsLibrary.Card;
+﻿using DeckOfPlayingCardsLibrary.Enums;
 
 namespace PokerLibrary.Enums
 {
@@ -17,42 +17,42 @@ namespace PokerLibrary.Enums
         HighCard,
 
         /// <summary>
-        /// Two cards of the same <see cref="Rank"/>.
+        /// Two cards of the same <see cref="CardRank"/>.
         /// </summary>
         Pair,
 
         /// <summary>
-        /// Two cards of one <see cref="Rank"/> and two of another.
+        /// Two cards of one <see cref="CardRank"/> and two of another.
         /// </summary>
         TwoPair,
 
         /// <summary>
-        /// Three cards of the same <see cref="Rank"/>.
+        /// Three cards of the same <see cref="CardRank"/>.
         /// </summary>
         ThreeOfAKind,
 
         /// <summary>
-        /// Five consecutive cards of different <see cref="Suit"/>s.
+        /// Five consecutive cards of different <see cref="CardSuit"/>s.
         /// </summary>
         Straight,
 
         /// <summary>
-        /// Five cards of the same <see cref="Suit"/> in any order.
+        /// Five cards of the same <see cref="CardSuit"/> in any order.
         /// </summary>
         Flush,
 
         /// <summary>
-        /// Three cards of the same <see cref="Rank"/> and two of another.
+        /// Three cards of the same <see cref="CardRank"/> and two of another.
         /// </summary>
         FullHouse,
 
         /// <summary>
-        /// Four cards of the same <see cref="Rank"/>.
+        /// Four cards of the same <see cref="CardRank"/>.
         /// </summary>
         FourOfAKind,
 
         /// <summary>
-        /// Five consecutive cards in the same <see cref="Suit"/>.
+        /// Five consecutive cards in the same <see cref="CardSuit"/>.
         /// </summary>
         StraightFlush,
     }
