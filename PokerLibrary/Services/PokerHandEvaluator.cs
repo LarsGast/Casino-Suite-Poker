@@ -90,7 +90,16 @@ namespace PokerLibrary.Services
             }
 
             var suit = highestStraightFlushCards.First().Suit;
-            var kickers = highestStraightFlushCards.OrderByDescending(card => card.Rank);
+            var kickers = highestStraightFlushCards.OrderByDescending(card => card.Rank).ToList();
+
+            // If the hand is a straight flush from Ace to Five, move the Ace to the end.
+            // In this case, the ace is the lowest rank of the hand, not the highest.
+            if (kickers.Last().Rank == CardRank.Two && kickers.First().Rank == CardRank.Ace)
+            {
+                var aceCard = kickers.First();
+                _ = kickers.Remove(aceCard);
+                kickers.Add(aceCard);
+            }
 
             return new PokerHand(HandRanking.StraightFlush, null, null, suit, kickers);
         }
@@ -210,7 +219,16 @@ namespace PokerLibrary.Services
                 return null;
             }
 
-            var kickers = highestStraightCards.OrderByDescending(card => card.Rank);
+            var kickers = highestStraightCards.OrderByDescending(card => card.Rank).ToList();
+
+            // If the hand is a straight from Ace to Five, move the Ace to the end.
+            // In this case, the ace is the lowest rank of the hand, not the highest.
+            if (kickers.Last().Rank == CardRank.Two && kickers.First().Rank == CardRank.Ace)
+            {
+                var aceCard = kickers.First();
+                _ = kickers.Remove(aceCard);
+                kickers.Add(aceCard);
+            }
 
             return new PokerHand(HandRanking.Straight, null, null, null, kickers);
         }

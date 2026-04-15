@@ -55,39 +55,7 @@ namespace PokerLibrary.Entities
         /// <remarks>
         /// These are all the cards not part of the primary hand but still contribute to it.
         /// </remarks>
-        public List<Card> Kickers
-        {
-            get
-            {
-                // Sort kickers in descending order of rank.
-                var orderedKickers = this._kickers.OrderByDescending(card => card.Rank).ToList();
-
-                // If the hand is a straight or straight flush from Ace to Five, move the Ace to the end.
-                // In this case, the ace is the lowest rank of the hand, not the highest.
-                if (
-                    this.HandRank == HandRanking.Straight
-                    || this.HandRank == HandRanking.StraightFlush
-                )
-                {
-                    if (
-                        orderedKickers.Last().Rank == CardRank.Two
-                        && orderedKickers.First().Rank == CardRank.Ace
-                    )
-                    {
-                        var aceCard = orderedKickers.First();
-                        _ = orderedKickers.Remove(aceCard);
-                        orderedKickers.Add(aceCard);
-                    }
-                }
-
-                return orderedKickers;
-            }
-        }
-
-        /// <summary>
-        /// An unsorted list of kickers.
-        /// </summary>
-        private readonly IEnumerable<Card> _kickers;
+        public List<Card> Kickers { get; }
 
         #endregion
 
@@ -113,7 +81,7 @@ namespace PokerLibrary.Entities
             this.PrimaryCardRank = primaryCardRank;
             this.SecondaryCardRank = secondaryCardRank;
             this.HandSuit = handSuit;
-            this._kickers = kickers;
+            this.Kickers = kickers.ToList();
         }
 
         #endregion
