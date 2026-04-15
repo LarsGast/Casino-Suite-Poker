@@ -1,7 +1,7 @@
-﻿using DeckOfCardsLibrary;
+﻿using DeckOfPlayingCardsLibrary.Entities;
+using DeckOfPlayingCardsLibrary.Enums;
 using PokerLibrary;
-using static DeckOfCardsLibrary.Card;
-using static PokerLibrary.PokerHand;
+using PokerLibrary.Enums;
 
 namespace PokerUnitTests.Unit_Tests_Help_Methods
 {
@@ -21,10 +21,10 @@ namespace PokerUnitTests.Unit_Tests_Help_Methods
         /// <param name="kickers">Expected kickers</param>
         internal static void AssertHand(
             PokerHand hand,
-            HandRankEnum handRank,
-            Rank? primaryCardRank,
-            Rank? secondaryCardRank,
-            Suit? suit,
+            HandRanking handRank,
+            CardRank? primaryCardRank,
+            CardRank? secondaryCardRank,
+            CardSuit? suit,
             IEnumerable<Card> kickers
         )
         {
@@ -33,7 +33,7 @@ namespace PokerUnitTests.Unit_Tests_Help_Methods
                     () =>
                     {
                         Assert.That(
-                            (HandRankEnum)hand.HandRank,
+                            hand.HandRank,
                             Is.EqualTo(handRank),
                             $"Hand is not a {handRank}"
                         );
@@ -47,12 +47,8 @@ namespace PokerUnitTests.Unit_Tests_Help_Methods
                             Is.EqualTo(secondaryCardRank),
                             $"Secondary card rank is not {secondaryCardRank}"
                         );
-                        Assert.That(hand.Suit, Is.EqualTo(suit), $"Suit is not {suit}");
-                        Assert.That(
-                            ListExtensionMethods.Equals(hand.Kickers, kickers),
-                            Is.True,
-                            $"Kickers are not the same. Oberved: {(hand.Kickers.GetDisplayString(displayTenAsT: true))}. Expected: {(kickers.GetDisplayString(displayTenAsT: true))}"
-                        );
+                        Assert.That(hand.HandSuit, Is.EqualTo(suit), $"CardSuit is not {suit}");
+                        Assert.That(hand.Kickers, Is.EqualTo(kickers), $"Kickers are not the same");
                     }
                 )
             );
@@ -81,7 +77,7 @@ namespace PokerUnitTests.Unit_Tests_Help_Methods
                     + $"{winningHand.HandRank} vs. {handThatWon.HandRank}\n"
                     + $"Primary card rank: {winningHand.PrimaryCardRank} vs. {handThatWon.PrimaryCardRank}\n"
                     + $"Secondary card rank: {winningHand.SecondaryCardRank} vs. {handThatWon.SecondaryCardRank}\n"
-                    + $"Kickers: {winningHand.Kickers.GetDisplayString(displayTenAsT: true)} vs. {handThatWon.Kickers.GetDisplayString(displayTenAsT: true)}"
+                    + $"Kickers: {winningHand.Kickers} vs. {handThatWon.Kickers}"
             );
         }
 
@@ -93,13 +89,13 @@ namespace PokerUnitTests.Unit_Tests_Help_Methods
         {
             var cards = new List<Card>()
             {
-                new(Rank.Ace, Suit.Hearts),
-                new(Rank.King, Suit.Hearts),
-                new(Rank.Queen, Suit.Hearts),
-                new(Rank.Jack, Suit.Hearts),
-                new(Rank.Ten, Suit.Hearts),
-                new(Rank.Two, Suit.Clubs),
-                new(Rank.Three, Suit.Spades),
+                new(CardRank.Ace, CardSuit.Hearts),
+                new(CardRank.King, CardSuit.Hearts),
+                new(CardRank.Queen, CardSuit.Hearts),
+                new(CardRank.Jack, CardSuit.Hearts),
+                new(CardRank.Ten, CardSuit.Hearts),
+                new(CardRank.Two, CardSuit.Clubs),
+                new(CardRank.Three, CardSuit.Spades),
             };
 
             return PokerHand.GetBestHand(cards);
@@ -113,13 +109,13 @@ namespace PokerUnitTests.Unit_Tests_Help_Methods
         {
             var cards = new List<Card>()
             {
-                new(Rank.Ace, Suit.Hearts),
-                new(Rank.Two, Suit.Hearts),
-                new(Rank.Three, Suit.Hearts),
-                new(Rank.Four, Suit.Hearts),
-                new(Rank.Five, Suit.Hearts),
-                new(Rank.Seven, Suit.Clubs),
-                new(Rank.Eight, Suit.Spades),
+                new(CardRank.Ace, CardSuit.Hearts),
+                new(CardRank.Two, CardSuit.Hearts),
+                new(CardRank.Three, CardSuit.Hearts),
+                new(CardRank.Four, CardSuit.Hearts),
+                new(CardRank.Five, CardSuit.Hearts),
+                new(CardRank.Seven, CardSuit.Clubs),
+                new(CardRank.Eight, CardSuit.Spades),
             };
 
             return PokerHand.GetBestHand(cards);
@@ -133,13 +129,13 @@ namespace PokerUnitTests.Unit_Tests_Help_Methods
         {
             var cards = new List<Card>()
             {
-                new(Rank.Ace, Suit.Hearts),
-                new(Rank.Ace, Suit.Spades),
-                new(Rank.Ace, Suit.Diamonds),
-                new(Rank.Ace, Suit.Clubs),
-                new(Rank.King, Suit.Hearts),
-                new(Rank.Two, Suit.Clubs),
-                new(Rank.Three, Suit.Spades),
+                new(CardRank.Ace, CardSuit.Hearts),
+                new(CardRank.Ace, CardSuit.Spades),
+                new(CardRank.Ace, CardSuit.Diamonds),
+                new(CardRank.Ace, CardSuit.Clubs),
+                new(CardRank.King, CardSuit.Hearts),
+                new(CardRank.Two, CardSuit.Clubs),
+                new(CardRank.Three, CardSuit.Spades),
             };
 
             return PokerHand.GetBestHand(cards);
@@ -153,13 +149,13 @@ namespace PokerUnitTests.Unit_Tests_Help_Methods
         {
             var cards = new List<Card>()
             {
-                new(Rank.Two, Suit.Hearts),
-                new(Rank.Two, Suit.Spades),
-                new(Rank.Two, Suit.Diamonds),
-                new(Rank.Two, Suit.Clubs),
-                new(Rank.Three, Suit.Hearts),
-                new(Rank.Three, Suit.Clubs),
-                new(Rank.Three, Suit.Spades),
+                new(CardRank.Two, CardSuit.Hearts),
+                new(CardRank.Two, CardSuit.Spades),
+                new(CardRank.Two, CardSuit.Diamonds),
+                new(CardRank.Two, CardSuit.Clubs),
+                new(CardRank.Three, CardSuit.Hearts),
+                new(CardRank.Three, CardSuit.Clubs),
+                new(CardRank.Three, CardSuit.Spades),
             };
 
             return PokerHand.GetBestHand(cards);
@@ -173,13 +169,13 @@ namespace PokerUnitTests.Unit_Tests_Help_Methods
         {
             var cards = new List<Card>()
             {
-                new(Rank.Ace, Suit.Hearts),
-                new(Rank.Ace, Suit.Spades),
-                new(Rank.Ace, Suit.Diamonds),
-                new(Rank.King, Suit.Clubs),
-                new(Rank.King, Suit.Hearts),
-                new(Rank.Two, Suit.Clubs),
-                new(Rank.Three, Suit.Spades),
+                new(CardRank.Ace, CardSuit.Hearts),
+                new(CardRank.Ace, CardSuit.Spades),
+                new(CardRank.Ace, CardSuit.Diamonds),
+                new(CardRank.King, CardSuit.Clubs),
+                new(CardRank.King, CardSuit.Hearts),
+                new(CardRank.Two, CardSuit.Clubs),
+                new(CardRank.Three, CardSuit.Spades),
             };
 
             return PokerHand.GetBestHand(cards);
@@ -193,13 +189,13 @@ namespace PokerUnitTests.Unit_Tests_Help_Methods
         {
             var cards = new List<Card>()
             {
-                new(Rank.Two, Suit.Hearts),
-                new(Rank.Two, Suit.Spades),
-                new(Rank.Two, Suit.Diamonds),
-                new(Rank.Three, Suit.Clubs),
-                new(Rank.Three, Suit.Hearts),
-                new(Rank.Five, Suit.Clubs),
-                new(Rank.Six, Suit.Spades),
+                new(CardRank.Two, CardSuit.Hearts),
+                new(CardRank.Two, CardSuit.Spades),
+                new(CardRank.Two, CardSuit.Diamonds),
+                new(CardRank.Three, CardSuit.Clubs),
+                new(CardRank.Three, CardSuit.Hearts),
+                new(CardRank.Five, CardSuit.Clubs),
+                new(CardRank.Six, CardSuit.Spades),
             };
 
             return PokerHand.GetBestHand(cards);
@@ -213,13 +209,13 @@ namespace PokerUnitTests.Unit_Tests_Help_Methods
         {
             var cards = new List<Card>()
             {
-                new(Rank.Ace, Suit.Hearts),
-                new(Rank.King, Suit.Hearts),
-                new(Rank.Queen, Suit.Hearts),
-                new(Rank.Jack, Suit.Hearts),
-                new(Rank.Nine, Suit.Hearts),
-                new(Rank.Two, Suit.Clubs),
-                new(Rank.Three, Suit.Spades),
+                new(CardRank.Ace, CardSuit.Hearts),
+                new(CardRank.King, CardSuit.Hearts),
+                new(CardRank.Queen, CardSuit.Hearts),
+                new(CardRank.Jack, CardSuit.Hearts),
+                new(CardRank.Nine, CardSuit.Hearts),
+                new(CardRank.Two, CardSuit.Clubs),
+                new(CardRank.Three, CardSuit.Spades),
             };
 
             return PokerHand.GetBestHand(cards);
@@ -233,13 +229,13 @@ namespace PokerUnitTests.Unit_Tests_Help_Methods
         {
             var cards = new List<Card>()
             {
-                new(Rank.Two, Suit.Hearts),
-                new(Rank.Three, Suit.Hearts),
-                new(Rank.Four, Suit.Hearts),
-                new(Rank.Five, Suit.Hearts),
-                new(Rank.Seven, Suit.Hearts),
-                new(Rank.Two, Suit.Clubs),
-                new(Rank.Three, Suit.Spades),
+                new(CardRank.Two, CardSuit.Hearts),
+                new(CardRank.Three, CardSuit.Hearts),
+                new(CardRank.Four, CardSuit.Hearts),
+                new(CardRank.Five, CardSuit.Hearts),
+                new(CardRank.Seven, CardSuit.Hearts),
+                new(CardRank.Two, CardSuit.Clubs),
+                new(CardRank.Three, CardSuit.Spades),
             };
 
             return PokerHand.GetBestHand(cards);
@@ -253,13 +249,13 @@ namespace PokerUnitTests.Unit_Tests_Help_Methods
         {
             var cards = new List<Card>()
             {
-                new(Rank.Ace, Suit.Hearts),
-                new(Rank.King, Suit.Spades),
-                new(Rank.Queen, Suit.Diamonds),
-                new(Rank.Jack, Suit.Clubs),
-                new(Rank.Ten, Suit.Hearts),
-                new(Rank.Two, Suit.Clubs),
-                new(Rank.Three, Suit.Spades),
+                new(CardRank.Ace, CardSuit.Hearts),
+                new(CardRank.King, CardSuit.Spades),
+                new(CardRank.Queen, CardSuit.Diamonds),
+                new(CardRank.Jack, CardSuit.Clubs),
+                new(CardRank.Ten, CardSuit.Hearts),
+                new(CardRank.Two, CardSuit.Clubs),
+                new(CardRank.Three, CardSuit.Spades),
             };
 
             return PokerHand.GetBestHand(cards);
@@ -273,13 +269,13 @@ namespace PokerUnitTests.Unit_Tests_Help_Methods
         {
             var cards = new List<Card>()
             {
-                new(Rank.Ace, Suit.Hearts),
-                new(Rank.Two, Suit.Spades),
-                new(Rank.Three, Suit.Diamonds),
-                new(Rank.Four, Suit.Clubs),
-                new(Rank.Five, Suit.Hearts),
-                new(Rank.Seven, Suit.Clubs),
-                new(Rank.Eight, Suit.Spades),
+                new(CardRank.Ace, CardSuit.Hearts),
+                new(CardRank.Two, CardSuit.Spades),
+                new(CardRank.Three, CardSuit.Diamonds),
+                new(CardRank.Four, CardSuit.Clubs),
+                new(CardRank.Five, CardSuit.Hearts),
+                new(CardRank.Seven, CardSuit.Clubs),
+                new(CardRank.Eight, CardSuit.Spades),
             };
 
             return PokerHand.GetBestHand(cards);
@@ -293,13 +289,13 @@ namespace PokerUnitTests.Unit_Tests_Help_Methods
         {
             var cards = new List<Card>()
             {
-                new(Rank.Ace, Suit.Hearts),
-                new(Rank.Ace, Suit.Spades),
-                new(Rank.Ace, Suit.Diamonds),
-                new(Rank.King, Suit.Clubs),
-                new(Rank.Queen, Suit.Hearts),
-                new(Rank.Two, Suit.Clubs),
-                new(Rank.Three, Suit.Spades),
+                new(CardRank.Ace, CardSuit.Hearts),
+                new(CardRank.Ace, CardSuit.Spades),
+                new(CardRank.Ace, CardSuit.Diamonds),
+                new(CardRank.King, CardSuit.Clubs),
+                new(CardRank.Queen, CardSuit.Hearts),
+                new(CardRank.Two, CardSuit.Clubs),
+                new(CardRank.Three, CardSuit.Spades),
             };
 
             return PokerHand.GetBestHand(cards);
@@ -313,13 +309,13 @@ namespace PokerUnitTests.Unit_Tests_Help_Methods
         {
             var cards = new List<Card>()
             {
-                new(Rank.Two, Suit.Hearts),
-                new(Rank.Two, Suit.Spades),
-                new(Rank.Two, Suit.Diamonds),
-                new(Rank.Three, Suit.Clubs),
-                new(Rank.Four, Suit.Hearts),
-                new(Rank.Five, Suit.Clubs),
-                new(Rank.Seven, Suit.Spades),
+                new(CardRank.Two, CardSuit.Hearts),
+                new(CardRank.Two, CardSuit.Spades),
+                new(CardRank.Two, CardSuit.Diamonds),
+                new(CardRank.Three, CardSuit.Clubs),
+                new(CardRank.Four, CardSuit.Hearts),
+                new(CardRank.Five, CardSuit.Clubs),
+                new(CardRank.Seven, CardSuit.Spades),
             };
 
             return PokerHand.GetBestHand(cards);
@@ -333,13 +329,13 @@ namespace PokerUnitTests.Unit_Tests_Help_Methods
         {
             var cards = new List<Card>()
             {
-                new(Rank.Ace, Suit.Hearts),
-                new(Rank.Ace, Suit.Spades),
-                new(Rank.King, Suit.Diamonds),
-                new(Rank.King, Suit.Clubs),
-                new(Rank.Queen, Suit.Hearts),
-                new(Rank.Two, Suit.Clubs),
-                new(Rank.Three, Suit.Spades),
+                new(CardRank.Ace, CardSuit.Hearts),
+                new(CardRank.Ace, CardSuit.Spades),
+                new(CardRank.King, CardSuit.Diamonds),
+                new(CardRank.King, CardSuit.Clubs),
+                new(CardRank.Queen, CardSuit.Hearts),
+                new(CardRank.Two, CardSuit.Clubs),
+                new(CardRank.Three, CardSuit.Spades),
             };
 
             return PokerHand.GetBestHand(cards);
@@ -353,13 +349,13 @@ namespace PokerUnitTests.Unit_Tests_Help_Methods
         {
             var cards = new List<Card>()
             {
-                new(Rank.Two, Suit.Hearts),
-                new(Rank.Two, Suit.Spades),
-                new(Rank.Three, Suit.Diamonds),
-                new(Rank.Three, Suit.Clubs),
-                new(Rank.Four, Suit.Hearts),
-                new(Rank.Five, Suit.Clubs),
-                new(Rank.Seven, Suit.Spades),
+                new(CardRank.Two, CardSuit.Hearts),
+                new(CardRank.Two, CardSuit.Spades),
+                new(CardRank.Three, CardSuit.Diamonds),
+                new(CardRank.Three, CardSuit.Clubs),
+                new(CardRank.Four, CardSuit.Hearts),
+                new(CardRank.Five, CardSuit.Clubs),
+                new(CardRank.Seven, CardSuit.Spades),
             };
 
             return PokerHand.GetBestHand(cards);
@@ -373,13 +369,13 @@ namespace PokerUnitTests.Unit_Tests_Help_Methods
         {
             var cards = new List<Card>()
             {
-                new(Rank.Ace, Suit.Hearts),
-                new(Rank.Ace, Suit.Spades),
-                new(Rank.King, Suit.Diamonds),
-                new(Rank.Queen, Suit.Clubs),
-                new(Rank.Jack, Suit.Hearts),
-                new(Rank.Two, Suit.Clubs),
-                new(Rank.Three, Suit.Spades),
+                new(CardRank.Ace, CardSuit.Hearts),
+                new(CardRank.Ace, CardSuit.Spades),
+                new(CardRank.King, CardSuit.Diamonds),
+                new(CardRank.Queen, CardSuit.Clubs),
+                new(CardRank.Jack, CardSuit.Hearts),
+                new(CardRank.Two, CardSuit.Clubs),
+                new(CardRank.Three, CardSuit.Spades),
             };
 
             return PokerHand.GetBestHand(cards);
@@ -393,13 +389,13 @@ namespace PokerUnitTests.Unit_Tests_Help_Methods
         {
             var cards = new List<Card>()
             {
-                new(Rank.Two, Suit.Hearts),
-                new(Rank.Two, Suit.Spades),
-                new(Rank.Three, Suit.Diamonds),
-                new(Rank.Four, Suit.Clubs),
-                new(Rank.Five, Suit.Hearts),
-                new(Rank.Seven, Suit.Clubs),
-                new(Rank.Eight, Suit.Spades),
+                new(CardRank.Two, CardSuit.Hearts),
+                new(CardRank.Two, CardSuit.Spades),
+                new(CardRank.Three, CardSuit.Diamonds),
+                new(CardRank.Four, CardSuit.Clubs),
+                new(CardRank.Five, CardSuit.Hearts),
+                new(CardRank.Seven, CardSuit.Clubs),
+                new(CardRank.Eight, CardSuit.Spades),
             };
 
             return PokerHand.GetBestHand(cards);
@@ -413,13 +409,13 @@ namespace PokerUnitTests.Unit_Tests_Help_Methods
         {
             var cards = new List<Card>()
             {
-                new(Rank.Ace, Suit.Hearts),
-                new(Rank.King, Suit.Spades),
-                new(Rank.Queen, Suit.Diamonds),
-                new(Rank.Jack, Suit.Clubs),
-                new(Rank.Nine, Suit.Hearts),
-                new(Rank.Two, Suit.Clubs),
-                new(Rank.Three, Suit.Spades),
+                new(CardRank.Ace, CardSuit.Hearts),
+                new(CardRank.King, CardSuit.Spades),
+                new(CardRank.Queen, CardSuit.Diamonds),
+                new(CardRank.Jack, CardSuit.Clubs),
+                new(CardRank.Nine, CardSuit.Hearts),
+                new(CardRank.Two, CardSuit.Clubs),
+                new(CardRank.Three, CardSuit.Spades),
             };
 
             return PokerHand.GetBestHand(cards);
@@ -433,13 +429,13 @@ namespace PokerUnitTests.Unit_Tests_Help_Methods
         {
             var cards = new List<Card>()
             {
-                new(Rank.Two, Suit.Hearts),
-                new(Rank.Three, Suit.Spades),
-                new(Rank.Four, Suit.Diamonds),
-                new(Rank.Five, Suit.Clubs),
-                new(Rank.Seven, Suit.Hearts),
-                new(Rank.Eight, Suit.Clubs),
-                new(Rank.Nine, Suit.Spades),
+                new(CardRank.Two, CardSuit.Hearts),
+                new(CardRank.Three, CardSuit.Spades),
+                new(CardRank.Four, CardSuit.Diamonds),
+                new(CardRank.Five, CardSuit.Clubs),
+                new(CardRank.Seven, CardSuit.Hearts),
+                new(CardRank.Eight, CardSuit.Clubs),
+                new(CardRank.Nine, CardSuit.Spades),
             };
 
             return PokerHand.GetBestHand(cards);

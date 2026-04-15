@@ -1,4 +1,5 @@
-﻿using DeckOfCardsLibrary;
+﻿using DeckOfPlayingCardsLibrary.Entities;
+using DeckOfPlayingCardsLibrary.Enums;
 using PokerLibrary;
 
 namespace PokerDemo
@@ -11,8 +12,8 @@ namespace PokerDemo
             var players = Program.GetPlayers();
 
             // Get the deck and shuffle it.
-            var deck = Deck.get();
-            deck.shuffle();
+            var deck = Deck.Get();
+            deck.Shuffle();
 
             // Draw 2 cards for each player.
             Program.DrawCardsForPlayers(players, deck);
@@ -85,7 +86,7 @@ namespace PokerDemo
                 foreach (var player in players)
                 {
                     var card =
-                        deck.draw() ?? throw new Exception("There are no more cards in the deck.");
+                        deck.Draw() ?? throw new Exception("There are no more cards in the deck.");
 
                     player.AddCard(card);
                 }
@@ -104,7 +105,7 @@ namespace PokerDemo
             for (var i = 0; i < 5; i++)
             {
                 var card =
-                    deck.draw() ?? throw new Exception("There are no more cards in the deck.");
+                    deck.Draw() ?? throw new Exception("There are no more cards in the deck.");
 
                 tableCards.Add(card);
             }
@@ -151,21 +152,21 @@ namespace PokerDemo
         )
         {
             Console.WriteLine("Table:");
-            Console.WriteLine(tableCards.GetDisplayString(displayTenAsT: true));
+            Console.WriteLine(GetCardDisplayString(tableCards));
             Console.WriteLine("");
             Console.WriteLine("Players:");
 
             foreach (var player in players)
             {
                 Console.WriteLine($"Name: {player.Name}");
-                Console.WriteLine($"Cards: {player.Cards.GetDisplayString(displayTenAsT: true)}");
+                Console.WriteLine($"Cards: {GetCardDisplayString(player.Cards)}");
                 Console.WriteLine($"Hand Rank: {player.Hand!.HandRank}");
                 Console.WriteLine(
-                    $"Highest value for this hand rank: {(player.Hand.PrimaryCardRank?.getDisplayString(displayTenAsT: true))}"
+                    $"Highest value for this hand rank: {GetCardRankDisplayString(player.Hand.PrimaryCardRank)}"
                 );
                 Console.WriteLine(
-                    $"Second highest value for this hand rank: {(player.Hand.SecondaryCardRank?.getDisplayString(displayTenAsT: true))}\n"
-                        + $"Kickers: {player.Hand.Kickers.GetDisplayString(displayTenAsT: true)}"
+                    $"Second highest value for this hand rank: {GetCardRankDisplayString(player.Hand!.SecondaryCardRank)}\n"
+                        + $"Kickers: {GetCardDisplayString(player.Hand!.Kickers)}"
                 );
                 Console.WriteLine("");
             }
@@ -178,6 +179,64 @@ namespace PokerDemo
 
             Console.WriteLine("");
             Console.WriteLine("(Press any key to close this window)");
+        }
+
+        /// <summary>
+        /// Gets a readable display string for a list of cards, e.g. "A♥, K♦, T♣".
+        /// </summary>
+        /// <param name="cards"></param>
+        /// <returns></returns>
+        private static string GetCardDisplayString(IEnumerable<Card> cards)
+        {
+            return string.Join(
+                ", ",
+                cards.Select(card =>
+                    GetCardRankDisplayString(card.Rank) + GetCardSuitDisplayString(card.Suit)
+                )
+            );
+        }
+
+        /// <summary>
+        /// Gets a readable display string for a card rank, e.g. "A" for Ace, "K" for King.
+        /// </summary>
+        /// <param name="rank"></param>
+        /// <returns></returns>
+        private static string GetCardRankDisplayString(CardRank? rank)
+        {
+            return rank switch
+            {
+                CardRank.Two => "2",
+                CardRank.Three => "3",
+                CardRank.Four => "4",
+                CardRank.Five => "5",
+                CardRank.Six => "6",
+                CardRank.Seven => "7",
+                CardRank.Eight => "8",
+                CardRank.Nine => "9",
+                CardRank.Ten => "T",
+                CardRank.Jack => "J",
+                CardRank.Queen => "Q",
+                CardRank.King => "K",
+                CardRank.Ace => "A",
+                _ => "",
+            };
+        }
+
+        /// <summary>
+        /// Gets a readable display string for a card suit, e.g. "♥" for Hearts, "♦" for Diamonds.
+        /// </summary>
+        /// <param name="suit"></param>
+        /// <returns></returns>
+        private static string GetCardSuitDisplayString(CardSuit? suit)
+        {
+            return suit switch
+            {
+                CardSuit.Hearts => "\u2665",
+                CardSuit.Diamonds => "\u2666",
+                CardSuit.Clubs => "\u2663",
+                CardSuit.Spades => "\u2660",
+                _ => "",
+            };
         }
     }
 

@@ -28,6 +28,6 @@ This library includes classes for representing poker hands, cards, and offers ut
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="DeckOfPlayingCards" Version="1.1.1" />
+    <PackageReference Include="DeckOfPlayingCards" Version="2.0.0" />
   </ItemGroup>
 </Project>
