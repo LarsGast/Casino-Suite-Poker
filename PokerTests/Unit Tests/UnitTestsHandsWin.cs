@@ -1,4 +1,4 @@
-﻿using PokerLibrary;
+﻿using PokerLibrary.Entities;
 using PokerUnitTests.Unit_Tests_Help_Methods;
 
 namespace PokerUnitTests

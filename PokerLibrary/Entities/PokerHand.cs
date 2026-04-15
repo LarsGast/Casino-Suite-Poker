@@ -2,7 +2,7 @@
 using DeckOfPlayingCardsLibrary.Enums;
 using PokerLibrary.Enums;
 
-namespace PokerLibrary
+namespace PokerLibrary.Entities
 {
     /// <summary>
     /// Represents a 5-card poker hand, which is a combination of playing cards used in various poker games.

@@ -1,6 +1,6 @@
 ﻿using DeckOfPlayingCardsLibrary.Entities;
 using DeckOfPlayingCardsLibrary.Enums;
-using PokerLibrary;
+using PokerLibrary.Entities;
 
 namespace PokerDemo
 {

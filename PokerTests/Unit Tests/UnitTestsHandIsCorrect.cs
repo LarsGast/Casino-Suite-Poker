@@ -1,6 +1,6 @@
 ﻿using DeckOfPlayingCardsLibrary.Entities;
 using DeckOfPlayingCardsLibrary.Enums;
-using PokerLibrary;
+using PokerLibrary.Entities;
 using PokerLibrary.Enums;
 using PokerUnitTests.Unit_Tests_Help_Methods;
 
