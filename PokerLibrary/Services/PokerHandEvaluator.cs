@@ -132,7 +132,7 @@ namespace PokerLibrary.Services
                 highestFourOrAKindValue,
                 null,
                 null,
-                kickers
+                kickers.ToList()
             );
         }
 
@@ -198,7 +198,7 @@ namespace PokerLibrary.Services
             var flushSuit = flushCards.First().Suit;
             var kickers = flushCards.OrderByDescending(card => card.Rank);
 
-            return new PokerHand(HandRanking.Flush, null, null, flushSuit, kickers);
+            return new PokerHand(HandRanking.Flush, null, null, flushSuit, kickers.ToList());
         }
 
         /// <summary>
@@ -261,7 +261,7 @@ namespace PokerLibrary.Services
                 highestThreeOfAKindValue,
                 null,
                 null,
-                kickers
+                kickers.ToList()
             );
         }
 
@@ -303,7 +303,7 @@ namespace PokerLibrary.Services
                 highestPairValue,
                 secondHighestPairValue,
                 null,
-                kickers
+                kickers.ToList()
             );
         }
 
@@ -330,7 +330,7 @@ namespace PokerLibrary.Services
                 .OrderByDescending(card => card.Rank)
                 .Take(3);
 
-            return new PokerHand(HandRanking.Pair, highestPairValue, null, null, kickers);
+            return new PokerHand(HandRanking.Pair, highestPairValue, null, null, kickers.ToList());
         }
 
         /// <summary>
@@ -343,7 +343,7 @@ namespace PokerLibrary.Services
             // Find the five highest cards as kickers and return as a PokerHand.
             var orderedCards = cards.OrderByDescending(card => card.Rank);
             var kickers = orderedCards.Take(5);
-            return new PokerHand(HandRanking.HighCard, null, null, null, kickers);
+            return new PokerHand(HandRanking.HighCard, null, null, null, kickers.ToList());
         }
 
         /// <summary>

@@ -8,82 +8,70 @@ namespace PokerLibrary.Entities
     /// Represents a 5-card poker hand, which is a combination of playing cards used in various poker games.
     /// </summary>
     /// <remarks>
-    /// This class provides methods to evaluate and compare poker hands based on standard hand ranks.
+    /// This record provides an immutable representation of a poker hand evaluated from a collection of cards.
     /// </remarks>
-    public class PokerHand
+    public sealed record PokerHand(
+        HandRanking HandRank,
+        CardRank? PrimaryCardRank,
+        CardRank? SecondaryCardRank,
+        CardSuit? HandSuit,
+        IReadOnlyList<Card> Kickers
+    )
     {
-        #region Properties
-
         /// <summary>
-        /// The specific ranking of the hand, such as High Card or Straight Flush.
+        /// The specific ranking of the hand, such as <see cref="HandRanking.HighCard"/> or <see cref="HandRanking.StraightFlush"/>.
         /// </summary>
-        public HandRanking HandRank { get; }
+        public HandRanking HandRank { get; } = HandRank;
 
         /// <summary>
         /// The primary card <see cref="CardRank"/> relevant to this hand.
         /// </summary>
         /// <value>
-        /// For <see cref="HandRanking.Pair"/> and <see cref="HandRanking.TwoPair"/>: the rank of the highest pair.
-        /// For <see cref="HandRanking.ThreeOfAKind"/> and <see cref="HandRanking.FullHouse"/>: the rank of the three of a kind.
-        /// For <see cref="HandRanking.FourOfAKind"/>: the rank of the four of a kind.
-        /// <see langword="null"/> for other hand ranks.
+        /// <list type="bullet">
+        ///     <item>For <see cref="HandRanking.Pair"/> and <see cref="HandRanking.TwoPair"/>: the rank of the highest pair.</item>
+        ///     <item>For <see cref="HandRanking.ThreeOfAKind"/> and <see cref="HandRanking.FullHouse"/>: the rank of the highest three of a kind.</item>
+        ///     <item>For <see cref="HandRanking.FourOfAKind"/>: the rank of the four of a kind.</item>
+        ///     <item><see langword="null"/> for other hand ranks.</item>
+        /// </list>
         /// </value>
-        public CardRank? PrimaryCardRank { get; }
+        public CardRank? PrimaryCardRank { get; } = PrimaryCardRank;
 
         /// <summary>
         /// The secondary card <see cref="CardRank"/> relevant to this hand.
         /// </summary>
         /// <value>
-        /// For <see cref="HandRanking.TwoPair"/>: the rank of the second-highest pair.
-        /// For <see cref="HandRanking.FullHouse"/>: the rank of the highest pair that is not a three of a kind.
-        /// <see langword="null"/> for other hand ranks.
+        /// <list type="bullet">
+        ///     <item>For <see cref="HandRanking.TwoPair"/>: the rank of the second-highest pair.</item>
+        ///     <item>For <see cref="HandRanking.FullHouse"/>: the rank of the highest pair that is not part of the three of a kind.</item>
+        ///     <item><see langword="null"/> for other hand ranks.</item>
+        /// </list>
         /// </value>
-        public CardRank? SecondaryCardRank { get; }
+        public CardRank? SecondaryCardRank { get; } = SecondaryCardRank;
 
         /// <summary>
         /// The <see cref="CardSuit"/> of the hand.
         /// </summary>
         /// <value>
-        /// Relevant for <see cref="HandRanking.Flush"/> and <see cref="HandRanking.StraightFlush"/>
+        /// Relevant for <see cref="HandRanking.Flush"/> and <see cref="HandRanking.StraightFlush"/>.
         /// <see langword="null"/> for other hand ranks.
         /// </value>
-        public CardSuit? HandSuit { get; }
+        public CardSuit? HandSuit { get; } = HandSuit;
 
         /// <summary>
-        /// A sorted list of kickers, the cards used to enhance the hand.
+        /// A sorted read-only list of kickers, the cards used to enhance the hand.
         /// </summary>
         /// <remarks>
+        /// <para>
         /// These are all the cards not part of the primary hand but still contribute to it.
+        /// </para>
+        /// <para>
+        /// For <see cref="HandRanking.Straight"/> and <see cref="HandRanking.StraightFlush"/> hands with an Ace-low straight (A-2-3-4-5),
+        /// the Ace is positioned last in the list since it acts as the low card.
+        /// </para>
+        /// <para>
+        /// For all other hands, kickers are sorted in descending order by rank.
+        /// </para>
         /// </remarks>
-        public List<Card> Kickers { get; }
-
-        #endregion
-
-        #region Constructor
-
-        /// <summary>
-        /// Constructor for initializing a PokerHand.
-        /// </summary>
-        /// <param name="handRank"><inheritdoc cref="HandRank" path="/summary"/></param>
-        /// <param name="primaryCardRank"><inheritdoc cref="PrimaryCardRank" path="/summary"/></param>
-        /// <param name="secondaryCardRank"><inheritdoc cref="SecondaryCardRank" path="/summary"/></param>
-        /// <param name="handSuit"><inheritdoc cref="HandSuit" path="/summary"/></param>
-        /// <param name="kickers"><inheritdoc cref="Kickers" path="/summary"/></param>
-        public PokerHand(
-            HandRanking handRank,
-            CardRank? primaryCardRank,
-            CardRank? secondaryCardRank,
-            CardSuit? handSuit,
-            IEnumerable<Card> kickers
-        )
-        {
-            this.HandRank = handRank;
-            this.PrimaryCardRank = primaryCardRank;
-            this.SecondaryCardRank = secondaryCardRank;
-            this.HandSuit = handSuit;
-            this.Kickers = kickers.ToList();
-        }
-
-        #endregion
+        public IReadOnlyList<Card> Kickers { get; } = Kickers;
     }
 }
