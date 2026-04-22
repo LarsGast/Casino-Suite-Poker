@@ -91,7 +91,7 @@ namespace PokerLibrary.Entities
             this.PrimaryCardRank = primaryCardRank;
             this.SecondaryCardRank = secondaryCardRank;
             this.HandSuit = handSuit;
-            this.Kickers = kickers;
+            this.Kickers = kickers?.ToList().AsReadOnly();
         }
 
         /// <inheritdoc/>
