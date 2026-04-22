@@ -1,15 +1,21 @@
-﻿using DeckOfPlayingCardsLibrary.Entities;
-using DeckOfPlayingCardsLibrary.Enums;
-using PokerLibrary;
-using PokerLibrary.Enums;
+﻿using PokerLibrary.Services;
 
 namespace PokerUnitTests.Unit_Tests_Help_Methods
 {
     /// <summary>
-    /// A static class that provides helper methods for unit tests related to Poker hand evaluation.
+    /// A class that provides helper methods for unit tests related to Poker hand evaluation.
     /// </summary>
-    internal static class UnitTestHelpClass
+    internal class UnitTestHelpClass
     {
+        private readonly PokerHandEvaluator _pokerHandEvaluator;
+        private readonly PokerHandComparer _pokerHandComparer;
+
+        public UnitTestHelpClass()
+        {
+            this._pokerHandEvaluator = new PokerHandEvaluator();
+            this._pokerHandComparer = new PokerHandComparer();
+        }
+
         /// <summary>
         /// Help function to assert a PokerHand.
         /// </summary>
@@ -19,13 +25,13 @@ namespace PokerUnitTests.Unit_Tests_Help_Methods
         /// <param name="secondaryCardRank">Expected secondaryCardRank</param>
         /// <param name="suit">Expected suit</param>
         /// <param name="kickers">Expected kickers</param>
-        internal static void AssertHand(
+        internal void AssertHand(
             PokerHand hand,
             HandRanking handRank,
             CardRank? primaryCardRank,
             CardRank? secondaryCardRank,
             CardSuit? suit,
-            IEnumerable<Card> kickers
+            IEnumerable<Card>? kickers
         )
         {
             Assert.Multiple(
@@ -59,15 +65,12 @@ namespace PokerUnitTests.Unit_Tests_Help_Methods
         /// </summary>
         /// <param name="winningHand"></param>
         /// <param name="losingHands"></param>
-        internal static void AssertThatHandWins(
-            PokerHand winningHand,
-            IEnumerable<PokerHand> losingHands
-        )
+        internal void AssertThatHandWins(PokerHand winningHand, IEnumerable<PokerHand> losingHands)
         {
             var allhands = new List<PokerHand>() { winningHand };
             allhands.AddRange(losingHands);
 
-            var handThatWon = PokerHand.GetWinningHand(allhands);
+            var handThatWon = this._pokerHandComparer.GetWinningHand(allhands);
 
             Assert.That(
                 handThatWon,
@@ -85,7 +88,7 @@ namespace PokerUnitTests.Unit_Tests_Help_Methods
         /// Gets the best StraightFlush as a PokerHand.
         /// </summary>
         /// <returns></returns>
-        internal static PokerHand GetBestStraightFlush()
+        internal PokerHand GetBestStraightFlush()
         {
             var cards = new List<Card>()
             {
@@ -98,14 +101,14 @@ namespace PokerUnitTests.Unit_Tests_Help_Methods
                 new(CardRank.Three, CardSuit.Spades),
             };
 
-            return PokerHand.GetBestHand(cards);
+            return this._pokerHandEvaluator.GetBestHand(cards);
         }
 
         /// <summary>
         /// Gets the worst StraightFlush as a PokerHand.
         /// </summary>
         /// <returns></returns>
-        internal static PokerHand GetWorstStraightFlush()
+        internal PokerHand GetWorstStraightFlush()
         {
             var cards = new List<Card>()
             {
@@ -118,14 +121,14 @@ namespace PokerUnitTests.Unit_Tests_Help_Methods
                 new(CardRank.Eight, CardSuit.Spades),
             };
 
-            return PokerHand.GetBestHand(cards);
+            return this._pokerHandEvaluator.GetBestHand(cards);
         }
 
         /// <summary>
         /// Gets the best FourOfAKind as a PokerHand.
         /// </summary>
         /// <returns></returns>
-        internal static PokerHand GetBestFourOfAKind()
+        internal PokerHand GetBestFourOfAKind()
         {
             var cards = new List<Card>()
             {
@@ -138,14 +141,14 @@ namespace PokerUnitTests.Unit_Tests_Help_Methods
                 new(CardRank.Three, CardSuit.Spades),
             };
 
-            return PokerHand.GetBestHand(cards);
+            return this._pokerHandEvaluator.GetBestHand(cards);
         }
 
         /// <summary>
         /// Gets the worst FourOfAKind as a PokerHand.
         /// </summary>
         /// <returns></returns>
-        internal static PokerHand GetWorstFourOfAKind()
+        internal PokerHand GetWorstFourOfAKind()
         {
             var cards = new List<Card>()
             {
@@ -158,14 +161,14 @@ namespace PokerUnitTests.Unit_Tests_Help_Methods
                 new(CardRank.Three, CardSuit.Spades),
             };
 
-            return PokerHand.GetBestHand(cards);
+            return this._pokerHandEvaluator.GetBestHand(cards);
         }
 
         /// <summary>
         /// Gets the best FullHouse as a PokerHand.
         /// </summary>
         /// <returns></returns>
-        internal static PokerHand GetBestFullHouse()
+        internal PokerHand GetBestFullHouse()
         {
             var cards = new List<Card>()
             {
@@ -178,14 +181,14 @@ namespace PokerUnitTests.Unit_Tests_Help_Methods
                 new(CardRank.Three, CardSuit.Spades),
             };
 
-            return PokerHand.GetBestHand(cards);
+            return this._pokerHandEvaluator.GetBestHand(cards);
         }
 
         /// <summary>
         /// Gets the worst FullHouse as a PokerHand.
         /// </summary>
         /// <returns></returns>
-        internal static PokerHand GetWorstFullHouse()
+        internal PokerHand GetWorstFullHouse()
         {
             var cards = new List<Card>()
             {
@@ -198,14 +201,14 @@ namespace PokerUnitTests.Unit_Tests_Help_Methods
                 new(CardRank.Six, CardSuit.Spades),
             };
 
-            return PokerHand.GetBestHand(cards);
+            return this._pokerHandEvaluator.GetBestHand(cards);
         }
 
         /// <summary>
         /// Gets the best Flush as a PokerHand.
         /// </summary>
         /// <returns></returns>
-        internal static PokerHand GetBestFlush()
+        internal PokerHand GetBestFlush()
         {
             var cards = new List<Card>()
             {
@@ -218,14 +221,14 @@ namespace PokerUnitTests.Unit_Tests_Help_Methods
                 new(CardRank.Three, CardSuit.Spades),
             };
 
-            return PokerHand.GetBestHand(cards);
+            return this._pokerHandEvaluator.GetBestHand(cards);
         }
 
         /// <summary>
         /// Gets the worst Flush as a PokerHand.
         /// </summary>
         /// <returns></returns>
-        internal static PokerHand GetWorstFlush()
+        internal PokerHand GetWorstFlush()
         {
             var cards = new List<Card>()
             {
@@ -238,14 +241,14 @@ namespace PokerUnitTests.Unit_Tests_Help_Methods
                 new(CardRank.Three, CardSuit.Spades),
             };
 
-            return PokerHand.GetBestHand(cards);
+            return this._pokerHandEvaluator.GetBestHand(cards);
         }
 
         /// <summary>
         /// Gets the best Straight as a PokerHand.
         /// </summary>
         /// <returns></returns>
-        internal static PokerHand GetBestStraight()
+        internal PokerHand GetBestStraight()
         {
             var cards = new List<Card>()
             {
@@ -258,14 +261,14 @@ namespace PokerUnitTests.Unit_Tests_Help_Methods
                 new(CardRank.Three, CardSuit.Spades),
             };
 
-            return PokerHand.GetBestHand(cards);
+            return this._pokerHandEvaluator.GetBestHand(cards);
         }
 
         /// <summary>
         /// Gets the worst Straight as a PokerHand.
         /// </summary>
         /// <returns></returns>
-        internal static PokerHand GetWorstStraight()
+        internal PokerHand GetWorstStraight()
         {
             var cards = new List<Card>()
             {
@@ -278,14 +281,14 @@ namespace PokerUnitTests.Unit_Tests_Help_Methods
                 new(CardRank.Eight, CardSuit.Spades),
             };
 
-            return PokerHand.GetBestHand(cards);
+            return this._pokerHandEvaluator.GetBestHand(cards);
         }
 
         /// <summary>
         /// Gets the best ThreeOfAKind as a PokerHand.
         /// </summary>
         /// <returns></returns>
-        internal static PokerHand GetBestThreeOfAKind()
+        internal PokerHand GetBestThreeOfAKind()
         {
             var cards = new List<Card>()
             {
@@ -298,14 +301,14 @@ namespace PokerUnitTests.Unit_Tests_Help_Methods
                 new(CardRank.Three, CardSuit.Spades),
             };
 
-            return PokerHand.GetBestHand(cards);
+            return this._pokerHandEvaluator.GetBestHand(cards);
         }
 
         /// <summary>
         /// Gets the worst ThreeOfAKind as a PokerHand.
         /// </summary>
         /// <returns></returns>
-        internal static PokerHand GetWorstThreeOfAKind()
+        internal PokerHand GetWorstThreeOfAKind()
         {
             var cards = new List<Card>()
             {
@@ -318,14 +321,14 @@ namespace PokerUnitTests.Unit_Tests_Help_Methods
                 new(CardRank.Seven, CardSuit.Spades),
             };
 
-            return PokerHand.GetBestHand(cards);
+            return this._pokerHandEvaluator.GetBestHand(cards);
         }
 
         /// <summary>
         /// Gets the best TwoPair as a PokerHand.
         /// </summary>
         /// <returns></returns>
-        internal static PokerHand GetBestTwoPair()
+        internal PokerHand GetBestTwoPair()
         {
             var cards = new List<Card>()
             {
@@ -338,14 +341,14 @@ namespace PokerUnitTests.Unit_Tests_Help_Methods
                 new(CardRank.Three, CardSuit.Spades),
             };
 
-            return PokerHand.GetBestHand(cards);
+            return this._pokerHandEvaluator.GetBestHand(cards);
         }
 
         /// <summary>
         /// Gets the worst TwoPair as a PokerHand.
         /// </summary>
         /// <returns></returns>
-        internal static PokerHand GetWorstTwoPair()
+        internal PokerHand GetWorstTwoPair()
         {
             var cards = new List<Card>()
             {
@@ -358,14 +361,14 @@ namespace PokerUnitTests.Unit_Tests_Help_Methods
                 new(CardRank.Seven, CardSuit.Spades),
             };
 
-            return PokerHand.GetBestHand(cards);
+            return this._pokerHandEvaluator.GetBestHand(cards);
         }
 
         /// <summary>
         /// Gets the best Pair as a PokerHand.
         /// </summary>
         /// <returns></returns>
-        internal static PokerHand GetBestPair()
+        internal PokerHand GetBestPair()
         {
             var cards = new List<Card>()
             {
@@ -378,14 +381,14 @@ namespace PokerUnitTests.Unit_Tests_Help_Methods
                 new(CardRank.Three, CardSuit.Spades),
             };
 
-            return PokerHand.GetBestHand(cards);
+            return this._pokerHandEvaluator.GetBestHand(cards);
         }
 
         /// <summary>
         /// Gets the worst Pair as a PokerHand.
         /// </summary>
         /// <returns></returns>
-        internal static PokerHand getWorstPair()
+        internal PokerHand GetWorstPair()
         {
             var cards = new List<Card>()
             {
@@ -398,14 +401,14 @@ namespace PokerUnitTests.Unit_Tests_Help_Methods
                 new(CardRank.Eight, CardSuit.Spades),
             };
 
-            return PokerHand.GetBestHand(cards);
+            return this._pokerHandEvaluator.GetBestHand(cards);
         }
 
         /// <summary>
         /// Gets the best HighCard as a PokerHand.
         /// </summary>
         /// <returns></returns>
-        internal static PokerHand GetBestHighCard()
+        internal PokerHand GetBestHighCard()
         {
             var cards = new List<Card>()
             {
@@ -418,14 +421,14 @@ namespace PokerUnitTests.Unit_Tests_Help_Methods
                 new(CardRank.Three, CardSuit.Spades),
             };
 
-            return PokerHand.GetBestHand(cards);
+            return this._pokerHandEvaluator.GetBestHand(cards);
         }
 
         /// <summary>
         /// Gets the worst HighCard as a PokerHand.
         /// </summary>
         /// <returns></returns>
-        internal static PokerHand GetWorstHighCard()
+        internal PokerHand GetWorstHighCard()
         {
             var cards = new List<Card>()
             {
@@ -438,7 +441,7 @@ namespace PokerUnitTests.Unit_Tests_Help_Methods
                 new(CardRank.Nine, CardSuit.Spades),
             };
 
-            return PokerHand.GetBestHand(cards);
+            return this._pokerHandEvaluator.GetBestHand(cards);
         }
     }
 }

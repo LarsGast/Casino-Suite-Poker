@@ -1,6 +1,7 @@
 ﻿using DeckOfPlayingCardsLibrary.Entities;
 using DeckOfPlayingCardsLibrary.Enums;
-using PokerLibrary;
+using PokerLibrary.Entities;
+using PokerLibrary.Services;
 
 namespace PokerDemo
 {
@@ -129,12 +130,13 @@ namespace PokerDemo
             }
 
             // Get the best hand amongst all the players.
-            var bestHand = PokerHand.GetWinningHand(players.Select(player => player.Hand!));
+            var pokerHandComparer = new PokerHandComparer();
+            var bestHand = pokerHandComparer.GetWinningHand(players.Select(player => player.Hand!));
 
             // Get all the players that draw with the best hand.
             // More than one player can have the best hand.
             var winningPlayers = players
-                .Where(player => player.Hand!.WinsAgainst(bestHand) == null)
+                .Where(player => pokerHandComparer.WinsAgainst(player.Hand!, bestHand) == null)
                 .ToList();
             return winningPlayers;
         }
@@ -286,7 +288,8 @@ namespace PokerDemo
         /// <param name="tableCards"></param>
         public void SetPokerHand(List<Card> tableCards)
         {
-            this.Hand = PokerHand.GetBestHand(tableCards.Union(this.Cards));
+            var pokerHandEvaluator = new PokerHandEvaluator();
+            this.Hand = pokerHandEvaluator.GetBestHand(tableCards.Union(this.Cards));
         }
     }
 }
