@@ -1,4 +1,5 @@
-﻿using PokerUnitTests.Unit_Tests_Help_Methods;
+﻿using PokerLibrary.Services;
+using PokerUnitTests.Unit_Tests_Help_Methods;
 
 namespace PokerUnitTests
 {
@@ -7,6 +8,15 @@ namespace PokerUnitTests
     /// </summary>
     public class UnitTestsHandIsCorrect
     {
+        private readonly PokerHandEvaluator _pokerHandEvaluator;
+        private readonly UnitTestHelpClass _unitTestHelpClass;
+
+        public UnitTestsHandIsCorrect()
+        {
+            this._pokerHandEvaluator = new PokerHandEvaluator();
+            this._unitTestHelpClass = new UnitTestHelpClass();
+        }
+
         /// <summary>
         /// Tests whether the given hand is a straight flush.
         /// </summary>
@@ -24,7 +34,7 @@ namespace PokerUnitTests
                 new(CardRank.Three, CardSuit.Spades),
             };
 
-            var bestHand = PokerHand.GetBestHand(cards);
+            var bestHand = this._pokerHandEvaluator.GetBestHand(cards);
 
             var handRank = HandRanking.StraightFlush;
             CardRank? primaryCardRank = null;
@@ -39,7 +49,7 @@ namespace PokerUnitTests
                 new(CardRank.Ten, CardSuit.Hearts),
             };
 
-            UnitTestHelpClass.AssertHand(
+            this._unitTestHelpClass.AssertHand(
                 bestHand,
                 handRank,
                 primaryCardRank,
@@ -66,7 +76,7 @@ namespace PokerUnitTests
                 new(CardRank.Three, CardSuit.Spades),
             };
 
-            var bestHand = PokerHand.GetBestHand(cards);
+            var bestHand = this._pokerHandEvaluator.GetBestHand(cards);
 
             var handRank = HandRanking.FourOfAKind;
             CardRank? primaryCardRank = CardRank.Ace;
@@ -74,7 +84,7 @@ namespace PokerUnitTests
             CardSuit? suit = null;
             var kickers = new List<Card>() { new(CardRank.King, CardSuit.Hearts) };
 
-            UnitTestHelpClass.AssertHand(
+            this._unitTestHelpClass.AssertHand(
                 bestHand,
                 handRank,
                 primaryCardRank,
@@ -101,7 +111,7 @@ namespace PokerUnitTests
                 new(CardRank.Three, CardSuit.Spades),
             };
 
-            var bestHand = PokerHand.GetBestHand(cards);
+            var bestHand = this._pokerHandEvaluator.GetBestHand(cards);
 
             var handRank = HandRanking.FullHouse;
             CardRank? primaryCardRank = CardRank.Ace;
@@ -109,7 +119,7 @@ namespace PokerUnitTests
             CardSuit? suit = null;
             var kickers = new List<Card>();
 
-            UnitTestHelpClass.AssertHand(
+            this._unitTestHelpClass.AssertHand(
                 bestHand,
                 handRank,
                 primaryCardRank,
@@ -136,7 +146,7 @@ namespace PokerUnitTests
                 new(CardRank.Three, CardSuit.Spades),
             };
 
-            var bestHand = PokerHand.GetBestHand(cards);
+            var bestHand = this._pokerHandEvaluator.GetBestHand(cards);
 
             var handRank = HandRanking.Flush;
             CardRank? primaryCardRank = null;
@@ -151,7 +161,7 @@ namespace PokerUnitTests
                 new(CardRank.Nine, CardSuit.Hearts),
             };
 
-            UnitTestHelpClass.AssertHand(
+            this._unitTestHelpClass.AssertHand(
                 bestHand,
                 handRank,
                 primaryCardRank,
@@ -178,7 +188,7 @@ namespace PokerUnitTests
                 new(CardRank.Three, CardSuit.Spades),
             };
 
-            var bestHand = PokerHand.GetBestHand(cards);
+            var bestHand = this._pokerHandEvaluator.GetBestHand(cards);
 
             var handRank = HandRanking.Straight;
             CardRank? primaryCardRank = null;
@@ -193,7 +203,7 @@ namespace PokerUnitTests
                 new(CardRank.Ten, CardSuit.Hearts),
             };
 
-            UnitTestHelpClass.AssertHand(
+            this._unitTestHelpClass.AssertHand(
                 bestHand,
                 handRank,
                 primaryCardRank,
@@ -220,7 +230,7 @@ namespace PokerUnitTests
                 new(CardRank.Three, CardSuit.Spades),
             };
 
-            var bestHand = PokerHand.GetBestHand(cards);
+            var bestHand = this._pokerHandEvaluator.GetBestHand(cards);
 
             var handRank = HandRanking.ThreeOfAKind;
             CardRank? primaryCardRank = CardRank.Ace;
@@ -232,7 +242,7 @@ namespace PokerUnitTests
                 new(CardRank.Queen, CardSuit.Hearts),
             };
 
-            UnitTestHelpClass.AssertHand(
+            this._unitTestHelpClass.AssertHand(
                 bestHand,
                 handRank,
                 primaryCardRank,
@@ -259,7 +269,7 @@ namespace PokerUnitTests
                 new(CardRank.Three, CardSuit.Spades),
             };
 
-            var bestHand = PokerHand.GetBestHand(cards);
+            var bestHand = this._pokerHandEvaluator.GetBestHand(cards);
 
             var handRank = HandRanking.TwoPair;
             CardRank? primaryCardRank = CardRank.Ace;
@@ -267,7 +277,7 @@ namespace PokerUnitTests
             CardSuit? suit = null;
             var kickers = new List<Card>() { new(CardRank.Queen, CardSuit.Hearts) };
 
-            UnitTestHelpClass.AssertHand(
+            this._unitTestHelpClass.AssertHand(
                 bestHand,
                 handRank,
                 primaryCardRank,
@@ -294,7 +304,7 @@ namespace PokerUnitTests
                 new(CardRank.Three, CardSuit.Spades),
             };
 
-            var bestHand = PokerHand.GetBestHand(cards);
+            var bestHand = this._pokerHandEvaluator.GetBestHand(cards);
 
             var handRank = HandRanking.Pair;
             CardRank? primaryCardRank = CardRank.Ace;
@@ -307,7 +317,7 @@ namespace PokerUnitTests
                 new(CardRank.Jack, CardSuit.Hearts),
             };
 
-            UnitTestHelpClass.AssertHand(
+            this._unitTestHelpClass.AssertHand(
                 bestHand,
                 handRank,
                 primaryCardRank,
@@ -334,7 +344,7 @@ namespace PokerUnitTests
                 new(CardRank.Three, CardSuit.Spades),
             };
 
-            var bestHand = PokerHand.GetBestHand(cards);
+            var bestHand = this._pokerHandEvaluator.GetBestHand(cards);
 
             var handRank = HandRanking.HighCard;
             CardRank? primaryCardRank = null;
@@ -349,7 +359,7 @@ namespace PokerUnitTests
                 new(CardRank.Nine, CardSuit.Hearts),
             };
 
-            UnitTestHelpClass.AssertHand(
+            this._unitTestHelpClass.AssertHand(
                 bestHand,
                 handRank,
                 primaryCardRank,

@@ -4,6 +4,13 @@ namespace PokerUnitTests
 {
     public class UnitTestsHandsWin
     {
+        private readonly UnitTestHelpClass _unitTestHelpClass;
+
+        public UnitTestsHandsWin()
+        {
+            this._unitTestHelpClass = new UnitTestHelpClass();
+        }
+
         /// <summary>
         /// Asserts that the best StraightFlush always wins against inferior hands.
         /// </summary>
@@ -11,23 +18,23 @@ namespace PokerUnitTests
         public void StraightFlushWins()
         {
             // This hand should win agains all other hands in this method.
-            var bestStraightFlush = UnitTestHelpClass.GetBestStraightFlush();
+            var bestStraightFlush = this._unitTestHelpClass.GetBestStraightFlush();
 
             // All hands below should lose against the hand specified above.
             var losingHands = new List<PokerHand>()
             {
-                UnitTestHelpClass.GetWorstStraightFlush(),
-                UnitTestHelpClass.GetBestFourOfAKind(),
-                UnitTestHelpClass.GetBestFullHouse(),
-                UnitTestHelpClass.GetBestFlush(),
-                UnitTestHelpClass.GetBestStraight(),
-                UnitTestHelpClass.GetBestThreeOfAKind(),
-                UnitTestHelpClass.GetBestTwoPair(),
-                UnitTestHelpClass.GetBestPair(),
-                UnitTestHelpClass.GetBestHighCard(),
+                this._unitTestHelpClass.GetWorstStraightFlush(),
+                this._unitTestHelpClass.GetBestFourOfAKind(),
+                this._unitTestHelpClass.GetBestFullHouse(),
+                this._unitTestHelpClass.GetBestFlush(),
+                this._unitTestHelpClass.GetBestStraight(),
+                this._unitTestHelpClass.GetBestThreeOfAKind(),
+                this._unitTestHelpClass.GetBestTwoPair(),
+                this._unitTestHelpClass.GetBestPair(),
+                this._unitTestHelpClass.GetBestHighCard(),
             };
 
-            UnitTestHelpClass.AssertThatHandWins(bestStraightFlush, losingHands);
+            this._unitTestHelpClass.AssertThatHandWins(bestStraightFlush, losingHands);
         }
 
         /// <summary>
@@ -37,22 +44,22 @@ namespace PokerUnitTests
         public void FourOfAKindWins()
         {
             // This hand should win agains all other hands in this method.
-            var bestFourOfAKind = UnitTestHelpClass.GetBestFourOfAKind();
+            var bestFourOfAKind = this._unitTestHelpClass.GetBestFourOfAKind();
 
             // All hands below should lose against the hand specified above.
             var losingHands = new List<PokerHand>()
             {
-                UnitTestHelpClass.GetWorstFourOfAKind(),
-                UnitTestHelpClass.GetBestFullHouse(),
-                UnitTestHelpClass.GetBestFlush(),
-                UnitTestHelpClass.GetBestStraight(),
-                UnitTestHelpClass.GetBestThreeOfAKind(),
-                UnitTestHelpClass.GetBestTwoPair(),
-                UnitTestHelpClass.GetBestPair(),
-                UnitTestHelpClass.GetBestHighCard(),
+                this._unitTestHelpClass.GetWorstFourOfAKind(),
+                this._unitTestHelpClass.GetBestFullHouse(),
+                this._unitTestHelpClass.GetBestFlush(),
+                this._unitTestHelpClass.GetBestStraight(),
+                this._unitTestHelpClass.GetBestThreeOfAKind(),
+                this._unitTestHelpClass.GetBestTwoPair(),
+                this._unitTestHelpClass.GetBestPair(),
+                this._unitTestHelpClass.GetBestHighCard(),
             };
 
-            UnitTestHelpClass.AssertThatHandWins(bestFourOfAKind, losingHands);
+            this._unitTestHelpClass.AssertThatHandWins(bestFourOfAKind, losingHands);
         }
 
         /// <summary>
@@ -62,21 +69,21 @@ namespace PokerUnitTests
         public void FullHouseWins()
         {
             // This hand should win agains all other hands in this method.
-            var bestFullHouse = UnitTestHelpClass.GetBestFullHouse();
+            var bestFullHouse = this._unitTestHelpClass.GetBestFullHouse();
 
             // All hands below should lose against the hand specified above.
             var losingHands = new List<PokerHand>()
             {
-                UnitTestHelpClass.GetWorstFullHouse(),
-                UnitTestHelpClass.GetBestFlush(),
-                UnitTestHelpClass.GetBestStraight(),
-                UnitTestHelpClass.GetBestThreeOfAKind(),
-                UnitTestHelpClass.GetBestTwoPair(),
-                UnitTestHelpClass.GetBestPair(),
-                UnitTestHelpClass.GetBestHighCard(),
+                this._unitTestHelpClass.GetWorstFullHouse(),
+                this._unitTestHelpClass.GetBestFlush(),
+                this._unitTestHelpClass.GetBestStraight(),
+                this._unitTestHelpClass.GetBestThreeOfAKind(),
+                this._unitTestHelpClass.GetBestTwoPair(),
+                this._unitTestHelpClass.GetBestPair(),
+                this._unitTestHelpClass.GetBestHighCard(),
             };
 
-            UnitTestHelpClass.AssertThatHandWins(bestFullHouse, losingHands);
+            this._unitTestHelpClass.AssertThatHandWins(bestFullHouse, losingHands);
         }
 
         /// <summary>
@@ -86,20 +93,20 @@ namespace PokerUnitTests
         public void FlushWins()
         {
             // This hand should win agains all other hands in this method.
-            var bestFlush = UnitTestHelpClass.GetBestFlush();
+            var bestFlush = this._unitTestHelpClass.GetBestFlush();
 
             // All hands below should lose against the hand specified above.
             var losingHands = new List<PokerHand>()
             {
-                UnitTestHelpClass.GetWorstFlush(),
-                UnitTestHelpClass.GetBestStraight(),
-                UnitTestHelpClass.GetBestThreeOfAKind(),
-                UnitTestHelpClass.GetBestTwoPair(),
-                UnitTestHelpClass.GetBestPair(),
-                UnitTestHelpClass.GetBestHighCard(),
+                this._unitTestHelpClass.GetWorstFlush(),
+                this._unitTestHelpClass.GetBestStraight(),
+                this._unitTestHelpClass.GetBestThreeOfAKind(),
+                this._unitTestHelpClass.GetBestTwoPair(),
+                this._unitTestHelpClass.GetBestPair(),
+                this._unitTestHelpClass.GetBestHighCard(),
             };
 
-            UnitTestHelpClass.AssertThatHandWins(bestFlush, losingHands);
+            this._unitTestHelpClass.AssertThatHandWins(bestFlush, losingHands);
         }
 
         /// <summary>
@@ -109,19 +116,19 @@ namespace PokerUnitTests
         public void StraightWins()
         {
             // This hand should win agains all other hands in this method.
-            var bestStraight = UnitTestHelpClass.GetBestStraight();
+            var bestStraight = this._unitTestHelpClass.GetBestStraight();
 
             // All hands below should lose against the hand specified above.
             var losingHands = new List<PokerHand>()
             {
-                UnitTestHelpClass.GetWorstStraight(),
-                UnitTestHelpClass.GetBestThreeOfAKind(),
-                UnitTestHelpClass.GetBestTwoPair(),
-                UnitTestHelpClass.GetBestPair(),
-                UnitTestHelpClass.GetBestHighCard(),
+                this._unitTestHelpClass.GetWorstStraight(),
+                this._unitTestHelpClass.GetBestThreeOfAKind(),
+                this._unitTestHelpClass.GetBestTwoPair(),
+                this._unitTestHelpClass.GetBestPair(),
+                this._unitTestHelpClass.GetBestHighCard(),
             };
 
-            UnitTestHelpClass.AssertThatHandWins(bestStraight, losingHands);
+            this._unitTestHelpClass.AssertThatHandWins(bestStraight, losingHands);
         }
 
         /// <summary>
@@ -131,18 +138,18 @@ namespace PokerUnitTests
         public void ThreeOfAKindWins()
         {
             // This hand should win agains all other hands in this method.
-            var bestThreeOfAKind = UnitTestHelpClass.GetBestThreeOfAKind();
+            var bestThreeOfAKind = this._unitTestHelpClass.GetBestThreeOfAKind();
 
             // All hands below should lose against the hand specified above.
             var losingHands = new List<PokerHand>()
             {
-                UnitTestHelpClass.GetWorstThreeOfAKind(),
-                UnitTestHelpClass.GetBestTwoPair(),
-                UnitTestHelpClass.GetBestPair(),
-                UnitTestHelpClass.GetBestHighCard(),
+                this._unitTestHelpClass.GetWorstThreeOfAKind(),
+                this._unitTestHelpClass.GetBestTwoPair(),
+                this._unitTestHelpClass.GetBestPair(),
+                this._unitTestHelpClass.GetBestHighCard(),
             };
 
-            UnitTestHelpClass.AssertThatHandWins(bestThreeOfAKind, losingHands);
+            this._unitTestHelpClass.AssertThatHandWins(bestThreeOfAKind, losingHands);
         }
 
         /// <summary>
@@ -152,17 +159,17 @@ namespace PokerUnitTests
         public void TwoPairWins()
         {
             // This hand should win agains all other hands in this method.
-            var bestTwoPair = UnitTestHelpClass.GetBestTwoPair();
+            var bestTwoPair = this._unitTestHelpClass.GetBestTwoPair();
 
             // All hands below should lose against the hand specified above.
             var losingHands = new List<PokerHand>()
             {
-                UnitTestHelpClass.GetWorstTwoPair(),
-                UnitTestHelpClass.GetBestPair(),
-                UnitTestHelpClass.GetBestHighCard(),
+                this._unitTestHelpClass.GetWorstTwoPair(),
+                this._unitTestHelpClass.GetBestPair(),
+                this._unitTestHelpClass.GetBestHighCard(),
             };
 
-            UnitTestHelpClass.AssertThatHandWins(bestTwoPair, losingHands);
+            this._unitTestHelpClass.AssertThatHandWins(bestTwoPair, losingHands);
         }
 
         /// <summary>
@@ -172,16 +179,16 @@ namespace PokerUnitTests
         public void PairWins()
         {
             // This hand should win agains all other hands in this method.
-            var bestPair = UnitTestHelpClass.GetBestPair();
+            var bestPair = this._unitTestHelpClass.GetBestPair();
 
             // All hands below should lose against the hand specified above.
             var losingHands = new List<PokerHand>()
             {
-                UnitTestHelpClass.getWorstPair(),
-                UnitTestHelpClass.GetBestHighCard(),
+                this._unitTestHelpClass.GetWorstPair(),
+                this._unitTestHelpClass.GetBestHighCard(),
             };
 
-            UnitTestHelpClass.AssertThatHandWins(bestPair, losingHands);
+            this._unitTestHelpClass.AssertThatHandWins(bestPair, losingHands);
         }
 
         /// <summary>
@@ -191,12 +198,12 @@ namespace PokerUnitTests
         public void HighCardWins()
         {
             // This hand should win agains all other hands in this method.
-            var bestHighCard = UnitTestHelpClass.GetBestHighCard();
+            var bestHighCard = this._unitTestHelpClass.GetBestHighCard();
 
             // All hands below should lose against the hand specified above.
-            var losingHands = new List<PokerHand>() { UnitTestHelpClass.GetWorstHighCard() };
+            var losingHands = new List<PokerHand>() { this._unitTestHelpClass.GetWorstHighCard() };
 
-            UnitTestHelpClass.AssertThatHandWins(bestHighCard, losingHands);
+            this._unitTestHelpClass.AssertThatHandWins(bestHighCard, losingHands);
         }
     }
 }
