@@ -338,14 +338,14 @@
             var hand1 = new PokerHand(
                 HandRanking.StraightFlush,
                 CardRank.King,
-                null,
+                CardRank.Queen,
                 CardSuit.Hearts,
                 kickers1
             );
             var hand2 = new PokerHand(
                 HandRanking.StraightFlush,
                 CardRank.King,
-                null,
+                CardRank.Queen,
                 CardSuit.Hearts,
                 kickers2
             );
@@ -370,11 +370,11 @@
         {
             // Arrange
             var hand = new PokerHand(
-                HandRanking.Flush,
-                CardRank.Ace,
+                HandRanking.FullHouse,
+                CardRank.King,
+                CardRank.Queen,
                 null,
-                CardSuit.Hearts,
-                new List<Card> { new(CardRank.King, CardSuit.Hearts) }
+                null
             );
 
             // Act
