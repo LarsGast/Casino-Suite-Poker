@@ -93,5 +93,42 @@ namespace PokerLibrary.Entities
             this.HandSuit = handSuit;
             this.Kickers = kickers;
         }
+
+        /// <inheritdoc/>
+        public bool Equals(PokerHand? hand)
+        {
+            return hand is not null
+                && this.HandRank == hand.HandRank
+                && this.PrimaryCardRank == hand.PrimaryCardRank
+                && this.SecondaryCardRank == hand.SecondaryCardRank
+                && this.HandSuit == hand.HandSuit
+                && (
+                    this.Kickers is null && hand.Kickers is null
+                    || this.Kickers is not null
+                        && hand.Kickers is not null
+                        && this.Kickers.SequenceEqual(hand.Kickers)
+                );
+        }
+
+        /// <inheritdoc/>
+        public override int GetHashCode()
+        {
+            var hashCode = new HashCode();
+            hashCode.Add(this.EqualityContract);
+            hashCode.Add(this.HandRank);
+            hashCode.Add(this.PrimaryCardRank);
+            hashCode.Add(this.SecondaryCardRank);
+            hashCode.Add(this.HandSuit);
+
+            if (this.Kickers is not null)
+            {
+                foreach (var kicker in this.Kickers)
+                {
+                    hashCode.Add(kicker);
+                }
+            }
+
+            return hashCode.ToHashCode();
+        }
     }
 }
