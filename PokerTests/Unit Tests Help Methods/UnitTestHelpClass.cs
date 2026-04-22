@@ -31,7 +31,7 @@ namespace PokerUnitTests.Unit_Tests_Help_Methods
             CardRank? primaryCardRank,
             CardRank? secondaryCardRank,
             CardSuit? suit,
-            IEnumerable<Card> kickers
+            IEnumerable<Card>? kickers
         )
         {
             Assert.Multiple(

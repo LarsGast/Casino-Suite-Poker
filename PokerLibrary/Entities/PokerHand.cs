@@ -10,18 +10,12 @@ namespace PokerLibrary.Entities
     /// <remarks>
     /// This record provides an immutable representation of a poker hand evaluated from a collection of cards.
     /// </remarks>
-    public sealed record PokerHand(
-        HandRanking HandRank,
-        CardRank? PrimaryCardRank,
-        CardRank? SecondaryCardRank,
-        CardSuit? HandSuit,
-        IReadOnlyList<Card> Kickers
-    )
+    public sealed record PokerHand
     {
         /// <summary>
         /// The specific ranking of the hand, such as <see cref="HandRanking.HighCard"/> or <see cref="HandRanking.StraightFlush"/>.
         /// </summary>
-        public HandRanking HandRank { get; } = HandRank;
+        public HandRanking HandRank { get; }
 
         /// <summary>
         /// The primary card <see cref="CardRank"/> relevant to this hand.
@@ -34,7 +28,7 @@ namespace PokerLibrary.Entities
         ///     <item><see langword="null"/> for other hand ranks.</item>
         /// </list>
         /// </value>
-        public CardRank? PrimaryCardRank { get; } = PrimaryCardRank;
+        public CardRank? PrimaryCardRank { get; }
 
         /// <summary>
         /// The secondary card <see cref="CardRank"/> relevant to this hand.
@@ -46,7 +40,7 @@ namespace PokerLibrary.Entities
         ///     <item><see langword="null"/> for other hand ranks.</item>
         /// </list>
         /// </value>
-        public CardRank? SecondaryCardRank { get; } = SecondaryCardRank;
+        public CardRank? SecondaryCardRank { get; }
 
         /// <summary>
         /// The <see cref="CardSuit"/> of the hand.
@@ -55,7 +49,7 @@ namespace PokerLibrary.Entities
         /// Relevant for <see cref="HandRanking.Flush"/> and <see cref="HandRanking.StraightFlush"/>.
         /// <see langword="null"/> for other hand ranks.
         /// </value>
-        public CardSuit? HandSuit { get; } = HandSuit;
+        public CardSuit? HandSuit { get; }
 
         /// <summary>
         /// A sorted read-only list of kickers, the cards used to enhance the hand.
@@ -72,6 +66,32 @@ namespace PokerLibrary.Entities
         /// For all other hands, kickers are sorted in descending order by rank.
         /// </para>
         /// </remarks>
-        public IReadOnlyList<Card> Kickers { get; } = Kickers;
+        /// <value>
+        /// <see langword="null"/> for <see cref="HandRanking.FullHouse"/>.
+        /// </value>
+        public IReadOnlyList<Card>? Kickers { get; }
+
+        /// <summary>
+        /// <inheritdoc cref="PokerHand"/>
+        /// </summary>
+        /// <param name="handRank"><inheritdoc cref="HandRank"/></param>
+        /// <param name="primaryCardRank"><inheritdoc cref="PrimaryCardRank"/></param>
+        /// <param name="secondaryCardRank"><inheritdoc cref="SecondaryCardRank"/></param>
+        /// <param name="handSuit"><inheritdoc cref="HandSuit"/></param>
+        /// <param name="kickers"><inheritdoc cref="Kickers"/></param>
+        public PokerHand(
+            HandRanking handRank,
+            CardRank? primaryCardRank,
+            CardRank? secondaryCardRank,
+            CardSuit? handSuit,
+            IReadOnlyList<Card>? kickers
+        )
+        {
+            this.HandRank = handRank;
+            this.PrimaryCardRank = primaryCardRank;
+            this.SecondaryCardRank = secondaryCardRank;
+            this.HandSuit = handSuit;
+            this.Kickers = kickers;
+        }
     }
 }

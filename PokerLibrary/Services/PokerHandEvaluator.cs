@@ -164,14 +164,12 @@ namespace PokerLibrary.Services
                 return null;
             }
 
-            var kickers = new List<Card>();
-
             return new PokerHand(
                 HandRanking.FullHouse,
                 highestThreeOfAKindValue,
                 highestPairValue,
                 null,
-                kickers
+                null
             );
         }
 

@@ -117,7 +117,7 @@ namespace PokerUnitTests
             CardRank? primaryCardRank = CardRank.Ace;
             CardRank? secondaryCardRank = CardRank.King;
             CardSuit? suit = null;
-            var kickers = new List<Card>();
+            List<Card>? kickers = null;
 
             this._unitTestHelpClass.AssertHand(
                 bestHand,
